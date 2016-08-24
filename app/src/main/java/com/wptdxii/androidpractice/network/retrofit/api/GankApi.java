@@ -1,7 +1,7 @@
 package com.wptdxii.androidpractice.network.retrofit.api;
 
 import com.wptdxii.androidpractice.model.BaseModel;
-import com.wptdxii.androidpractice.model.Benefit;
+import com.wptdxii.androidpractice.model.BenefitEntity;
 
 import java.util.ArrayList;
 
@@ -20,12 +20,12 @@ public interface GankApi {
     public static  String BASE_URL = "http://gank.io/";
     
     @GET("api/data/福利/{number}/{page}")
-    Call<BaseModel<ArrayList<Benefit>>> defaultBenefits(
+    Call<BaseModel<ArrayList<BenefitEntity>>> defaultBenefits(
             @Path("number") int number,
             @Path("page") int page
     );
     @GET("api/data/福利/{number}/{page}")
-    Observable<BaseModel<ArrayList<Benefit>>> rxBenefits(
+    Observable<BaseModel<ArrayList<BenefitEntity>>> rxBenefits(
             @Path("number") int number,
             @Path("page") int page
     );

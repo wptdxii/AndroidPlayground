@@ -9,10 +9,12 @@ import android.widget.TextView;
 
 import com.wptdxii.androidpractice.R;
 import com.wptdxii.androidpractice.imageloader.ImageLoader;
-import com.wptdxii.androidpractice.imageloader.ImageLoaderConfig;
-import com.wptdxii.androidpractice.model.Benefit;
+import com.wptdxii.androidpractice.model.BaseModel;
+import com.wptdxii.androidpractice.model.BenefitEntity;
 import com.wptdxii.androidpractice.network.retrofit.api.ApiFactory;
-import com.wptdxii.androidpractice.network.retrofit.subscriber.BaseModelSubscriber;
+import com.wptdxii.androidpractice.network.retrofit.rx.func.RetryFunc;
+import com.wptdxii.androidpractice.network.retrofit.rx.subscriber.BaseModelSubscriber;
+import com.wptdxii.androidpractice.network.retrofit.transformer.DefaultTransformer;
 import com.wptdxii.androidpractice.ui.base.BaseSwipeRecyclerActivity;
 import com.wptdxii.androidpractice.widget.swiperecycler.BaseSwipeRecyclerAdapter;
 import com.wptdxii.androidpractice.widget.swiperecycler.BaseSwipeViewHolder;
@@ -20,14 +22,13 @@ import com.wptdxii.androidpractice.widget.swiperecycler.SwipeRecycler;
 
 import java.util.ArrayList;
 
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import retrofit2.Call;
 
-public class SwipeRecyclerActivity extends BaseSwipeRecyclerActivity<Benefit> {
+public class SwipeRecyclerActivity extends BaseSwipeRecyclerActivity<BenefitEntity> {
     private int page = 1;
     private SwipeRecycler mSwipeRecycler;
     private BaseSwipeRecyclerAdapter mAdapter;
-    private ArrayList<Benefit> mDataList;
+    private ArrayList<BenefitEntity> mDataList;
     
     @Override
     protected void initListData(Bundle savedInstanceState) {
@@ -53,50 +54,22 @@ public class SwipeRecyclerActivity extends BaseSwipeRecyclerActivity<Benefit> {
         if (action == SwipeRecycler.ACTION_PULL_TO_REFRESH) {
             page = 1;
         }
-        //未封装
-        //GankApi api = RetrofitClient.getInstance().createApi(GankApi.class);
-        //封装后
-//        GankApi api = ApiFactory.getGankApi();
-//        Call<BaseModel<ArrayList<Benefit>>> call = api.defaultBenefits(20, page++);
-//        call.enqueue(new Callback<BaseModel<ArrayList<Benefit>>>() {
-//            @Override
-//            public void onResponse(Call<BaseModel<ArrayList<Benefit>>> call, Response<BaseModel<ArrayList<Benefit>>> response) {
-//                if (action == SwipeRecycler.ACTION_PULL_TO_REFRESH) {
-//                    mDataList.clear();
-//                }
-//                if (response.body() == null || response.body().results.size() == 0) {
-//                    mSwipeRecycler.enableLaodMore(false);
-//                } else {    
-//                    mSwipeRecycler.enableLaodMore(true);
-//                    mDataList.addAll(response.body().results);
-//                    mAdapter.notifyDataSetChanged();
-//                } 
-//                
-//                mSwipeRecycler.onRefreshCompleted();
-//            }
-//
-//            @Override
-//            public void onFailure(Call<BaseModel<ArrayList<Benefit>>> call, Throwable t) {
-//                mSwipeRecycler.onRefreshCompleted();
-//                
-//            }
-//        });
-
-       ApiFactory.getGankApi()
+        Call<BaseModel<ArrayList<BenefitEntity>>> call = ApiFactory.getGankApi().defaultBenefits(20, page++);
+        ApiFactory.getGankApi()
                .rxBenefits(20,page++)
-               .subscribeOn(Schedulers.io())
-               .observeOn(AndroidSchedulers.mainThread())
-               .subscribe(new BaseModelSubscriber<ArrayList<Benefit>>() {
+               .compose(new DefaultTransformer<BaseModel<ArrayList<BenefitEntity>>, BaseModel<ArrayList<BenefitEntity>>>())
+               .retryWhen(new RetryFunc())//设置网络失败时的重连机制
+               .subscribe(new BaseModelSubscriber<ArrayList<BenefitEntity>>() {
                    @Override
-                   protected void onSuccess(ArrayList<Benefit> benefits) {
+                   protected void onSuccess(ArrayList<BenefitEntity> benefitEntities) {
                        if (action == SwipeRecycler.ACTION_PULL_TO_REFRESH) {
                            mDataList.clear();
                        }
-                       if (benefits == null || benefits.size() == 0) {
+                       if (benefitEntities == null || benefitEntities.size() == 0) {
                            mSwipeRecycler.enableLaodMore(false);
                        } else {
                            mSwipeRecycler.enableLaodMore(true);
-                           mDataList.addAll(benefits);
+                           mDataList.addAll(benefitEntities);
                            mAdapter.notifyDataSetChanged();
                        }
 
@@ -122,15 +95,9 @@ public class SwipeRecyclerActivity extends BaseSwipeRecyclerActivity<Benefit> {
 
         @Override
         protected void onBindViewHolder(int position) {
-            Benefit benefit = mDataList.get(position);
+            BenefitEntity benefitEntity = mDataList.get(position);
             mTextView.setVisibility(View.GONE);
-            ImageLoader.getInstance().loadImage(SwipeRecyclerActivity.this, 
-                    new ImageLoaderConfig.Builder()
-                    .url(benefit.getUrl())
-                    .imgView(mImageView)
-                    .build()
-            );
-
+            ImageLoader.loadImage(SwipeRecyclerActivity.this,mImageView, benefitEntity.url);
         }
 
         @Override

@@ -1,4 +1,4 @@
-package com.wptdxii.androidpractice.network.retrofit.subscriber;
+package com.wptdxii.androidpractice.network.retrofit.rx.subscriber;
 
 import com.wptdxii.androidpractice.model.BaseModel;
 
@@ -15,6 +15,7 @@ public abstract class BaseModelSubscriber<T> extends Subscriber<BaseModel<T>> {
 
     @Override
     public void onError(Throwable e) {
+        //自己处理，或者在这里统一处理
        onFailure(e);
     }
 

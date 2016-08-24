@@ -35,6 +35,8 @@ dependencies {
     //https://mvnrepository.com/artifact/com.squareup.retrofit2/converter-jackson
     compile 'com.squareup.retrofit2:converter-jackson:2.1.0'
     
+    //https://github.com/alibaba/fastjson
+    compile 'com.alibaba:fastjson:1.1.52.android'
     
     //RxJava
     //https://github.com/ReactiveX/RxJava
@@ -44,10 +46,11 @@ dependencies {
     
     
     
-    // glide
+    //https://github.com/bumptech/glide
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.android.support:support-v4:24.1.1'
+    
+    //https://github.com/square/picasso
+    compile 'com.squareup.picasso:picasso:2.5.2'
 
-    //https://github.com/alibaba/fastjson
-    compile 'com.alibaba:fastjson:1.1.52.android'
 }

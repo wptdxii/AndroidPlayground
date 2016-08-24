@@ -7,8 +7,7 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.data.DataFetcher;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.model.stream.StreamModelLoader;
-import com.wptdxii.androidpractice.imageloader.IImageLoaderStrategy;
-import com.wptdxii.androidpractice.imageloader.ImageLoader;
+import com.wptdxii.androidpractice.imageloader.IImageLoaderProvider;
 import com.wptdxii.androidpractice.imageloader.ImageLoaderConfig;
 import com.wptdxii.androidpractice.util.NetUtils;
 
@@ -18,7 +17,13 @@ import java.io.InputStream;
 /**
  * Created by wptdxii on 2016/8/20 0020.
  */
-public class GlideImageLoaderStrategy implements IImageLoaderStrategy {
+public class GlideImageLoaderProvider implements IImageLoaderProvider {
+//
+//    @Override
+//    public void loadImage(ImageLoaderConfig imageLoaderConfig) {
+//        this.loadImage(App.getInstance(),imageLoaderConfig);
+//    }
+
     @Override
     public void loadImage(Context context, ImageLoaderConfig imageLoaderConfig) {
         loadNormal(context,imageLoaderConfig);
@@ -30,7 +35,7 @@ public class GlideImageLoaderStrategy implements IImageLoaderStrategy {
         }
 
         int strategy = imageLoaderConfig.getWifiStrategy();
-        if (strategy == ImageLoader.LOAD_STRATEGY_ONLY_WIFI) {
+        if (strategy == ImageLoaderConfig.LOAD_STRATEGY_ONLY_WIFI) {
             int netType = NetUtils.getNetWorkType(context);
             if (netType == NetUtils.NETWORKTYPE_WIFI) {
                 //如果是在wifi下才加载图片，并且当前网络是wifi,直接加载
@@ -45,6 +50,7 @@ public class GlideImageLoaderStrategy implements IImageLoaderStrategy {
         } 
     }
 
+   
     /**
      * load cache image with Glide
      * @param context
@@ -97,6 +103,20 @@ public class GlideImageLoaderStrategy implements IImageLoaderStrategy {
                 .into(imageLoaderConfig.getImgView());
     }
 
+    /**
+     * 加载圆形图片
+     * @param imageLoaderConfig
+     */
+//    @Override
+//    public void loadCircleImage(ImageLoaderConfig imageLoaderConfig) {
+//        this.loadCircleImage(App.getInstance(), imageLoaderConfig);
+//    }
+
+    /**
+     * 加载圆形图片
+     * @param context
+     * @param imageLoaderConfig
+     */
     @Override
     public void loadCircleImage(Context context, ImageLoaderConfig imageLoaderConfig) {
         Glide.with(context)
@@ -105,5 +125,6 @@ public class GlideImageLoaderStrategy implements IImageLoaderStrategy {
                 .transform(new GlideCircleTransform(context))
                 .into(imageLoaderConfig.getImgView());
     }
- 
+
+   
 }

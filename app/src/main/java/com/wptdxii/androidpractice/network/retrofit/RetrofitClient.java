@@ -149,9 +149,9 @@ public class RetrofitClient {
     
     private RetrofitClient(boolean useRxJava) {
         Retrofit.Builder builder = new Retrofit.Builder()
-                .addConverterFactory(FastJsonConverterFactory.create())
+//                .addConverterFactory(FastJsonConverterFactory.create())
 //              .addConverterFactory(JacksonConverterFactory.create())
-//              .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())//Bean中使用了 @SerializedName，需要使用该Converter
                 .baseUrl(BuildConfig.DEBUG ? API_DEV_URl : API_PRODUCT_URL)
                 .client(OkClient.getInstance().getClient());
 //              .client(getClient());
