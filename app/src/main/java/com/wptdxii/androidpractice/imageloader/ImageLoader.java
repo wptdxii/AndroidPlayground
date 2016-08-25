@@ -12,7 +12,6 @@ import com.wptdxii.androidpractice.App;
  */
 public class ImageLoader {
     private ImageLoader() {
-         /* cannot be instantiated */
         throw new UnsupportedOperationException("cannot be instantiated");
     }
 

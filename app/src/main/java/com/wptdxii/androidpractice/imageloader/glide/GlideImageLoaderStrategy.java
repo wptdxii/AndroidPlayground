@@ -7,7 +7,7 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.data.DataFetcher;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.model.stream.StreamModelLoader;
-import com.wptdxii.androidpractice.imageloader.IImageLoaderProvider;
+import com.wptdxii.androidpractice.imageloader.IImageLoaderStrategy;
 import com.wptdxii.androidpractice.imageloader.ImageLoaderConfig;
 import com.wptdxii.androidpractice.util.NetUtils;
 
@@ -17,13 +17,12 @@ import java.io.InputStream;
 /**
  * Created by wptdxii on 2016/8/20 0020.
  */
-public class GlideImageLoaderProvider implements IImageLoaderProvider {
-//
-//    @Override
-//    public void loadImage(ImageLoaderConfig imageLoaderConfig) {
-//        this.loadImage(App.getInstance(),imageLoaderConfig);
-//    }
-
+public class GlideImageLoaderStrategy implements IImageLoaderStrategy {
+    /**
+     * load image
+     * @param context
+     * @param imageLoaderConfig
+     */
     @Override
     public void loadImage(Context context, ImageLoaderConfig imageLoaderConfig) {
         loadNormal(context,imageLoaderConfig);
@@ -50,7 +49,21 @@ public class GlideImageLoaderProvider implements IImageLoaderProvider {
         } 
     }
 
-   
+    /**
+     * load circel image
+     * @param context
+     * @param imageLoaderConfig
+     */
+    @Override
+    public void loadCircleImage(Context context, ImageLoaderConfig imageLoaderConfig) {
+        Glide.with(context)
+                .load(imageLoaderConfig.getUrl())
+                .placeholder(imageLoaderConfig.getPlaceHolder())
+                .transform(new GlideCircleTransform(context))
+                .into(imageLoaderConfig.getImgView());
+    }
+
+
     /**
      * load cache image with Glide
      * @param context
@@ -102,29 +115,4 @@ public class GlideImageLoaderProvider implements IImageLoaderProvider {
                 .crossFade()
                 .into(imageLoaderConfig.getImgView());
     }
-
-    /**
-     * 加载圆形图片
-     * @param imageLoaderConfig
-     */
-//    @Override
-//    public void loadCircleImage(ImageLoaderConfig imageLoaderConfig) {
-//        this.loadCircleImage(App.getInstance(), imageLoaderConfig);
-//    }
-
-    /**
-     * 加载圆形图片
-     * @param context
-     * @param imageLoaderConfig
-     */
-    @Override
-    public void loadCircleImage(Context context, ImageLoaderConfig imageLoaderConfig) {
-        Glide.with(context)
-                .load(imageLoaderConfig.getUrl())
-                .placeholder(imageLoaderConfig.getPlaceHolder())
-                .transform(new GlideCircleTransform(context))
-                .into(imageLoaderConfig.getImgView());
-    }
-
-   
 }

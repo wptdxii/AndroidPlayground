@@ -61,11 +61,11 @@ public class ImageLoaderConfig {
         private int wifiStrategy;
         
         public Builder() {
-            this.type = ImageLoaderConfig.PIC_SMALL;
+            this.type = PIC_SMALL;
             this.url = "";
             this.placeHolder = R.drawable.icon_load_default_img;
             this.imgView = null;
-            this.wifiStrategy = ImageLoaderConfig.LOAD_STRATEGY_NORMAL;
+            this.wifiStrategy = LOAD_STRATEGY_NORMAL;
         }
 
         public Builder type(int type) {
