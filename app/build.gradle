@@ -1,56 +1,81 @@
 apply plugin: 'com.android.application'
-
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.0"
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
-        applicationId "com.wptdxii.androidpractice"
-        minSdkVersion 14
-        targetSdkVersion 24
-        versionCode 1
-        versionName "1.0"
+        applicationId rootProject.ext.applicationId
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+    }
+
+    def keystore = file('../../keystore/wptdxii.jks')
+    signingConfigs {
+        debug {
+            keyAlias KEY_ALIAS
+            keyPassword KEY_PASSWORD
+            storePassword STORE_PASSWORD
+            storeFile keystore
+        }
+
+        release {
+            keyAlias KEY_ALIAS
+            keyPassword KEY_PASSWORD
+            storePassword STORE_PASSWORD
+            storeFile keystore
+        }
     }
     buildTypes {
+        debug {
+            minifyEnabled false
+            shrinkResources true
+            signingConfig signingConfigs.debug
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "ENDPOINT", "\"${endpoint_product}\""
+            resValue "string", "umeng_appkey", "${umeng_appkey_dev}"
+            resValue "string", "deepshare_appid", "${deepshare_appid}"
+            resValue "string", "bugly_appid", "${bugly_appid_dev}"
+            resValue "string", "rong_appkey", "${rong_appkey}"
+            resValue "string", "channel", "dev"
+            resValue "string", "op_app_name", "dev_${app_name}"
+        }
         release {
             minifyEnabled false
+            shrinkResources true
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "ENDPOINT", "\"${endpoint_product}\""
+            resValue "string", "umeng_appkey", "${umeng_appkey_product}"
+            resValue "string", "deepshare_appid", "${deepshare_appid}"
+            resValue "string", "bugly_appid", "${bugly_appid_product}"
+            resValue "string", "rong_appkey", "${rong_appkey}"
+            resValue "string", "channel", "product"
+            resValue "string", "op_app_name", "${app_name}"
         }
     }
 }
 
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:24.1.1'
-    compile 'com.android.support:recyclerview-v7:24.1.1'
-    compile 'com.android.support:design:24.1.1'
-    //okhttp
-    compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
-    //https://github.com/square/retrofit
-    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile rootProject.ext.libSupportV4
+    compile rootProject.ext.libSupportAppcompatV7
+    compile rootProject.ext.libSupportDesign
+    compile rootProject.ext.libRecyclerViewV7
 
-    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
-    compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
-    //https://mvnrepository.com/artifact/com.squareup.retrofit2/converter-jackson
-    compile 'com.squareup.retrofit2:converter-jackson:2.1.0'
-    
-    //https://github.com/alibaba/fastjson
-    compile 'com.alibaba:fastjson:1.1.52.android'
-    
-    //RxJava
-    //https://github.com/ReactiveX/RxJava
-    compile 'io.reactivex:rxjava:1.1.9'
-    //https://github.com/ReactiveX/RxAndroid
-    compile 'io.reactivex:rxandroid:1.2.1'
-    
-    
-    
-    //https://github.com/bumptech/glide
-    compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.android.support:support-v4:24.1.1'
-    
-    //https://github.com/square/picasso
-    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile rootProject.ext.libRetrofit
+    compile rootProject.ext.libRetrofitConverterGson
+    compile rootProject.ext.libRetrofitAdapterRxJava
 
+    compile rootProject.ext.libOkHttpLoggingInterceptor
+    
+    compile rootProject.ext.libFastJson
+
+    compile rootProject.ext.libRxJava
+    compile rootProject.ext.libRxAndroid
+
+    compile rootProject.ext.libGlide
 }

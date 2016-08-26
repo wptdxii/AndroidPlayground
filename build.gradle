@@ -21,3 +21,53 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+def supportVersion = "24.1.1"
+def retrofitVersion = "2.0.2"
+def okHttpVersion = '3.4.1'
+//def rxBindingVersion = '0.4.0'
+//def daggerVersion = "2.4"
+project.ext {
+    applicationId = "com.github.moduth.petlover"
+    buildToolsVersion = "24.0.1"
+    compileSdkVersion = 23
+    minSdkVersion = 16
+    targetSdkVersion = 22
+    versionCode = 1
+    versionName = "1.0.0"
+    abortOnLintError = false
+    checkLintRelease = false
+    useJack = false
+
+    javaVersion = JavaVersion.VERSION_1_8
+
+    libSupportV4 = "com.android.support:support-v4:${supportVersion}"
+    libSupportAppcompatV7 = "com.android.support:appcompat-v7:${supportVersion}"
+    libSupportDesign = "com.android.support:design:${supportVersion}"
+    libRecyclerViewV7 = "com.android.support:recyclerview-v7:${supportVersion}"
+    
+    libRetrofit = "com.squareup.retrofit2:retrofit:${retrofitVersion}"
+    libRetrofitConverterGson = "com.squareup.retrofit2:converter-gson:${retrofitVersion}"
+//    libRetrofitConverterJackson = "com.squareup.retrofit2:converter-jackson:${retrofitVersion}"
+    libRetrofitAdapterRxJava = "com.squareup.retrofit2:adapter-rxjava:${retrofitVersion}"
+    
+    libOkHttpLoggingInterceptor = "com.squareup.okhttp3:logging-interceptor:${okHttpVersion}"
+    
+//    libGson = "com.google.code.gson:gson:2.6.2"
+    libFastJson = "com.alibaba:fastjson:1.1.52.android"
+    
+    libRxJava = "io.reactivex:rxjava:1.1.9"
+    libRxAndroid = "io.reactivex:rxandroid:1.2.1"
+    
+    libGlide = "com.github.bumptech.glide:glide:3.7.0"
+    
+//    libEventBus = "org.greenrobot:eventbus:3.0.0"
+    
+//    libJavaxAnnotation = "javax.annotation:jsr250-api:1.0"
+//    libJavaxInject = "javax.inject:javax.inject:1"
+    
+//    libRxBinding = "com.jakewharton.rxbinding:rxbinding:${rxBindingVersion}"
+    
+//    libDagger = "com.google.dagger:dagger:${daggerVersion}"
+//    libDaggerCompiler = "com.google.dagger:dagger-compiler:${daggerVersion}"
+}

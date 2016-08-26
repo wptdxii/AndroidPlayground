@@ -3,7 +3,6 @@ package com.wptdxii.androidpractice.network.retrofit;
 import com.wptdxii.androidpractice.App;
 import com.wptdxii.androidpractice.BuildConfig;
 import com.wptdxii.androidpractice.network.okhttp.OkClient;
-import com.wptdxii.androidpractice.network.retrofit.converter.FastJsonConverterFactory;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -22,7 +21,6 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.converter.jackson.JacksonConverterFactory;
 
 /**
  * Created by wptdxii on 2016/8/1 0001.
@@ -121,8 +119,6 @@ public class RetrofitClient {
         
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(baseUrl)
-                .addConverterFactory(FastJsonConverterFactory.create())
-                .addConverterFactory(JacksonConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(OkClient.getInstance().getClient());
 
@@ -149,8 +145,6 @@ public class RetrofitClient {
     
     private RetrofitClient(boolean useRxJava) {
         Retrofit.Builder builder = new Retrofit.Builder()
-//                .addConverterFactory(FastJsonConverterFactory.create())
-//              .addConverterFactory(JacksonConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())//Bean中使用了 @SerializedName，需要使用该Converter
                 .baseUrl(BuildConfig.DEBUG ? API_DEV_URl : API_PRODUCT_URL)
                 .client(OkClient.getInstance().getClient());
