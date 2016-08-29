@@ -2,7 +2,7 @@ package com.wptdxii.androidpractice;
 
 import android.app.Application;
 
-import com.wptdxii.androidpractice.util .AppStatusTracker;
+import com.wptdxii.androidpractice.util.AppStatusTracker;
 
 /**
  * Created by wptdxii on 2016/7/28 0028.
@@ -18,5 +18,6 @@ public class App extends Application {
         super.onCreate();
         instance = this;
         AppStatusTracker.init(this);
+//        LeakCanary.install(this);
     }
 }

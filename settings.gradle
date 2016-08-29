@@ -1,1 +1,2 @@
-include ':app'
+include ':app', ':lib_ext'
+project(':lib_ext').projectDir = new File('sdk/lib_ext')

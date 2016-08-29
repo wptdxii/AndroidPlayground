@@ -1,4 +1,17 @@
 apply plugin: 'com.android.application'
+
+//打包时使用
+def getDate() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC")) // 注意时区
+}
+
+// 获取当前git的Revision，打包时使用
+def getRevision() {
+    if (!System.getenv('CI_BUILD')) {
+        return 0
+    }
+    return ext.hash = 'git rev-parse --short HEAD'.execute().text.trim()
+}
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -10,27 +23,36 @@ android {
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
     }
+    //指定编译JDK版本
+    compileOptions {
+        sourceCompatibility rootProject.ext.javaVersion
+        targetCompatibility rootProject.ext.javaVersion
+    }
 
-    def keystore = file('../../keystore/wptdxii.jks')
+    def keystore_debug = file('../../keystore/wptdxii_debug.jks')
+    def keystore_release = file('../../keystore/wptdxii_release.jks')
     signingConfigs {
         debug {
-            keyAlias KEY_ALIAS
+            keyAlias KEY_ALIAS_DEBUG
             keyPassword KEY_PASSWORD
             storePassword STORE_PASSWORD
-            storeFile keystore
+            storeFile keystore_debug
         }
-
         release {
-            keyAlias KEY_ALIAS
-            keyPassword KEY_PASSWORD
-            storePassword STORE_PASSWORD
-            storeFile keystore
+            keyAlias 'wptdxii'
+            keyPassword 'wptdxii'
+            storePassword 'wptdxii'
+            storeFile file('C:/Dev/Code/github/keystore/wptdxii_release.jks')
         }
     }
+
+  
     buildTypes {
         debug {
+            versionNameSuffix "-debug"
             minifyEnabled false
-            shrinkResources true
+            shrinkResources false
+            zipAlignEnabled false
             signingConfig signingConfigs.debug
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField "String", "ENDPOINT", "\"${endpoint_product}\""
@@ -42,11 +64,21 @@ android {
             resValue "string", "op_app_name", "dev_${app_name}"
         }
         release {
+            //版本后缀加上-debug
+            versionNameSuffix "-release"
+            //是否开启混淆
             minifyEnabled false
+            //是否删除无效资源
             shrinkResources true
+            //是否zip对齐
+            zipAlignEnabled true
+            //签名所用配置文件，在上边signingConfigs {}中定义
             signingConfig signingConfigs.release
+            //混淆所用文件
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //在Java中通过BuildConfig.ENDPOINT调用
             buildConfigField "String", "ENDPOINT", "\"${endpoint_product}\""
+            //在xml文件中通过R.string.key调用
             resValue "string", "umeng_appkey", "${umeng_appkey_product}"
             resValue "string", "deepshare_appid", "${deepshare_appid}"
             resValue "string", "bugly_appid", "${bugly_appid_product}"
@@ -55,27 +87,117 @@ android {
             resValue "string", "op_app_name", "${app_name}"
         }
     }
+    
+    //解决三方库文件冲突
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude('META-INF/LICENSE.txt')
+        exclude('META-INF/NOTICE.txt')
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/DEPENDENCIES'
+        // umeng推送的jar包含有的okio库跟okhttp的okio库冲突
+//        exclude 'META-INF/maven/com.squareup.okio/okio/pom.xml'
+//        exclude 'META-INF/maven/com.squareup.okio/okio/pom.properties'
+    }
+    //lint检查
+    lintOptions {
+        quiet true
+        // if true, stop the gradle build if errors are found
+        abortOnError false
+        // if true, only report errors
+        ignoreWarnings true
+        checkReleaseBuilds true
+        disable "InvalidPackage"
+        disable "MissingTranslation" // 禁用中英文string.xml的强制lint
+        //配置信息在lint.xml中,需手动建立
+//        lintConfig file("lint.xml")
+    }
+
+   
+    //打包管理
+    productFlavors {
+        arm {
+            
+            //在defaultConfig基础上添加了下面配置
+            ndk {
+                //引号内容要与jniLibs文件夹内的文件夹名相同
+                abiFilters "arm64-v8a", "armeabi", "armeabi-v7a"
+            }
+        }
+        
+        x86 {
+            ndk {
+                abiFilters "x86", "x86_64"
+            }
+        }
+        mips {
+            ndk {
+                abiFilters "mips"
+            }
+        }
+        rc_open {}
+        rc_360 {}
+        rc_yingyongbao {}
+        rc_baidu {}
+        rc_91 {}
+        rc_wandoujia {}
+        rc_anzhuo {}
+        rc_xiaomi {}
+        rc_meizu {}
+        rc_oppo {}
+        rc_huawei {}
+        rc_weibo {}
+        rc_staging {}
+        rc_product {}
+    }
+    //友盟统计
+    productFlavors.all { flavor ->
+        // 这里只是方便友盟统计每个渠道的数据
+        flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+    }
+
+    // 修改打包后APK的文件名
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def oldFile = output.outputFile
+            if (variant.buildType.name.equals('release')) {
+                // 输出apk名称为yat3s_v1.0_2016-04-12_yingyongbao_a23f2e1.apk
+                def releaseApkName = 'ap-v' + defaultConfig.versionName + '_' + getDate() + '_' + variant.productFlavors[0].name + "_" + getRevision() + '.apk'
+                output.outputFile = new File(oldFile.parent, releaseApkName)
+            }
+            if (variant.buildType.name.equals('debug')) {
+                // Do nothing
+            }
+        }
+    }
 }
 
+repositories {
+    flatDir {
+        dirs 'libs' //this way we can find the .aar file in libs folder
+    }
+}
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
+//    compile(name:'test', ext:'aar') arr文件放到libs目录下，'test'为arr文件名
     testCompile 'junit:junit:4.12'
-    compile rootProject.ext.libSupportV4
-    compile rootProject.ext.libSupportAppcompatV7
-    compile rootProject.ext.libSupportDesign
-    compile rootProject.ext.libRecyclerViewV7
-
-    compile rootProject.ext.libRetrofit
-    compile rootProject.ext.libRetrofitConverterGson
-    compile rootProject.ext.libRetrofitAdapterRxJava
-
-    compile rootProject.ext.libOkHttpLoggingInterceptor
-    
-    compile rootProject.ext.libFastJson
-
-    compile rootProject.ext.libRxJava
-    compile rootProject.ext.libRxAndroid
-
+    compile project(':lib_ext')
+    compile rootProject.ext.libSupportV4 
+    compile rootProject.ext.libSupportAppcompatV7 
+    compile rootProject.ext.libSupportDesign 
+    compile rootProject.ext.libRecyclerViewV7 
+    compile rootProject.ext.libRetrofit 
+    compile rootProject.ext.libRetrofitConverterGson 
+    compile rootProject.ext.libRetrofitAdapterRxJava 
+    compile rootProject.ext.libOkHttpLoggingInterceptor 
+    compile rootProject.ext.libFastJson 
+    compile rootProject.ext.libRxJava 
+    compile rootProject.ext.libRxAndroid 
     compile rootProject.ext.libGlide
+//    debugCompile rootProject.ext.debugDependencies.leakCanary
+//    releaseCompile rootProject.ext.releaseDependencies.leakCanary
+//    debugCompile rootProject.ext.debugDependencies.blockCanary
+//    releaseCompile rootProject.ext.releaseDependencies.blockCanary
+    compile rootProject.ext.libUmengAnalytics
 }

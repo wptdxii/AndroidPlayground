@@ -25,5 +25,7 @@ public class HomeActivity extends BaseContentActivity {
     @Override
     protected void addItem(ArrayList<Module> mDataList) {
         mDataList.add(new Module("SwipeRecycler",SampleSwipeRecyclerActivity.class));
+        mDataList.add(new Module("SDKDemo",SampleSDKActivity.class));
     }
+    
 }
