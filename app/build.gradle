@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
 
 //打包时使用
 def getDate() {
@@ -39,9 +40,9 @@ android {
             storeFile keystore_debug
         }
         release {
-            keyAlias 'wptdxii'
-            keyPassword 'wptdxii'
-            storePassword 'wptdxii'
+            keyAlias KEY_ALIAS_RELEASE
+            keyPassword KEY_PASSWORD
+            storePassword STORE_PASSWORD
             storeFile file('C:/Dev/Code/github/keystore/wptdxii_release.jks')
         }
     }
@@ -116,38 +117,40 @@ android {
    
     //打包管理
     productFlavors {
-        arm {
-            
-            //在defaultConfig基础上添加了下面配置
-            ndk {
-                //引号内容要与jniLibs文件夹内的文件夹名相同
-                abiFilters "arm64-v8a", "armeabi", "armeabi-v7a"
-            }
-        }
+        //打包不同的so文件
+//        arm {
+//            
+//            //在defaultConfig基础上添加了下面配置
+//            ndk {
+//                //引号内容要与jniLibs文件夹内的文件夹名相同
+//                abiFilters "arm64-v8a", "armeabi", "armeabi-v7a"
+//            }
+//        }
+//        
+//        x86 {
+//            ndk {
+//                abiFilters "x86", "x86_64"
+//            }
+//        }
+//        mips {
+//            ndk {
+//                abiFilters "mips"
+//            }
+//        }
         
-        x86 {
-            ndk {
-                abiFilters "x86", "x86_64"
-            }
-        }
-        mips {
-            ndk {
-                abiFilters "mips"
-            }
-        }
-        rc_open {}
-        rc_360 {}
+          //需要同时安装apk时，可以更改applicationId，覆盖defaultConfig
+//        qa {
+//            applicationId ""
+//        }
+//        bata {
+//            applicationId ""
+//        }
+        
+        
+        //渠道号
         rc_yingyongbao {}
         rc_baidu {}
-        rc_91 {}
-        rc_wandoujia {}
-        rc_anzhuo {}
-        rc_xiaomi {}
-        rc_meizu {}
-        rc_oppo {}
-        rc_huawei {}
-        rc_weibo {}
-        rc_staging {}
+        rc_stagging {}
         rc_product {}
     }
     //友盟统计
@@ -157,17 +160,23 @@ android {
     }
 
     // 修改打包后APK的文件名
+    //variant = flavor + buildType 
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
-            def oldFile = output.outputFile
+            def outputFile = output.outputFile
             if (variant.buildType.name.equals('release')) {
-                // 输出apk名称为yat3s_v1.0_2016-04-12_yingyongbao_a23f2e1.apk
+                // 输出apk名称为ap_v1.0_2016-04-12_yingyongbao_a23f2e1.apk
                 def releaseApkName = 'ap-v' + defaultConfig.versionName + '_' + getDate() + '_' + variant.productFlavors[0].name + "_" + getRevision() + '.apk'
-                output.outputFile = new File(oldFile.parent, releaseApkName)
+                output.outputFile = new File(outputFile.parent, releaseApkName)
             }
             if (variant.buildType.name.equals('debug')) {
                 // Do nothing
             }
+
+//            if (outputFile != null && outputFile.name.endWith(".apk")) {
+//                def fileName = "ap_v${defaultConfig.versionName}_channel${variant.name}.apk"
+//                output.outputFile = new File(outputFile.parent,fileName)
+//            }
         }
     }
 }
@@ -195,9 +204,13 @@ dependencies {
     compile rootProject.ext.libRxJava 
     compile rootProject.ext.libRxAndroid 
     compile rootProject.ext.libGlide
+    compile rootProject.ext.libDagger
+    apt rootProject.ext.libDaggerCompiler
+    compile rootProject.ext.libJavaxAnnotation
+    
 //    debugCompile rootProject.ext.debugDependencies.leakCanary
 //    releaseCompile rootProject.ext.releaseDependencies.leakCanary
 //    debugCompile rootProject.ext.debugDependencies.blockCanary
 //    releaseCompile rootProject.ext.releaseDependencies.blockCanary
-    compile rootProject.ext.libUmengAnalytics
+//    compile rootProject.ext.libUmengAnalytics
 }

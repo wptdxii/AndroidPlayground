@@ -1,3 +1,5 @@
+//可以通过反注释 来切换源码依赖和arr文件依赖
+//依赖arr文件时需要把生成的arr拷贝到根目录下
 configurations.maybeCreate("default")
 artifacts.add("default", file('lib_ext-release.aar'))
 

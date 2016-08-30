@@ -15,6 +15,6 @@ public class SampleSDKActivity extends BaseContentActivity {
 
     @Override
     protected void addItem(ArrayList<Module> mDataList) {
-        mDataList.add(new Module("BaiduSDk", SampleBaiduMapActivity.class));
+        
     }
 }
