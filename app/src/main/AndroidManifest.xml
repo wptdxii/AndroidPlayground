@@ -16,13 +16,12 @@
         android:theme="@style/AppTheme">
 
         <!-- umeng -->
-        <!--<meta-data-->
-            <!--android:name="UMENG_APPKEY"-->
-            <!--android:value="57c3e4f167e58ef0b300272d"/>-->
-        <!--<meta-data-->
-            android:name="UMENG_CHANNEL"
-            android:value="${UMENG_CHANNEL_VALUE}"/>
-        
+        <!-- <meta-data -->
+        <!-- android:name="UMENG_APPKEY" -->
+        <!-- android:value="57c3e4f167e58ef0b300272d"/> -->
+        <!-- <meta-data -->
+        android:name="UMENG_CHANNEL"
+        android:value="${UMENG_CHANNEL_VALUE}"/>
         <activity
             android:name=".ui.activity.SplashActivity"
             android:theme="@style/SplashActivityTheme">
@@ -34,11 +33,15 @@
         </activity>
         <activity android:name=".ui.activity.SwipeRecyclerActivity">
         </activity>
-        <activity android:name=".ui.activity.HomeActivity">
+        <activity android:name=".ui.activity.ContentActivity">
         </activity>
         <activity android:name=".ui.activity.SampleSwipeRecyclerActivity">
         </activity>
         <activity android:name=".ui.activity.SampleSDKActivity">
+        </activity>
+        <activity android:name=".ui.activity.WidgetActivity">
+        </activity>
+        <activity android:name=".ui.activity.HomeActivity">
         </activity>
     </application>
 

@@ -70,14 +70,14 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
      * Token失效或者被挤下线执行的操作
      */
     protected void kickout() {
-        // TODO show dialog to confirm to HomeActivity or LoginActivity
+        // TODO show dialog to confirm to ContentActivity or LoginActivity
     }
 
     /**
      * 重启app
      */
     protected void restartApp() {
-        // TODO startActivity to HomeActivity
+        // TODO startActivity to ContentActivity
     }
 
     /**

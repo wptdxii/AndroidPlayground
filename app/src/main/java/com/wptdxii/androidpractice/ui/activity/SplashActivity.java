@@ -20,7 +20,7 @@ public class SplashActivity extends BaseActivity {
                     //解决全屏向非全屏跳转的toolbar闪动问题,在启动Activity前调用
                     cancelFullScreen();
                     
-                    HomeActivity.actionStart(SplashActivity.this);
+                    ContentActivity.actionStart(SplashActivity.this);
                     finish();
                     break;
             }

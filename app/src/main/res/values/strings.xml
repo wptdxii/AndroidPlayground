@@ -2,8 +2,15 @@
     <string name="app_name">AP</string>
     <string name="swipeRecyclerFooterContent">正在加载中...</string>
     <string name="splashTV">AndroidPractice</string>
-    <string name="home_activity_toolbar_title">HomeActivity</string>
+    <string name="content_activity_toolbar_title">Content</string>
     <string name="no_more_footer">没有更多</string>
     <string name="sample_swipte_recycler_activity_toolbar_title">SampleSwipeRecycler</string>
     <string name="sample_sdk_activity_toolbar_title">SDKSample</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="widget_activity_toolbar_title">Widget</string>
+    <string name="bottom_tab_msg">信息</string>
+    <string name="bottom_tab_contact">联系人</string>
+    <string name="bottom_tab_moments">发现</string>
+    <string name="bottom_tab_profile">我</string>
+    <string name="home_activity_toolbar_title">HomeActivity</string>
 </resources>

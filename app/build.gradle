@@ -50,19 +50,19 @@ android {
   
     buildTypes {
         debug {
-            versionNameSuffix "-debug"
-            minifyEnabled false
-            shrinkResources false
-            zipAlignEnabled false
-            signingConfig signingConfigs.debug
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "ENDPOINT", "\"${endpoint_product}\""
-            resValue "string", "umeng_appkey", "${umeng_appkey_dev}"
-            resValue "string", "deepshare_appid", "${deepshare_appid}"
-            resValue "string", "bugly_appid", "${bugly_appid_dev}"
-            resValue "string", "rong_appkey", "${rong_appkey}"
-            resValue "string", "channel", "dev"
-            resValue "string", "op_app_name", "dev_${app_name}"
+//            versionNameSuffix "-debug"
+//            minifyEnabled false
+//            shrinkResources false
+//            zipAlignEnabled false
+//            signingConfig signingConfigs.debug
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            buildConfigField "String", "ENDPOINT", "\"${endpoint_product}\""
+//            resValue "string", "umeng_appkey", "${umeng_appkey_dev}"
+//            resValue "string", "deepshare_appid", "${deepshare_appid}"
+//            resValue "string", "bugly_appid", "${bugly_appid_dev}"
+//            resValue "string", "rong_appkey", "${rong_appkey}"
+//            resValue "string", "channel", "dev"
+//            resValue "string", "op_app_name", "dev_${app_name}"
         }
         release {
             //版本后缀加上-debug
@@ -70,7 +70,7 @@ android {
             //是否开启混淆
             minifyEnabled false
             //是否删除无效资源
-            shrinkResources true
+            shrinkResources false
             //是否zip对齐
             zipAlignEnabled true
             //签名所用配置文件，在上边signingConfigs {}中定义
@@ -116,7 +116,7 @@ android {
 
    
     //打包管理
-    productFlavors {
+//    productFlavors {
         //打包不同的so文件
 //        arm {
 //            
@@ -148,37 +148,38 @@ android {
         
         
         //渠道号
-        rc_yingyongbao {}
-        rc_baidu {}
-        rc_stagging {}
-        rc_product {}
-    }
+//        rc_yingyongbao {}
+//        rc_baidu {}
+//        rc_stagging {}
+//        rc_product {}
+//    }
     //友盟统计
-    productFlavors.all { flavor ->
-        // 这里只是方便友盟统计每个渠道的数据
-        flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
-    }
+//    productFlavors.all { flavor ->
+//        // 这里只是方便友盟统计每个渠道的数据
+//        flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+//    }
 
-    // 修改打包后APK的文件名
-    //variant = flavor + buildType 
-    applicationVariants.all { variant ->
-        variant.outputs.each { output ->
-            def outputFile = output.outputFile
-            if (variant.buildType.name.equals('release')) {
-                // 输出apk名称为ap_v1.0_2016-04-12_yingyongbao_a23f2e1.apk
-                def releaseApkName = 'ap-v' + defaultConfig.versionName + '_' + getDate() + '_' + variant.productFlavors[0].name + "_" + getRevision() + '.apk'
-                output.outputFile = new File(outputFile.parent, releaseApkName)
-            }
-            if (variant.buildType.name.equals('debug')) {
-                // Do nothing
-            }
-
-//            if (outputFile != null && outputFile.name.endWith(".apk")) {
-//                def fileName = "ap_v${defaultConfig.versionName}_channel${variant.name}.apk"
-//                output.outputFile = new File(outputFile.parent,fileName)
+//    // 修改打包后APK的文件名
+//    //variant = flavor + buildType 
+//    applicationVariants.all { variant ->
+//        variant.outputs.each { output ->
+//            def outputFile = output.outputFile
+//            if (variant.buildType.name.equals('release')) {
+//                // 输出apk名称为ap_v1.0_2016-04-12_yingyongbao_a23f2e1.apk
+////                def releaseApkName = 'ap-v' + defaultConfig.versionName + '_' + getDate() + '_' + variant.productFlavors[0].name + "_" + getRevision() + '.apk'
+//                def releaseApkName = 'ap-v' + defaultConfig.versionName + '_' + getDate() + '_' + getRevision() + '.apk'
+//                output.outputFile = new File(outputFile.parent, releaseApkName)
 //            }
-        }
-    }
+//            if (variant.buildType.name.equals('debug')) {
+//                // Do nothing
+//            }
+//
+////            if (outputFile != null && outputFile.name.endWith(".apk")) {
+////                def fileName = "ap_v${defaultConfig.versionName}_channel${variant.name}.apk"
+////                output.outputFile = new File(outputFile.parent,fileName)
+////            }
+//        }
+//    }
 }
 
 repositories {
