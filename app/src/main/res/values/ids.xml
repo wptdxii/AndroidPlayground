@@ -9,4 +9,5 @@
     <item name="swipeRecycler" type="id"/>
     <item name="loadMoreProgressBar" type="id"/>
     <item name="deviderLine" type="id">deviderLine</item>
+    <item name="viewPager" type="id">viewPager</item>
 </resources>

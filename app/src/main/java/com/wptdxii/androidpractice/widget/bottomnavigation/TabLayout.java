@@ -38,18 +38,20 @@ public class TabLayout extends LinearLayout implements View.OnClickListener {
         super(context, attrs, defStyleAttr);
         iniView();
     }
+
     private void iniView() {
         setOrientation(HORIZONTAL);
     }
+
     public void setOnTabClickListener(OnTabClickListener listener) {
         this.listener = listener;
     }
 
     public void iniData(ArrayList<Tab> tabs) {
         this.tabs = tabs;
-        
+
         if (tabs != null && tabs.size() > 0) {
-            tabCount =  tabs.size();
+            tabCount = tabs.size();
             TabView tabView;
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT);
             layoutParams.gravity = Gravity.CENTER;
@@ -65,21 +67,24 @@ public class TabLayout extends LinearLayout implements View.OnClickListener {
             }
         } else {
             throw new IllegalArgumentException("tabs can't be empty");
-        } 
-        
+        }
+
     }
 
     public void setCurrentTab(int i) {
         if (i >= 0 && i < tabCount) {
             View view = getChildAt(i);
+            Tab tab = (Tab) view.getTag();
             if (selectedView != view) {
                 view.setSelected(true);
                 if (selectedView != null) {
                     selectedView.setSelected(false);
                 }
                 selectedView = view;
-                listener.onTabClick((Tab) view.getTag());
-            } 
+                listener.onTabClick(tab, false);
+            } else {
+                listener.onTabClick(tab, true);
+            }
         }
     }
 
@@ -96,15 +101,22 @@ public class TabLayout extends LinearLayout implements View.OnClickListener {
         int index = tabs.indexOf(tab);
         setCurrentTab(index);
     }
-    
+
 
     public interface OnTabClickListener {
-        void onTabClick(Tab tab);
+        /**
+         * 当前tabview已被选中，返回true
+         * 未被选中，返回false
+         * @param tab
+         * @param isSelected
+         */
+        void onTabClick(Tab tab, boolean isSelected);
     }
-    
+
     public class TabView extends LinearLayout {
         private ImageView mTabImg;
         private TextView mTabLabel;
+
         public TabView(Context context) {
             super(context);
             initView(context);
@@ -120,10 +132,11 @@ public class TabLayout extends LinearLayout implements View.OnClickListener {
             super(context, attrs, defStyleAttr);
             initView(context);
         }
+
         private void initView(Context context) {
             setOrientation(VERTICAL);
             setGravity(Gravity.CENTER);
-            LayoutInflater.from(context).inflate(R.layout.widget_tab_view,this,true);
+            LayoutInflater.from(context).inflate(R.layout.widget_tab_view, this, true);
             mTabImg = (ImageView) findViewById(R.id.tabImg);
             mTabLabel = (TextView) findViewById(R.id.tabLabel);
         }
@@ -136,15 +149,15 @@ public class TabLayout extends LinearLayout implements View.OnClickListener {
         public void onBadgeChanged(int badgeCount) {
             //TODO notify new message, change the badgeView
         }
-        
+
     }
 
     public static class Tab {
-       public int imgResId;
-       public int labelResId;
-       public int badgeCount;
-       public int menuResId;
-       public Class<? extends ITabFragment> targetFragmentClz;
+        public int imgResId;
+        public int labelResId;
+        public int badgeCount;
+        public int menuResId;
+        public Class<? extends ITabFragment> targetFragmentClz;
 
         public Tab(int imgResId, int labelResId) {
             this.imgResId = imgResId;
@@ -170,7 +183,13 @@ public class TabLayout extends LinearLayout implements View.OnClickListener {
             this.targetFragmentClz = targetFragmentClz;
             this.menuResId = menuResId;
         }
-    
+
+        public Tab(int imgResId, int labelResId, Class<? extends ITabFragment> targetFragmentClz) {
+            this.imgResId = imgResId;
+            this.labelResId = labelResId;
+            this.targetFragmentClz = targetFragmentClz;
+        }
+
         public Tab(int imgResId, int labelResId, int badgeCount, int menuResId, Class<? extends ITabFragment> targetFragmentClz) {
             this.imgResId = imgResId;
             this.labelResId = labelResId;
@@ -178,7 +197,7 @@ public class TabLayout extends LinearLayout implements View.OnClickListener {
             this.menuResId = menuResId;
             this.targetFragmentClz = targetFragmentClz;
         }
-    } 
-    
+    }
+
 }
 

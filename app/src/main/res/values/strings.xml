@@ -12,5 +12,6 @@
     <string name="bottom_tab_contact">联系人</string>
     <string name="bottom_tab_moments">发现</string>
     <string name="bottom_tab_profile">我</string>
-    <string name="home_activity_toolbar_title">HomeActivity</string>
+    <string name="tabviewpager_activity_toolbar_title">TabViewPager</string>
+    <string name="home_activity_toolbar_title">Home</string>
 </resources>

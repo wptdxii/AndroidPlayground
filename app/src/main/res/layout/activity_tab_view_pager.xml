@@ -5,15 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.activity.HomeActivity">
+    tools:context=".ui.activity.TabViewPagerActivity">
 
     <include layout="@layout/widget_toolbar"/>
-    <FrameLayout
-        android:id="@+id/content"
+    <android.support.v4.view.ViewPager
+        android:id="@id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>
-
     <include layout="@layout/widget_devider_line"/>
     <com.wptdxii.androidpractice.widget.bottomnavigation.TabLayout
         android:id="@+id/tabLayout"
@@ -21,5 +20,5 @@
         android:layout_height="wrap_content"
         android:padding="5dp"
         android:layout_alignParentBottom="true"/>
-  
+
 </LinearLayout>

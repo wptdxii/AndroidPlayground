@@ -34,10 +34,10 @@ android {
     def keystore_release = file('../../keystore/wptdxii_release.jks')
     signingConfigs {
         debug {
-            keyAlias KEY_ALIAS_DEBUG
-            keyPassword KEY_PASSWORD
-            storePassword STORE_PASSWORD
-            storeFile keystore_debug
+//            keyAlias KEY_ALIAS_DEBUG
+//            keyPassword KEY_PASSWORD
+//            storePassword STORE_PASSWORD
+//            storeFile keystore_debug
         }
         release {
             keyAlias KEY_ALIAS_RELEASE

@@ -6,6 +6,9 @@ import com.wptdxii.androidpractice.ui.base.BaseContentActivity;
 
 import java.util.ArrayList;
 
+/**
+ * 常用控件
+ */
 public class WidgetActivity extends BaseContentActivity {
     @Override
     protected void initToolbarTitle(int titleResId) {

@@ -35,13 +35,15 @@
         </activity>
         <activity android:name=".ui.activity.ContentActivity">
         </activity>
-        <activity android:name=".ui.activity.SampleSwipeRecyclerActivity">
-        </activity>
         <activity android:name=".ui.activity.SampleSDKActivity">
         </activity>
         <activity android:name=".ui.activity.WidgetActivity">
         </activity>
-        <activity android:name=".ui.activity.HomeActivity">
+        <activity android:name=".ui.activity.HoActivity">
+        </activity>
+        <activity android:name=".ui.activity.TabViewPagerActivity">
+        </activity>
+        <activity android:name=".ui.activity.ViewPagerActivity">
         </activity>
     </application>
 
