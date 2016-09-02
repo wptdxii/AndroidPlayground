@@ -45,6 +45,8 @@
         </activity>
         <activity android:name=".ui.activity.ViewPagerActivity">
         </activity>
+        <activity android:name=".ui.activity.SwipeRecyclerFragmentActivity">
+        </activity>
     </application>
 
 </manifest>

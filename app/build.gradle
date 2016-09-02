@@ -13,6 +13,7 @@ def getRevision() {
     }
     return ext.hash = 'git rev-parse --short HEAD'.execute().text.trim()
 }
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -47,7 +48,7 @@ android {
         }
     }
 
-  
+
     buildTypes {
         debug {
 //            versionNameSuffix "-debug"
@@ -88,7 +89,7 @@ android {
             resValue "string", "op_app_name", "${app_name}"
         }
     }
-    
+
     //解决三方库文件冲突
     packagingOptions {
         exclude 'META-INF/LICENSE'
@@ -114,10 +115,9 @@ android {
 //        lintConfig file("lint.xml")
     }
 
-   
     //打包管理
 //    productFlavors {
-        //打包不同的so文件
+    //打包不同的so文件
 //        arm {
 //            
 //            //在defaultConfig基础上添加了下面配置
@@ -137,17 +137,16 @@ android {
 //                abiFilters "mips"
 //            }
 //        }
-        
-          //需要同时安装apk时，可以更改applicationId，覆盖defaultConfig
+
+    //需要同时安装apk时，可以更改applicationId，覆盖defaultConfig
 //        qa {
 //            applicationId ""
 //        }
 //        bata {
 //            applicationId ""
 //        }
-        
-        
-        //渠道号
+
+    //渠道号
 //        rc_yingyongbao {}
 //        rc_baidu {}
 //        rc_stagging {}
@@ -193,25 +192,27 @@ dependencies {
 //    compile(name:'test', ext:'aar') arr文件放到libs目录下，'test'为arr文件名
     testCompile 'junit:junit:4.12'
     compile project(':lib_ext')
-    compile rootProject.ext.libSupportV4 
-    compile rootProject.ext.libSupportAppcompatV7 
-    compile rootProject.ext.libSupportDesign 
-    compile rootProject.ext.libRecyclerViewV7 
-    compile rootProject.ext.libRetrofit 
-    compile rootProject.ext.libRetrofitConverterGson 
-    compile rootProject.ext.libRetrofitAdapterRxJava 
-    compile rootProject.ext.libOkHttpLoggingInterceptor 
-    compile rootProject.ext.libFastJson 
-    compile rootProject.ext.libRxJava 
-    compile rootProject.ext.libRxAndroid 
+    compile rootProject.ext.libSupportV4
+    compile rootProject.ext.libSupportAppcompatV7
+    compile rootProject.ext.libSupportDesign
+    compile rootProject.ext.libRecyclerViewV7
+    compile rootProject.ext.libRetrofit
+    compile rootProject.ext.libRetrofitConverterGson
+    compile rootProject.ext.libRetrofitAdapterRxJava
+    compile rootProject.ext.libOkHttpLoggingInterceptor
+    compile rootProject.ext.libFastJson
+    compile rootProject.ext.libRxJava
+    compile rootProject.ext.libRxAndroid
     compile rootProject.ext.libGlide
     compile rootProject.ext.libDagger
     apt rootProject.ext.libDaggerCompiler
     compile rootProject.ext.libJavaxAnnotation
-    
+
 //    debugCompile rootProject.ext.debugDependencies.leakCanary
 //    releaseCompile rootProject.ext.releaseDependencies.leakCanary
 //    debugCompile rootProject.ext.debugDependencies.blockCanary
 //    releaseCompile rootProject.ext.releaseDependencies.blockCanary
 //    compile rootProject.ext.libUmengAnalytics
+    debugCompile rootProject.ext.debugDependencies.stetho
+
 }

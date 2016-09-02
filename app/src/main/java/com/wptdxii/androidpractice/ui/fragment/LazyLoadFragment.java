@@ -95,7 +95,7 @@ public class LazyLoadFragment extends BaseFragment implements ITabFragment{
                         }
                     });
             //两种异步方式
-                        loadData();
+//                        loadData();
         } else {
             mTextView.append("  init data:" + param);
         }

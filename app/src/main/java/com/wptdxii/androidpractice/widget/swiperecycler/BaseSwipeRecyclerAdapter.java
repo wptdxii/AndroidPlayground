@@ -15,13 +15,14 @@ import com.wptdxii.androidpractice.R;
  */
 public abstract class BaseSwipeRecyclerAdapter extends RecyclerView.Adapter<BaseSwipeViewHolder> {
 
-    private static final int VIEW_TYPLE_LOAD_MORE = -1;
+    private static final int VIEW_TYPE_LOAD_MORE = -1;
     private boolean isLoadMoreFooterShown;
     private LoadMoreFooterViewHolder loadMoreFooterViewHolder;
+    private boolean isLoadMoreEnable;
 
     @Override
     public BaseSwipeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == VIEW_TYPLE_LOAD_MORE) {
+        if (viewType == VIEW_TYPE_LOAD_MORE) {
             return onCreateLoadMoreFooterViewHolder(parent);
         }
         return onCreateNormalViewHolder(parent, viewType);
@@ -54,7 +55,7 @@ public abstract class BaseSwipeRecyclerAdapter extends RecyclerView.Adapter<Base
     @Override
     public int getItemViewType(int position) {
         if (isLoadMoreFooter(position)) {
-            return VIEW_TYPLE_LOAD_MORE;
+            return VIEW_TYPE_LOAD_MORE;
         }
         return getItemType(position);
     }
@@ -62,7 +63,7 @@ public abstract class BaseSwipeRecyclerAdapter extends RecyclerView.Adapter<Base
     protected abstract int getItemType(int position);
 
     protected abstract int getDataCount();
-    
+
     public void onLoadMoreStateChanged(boolean isShown) {
         this.isLoadMoreFooterShown = isShown;
         if (isShown) {
@@ -75,9 +76,12 @@ public abstract class BaseSwipeRecyclerAdapter extends RecyclerView.Adapter<Base
     public boolean isLoadMoreFooter(int position) {
         return isLoadMoreFooterShown && position == getItemCount() - 1;
     }
-
+    
     public void onNoMoreFooter() {
-        loadMoreFooterViewHolder.onNoMoreFooter();
+        if (loadMoreFooterViewHolder != null) {
+
+            loadMoreFooterViewHolder.onNoMoreFooter();
+        }
     }
 
     public abstract boolean isSectionHeader(int positon);
@@ -85,6 +89,7 @@ public abstract class BaseSwipeRecyclerAdapter extends RecyclerView.Adapter<Base
     private class LoadMoreFooterViewHolder extends BaseSwipeViewHolder {
         private TextView swipeRecyclerFooter;
         private ProgressBar progressBar;
+
         public LoadMoreFooterViewHolder(View view) {
             super(view);
             swipeRecyclerFooter = (TextView) view.findViewById(R.id.swipeRecyclerFooter);
@@ -97,8 +102,9 @@ public abstract class BaseSwipeRecyclerAdapter extends RecyclerView.Adapter<Base
 
         @Override
         protected void onBindViewHolder(int position) {
-           
+
         }
+
         public void onNoMoreFooter() {
             swipeRecyclerFooter.setText(R.string.no_more_footer);
             progressBar.setVisibility(View.GONE);

@@ -10,4 +10,5 @@
     <item name="loadMoreProgressBar" type="id"/>
     <item name="deviderLine" type="id">deviderLine</item>
     <item name="viewPager" type="id">viewPager</item>
+    <item name="swipeRecyclerNoMoreFooter" type="id">swipeRecyclerNoMoreFooter</item>
 </resources>

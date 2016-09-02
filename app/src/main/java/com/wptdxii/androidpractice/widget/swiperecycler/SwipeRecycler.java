@@ -111,6 +111,11 @@ public class SwipeRecycler extends FrameLayout implements SwipeRefreshLayout.OnR
         mCurrentState = ACTION_PULL_TO_REFRESH;
         listener.onRefresh(ACTION_PULL_TO_REFRESH);
     }
+    
+    public void onLoadMore() {
+        mCurrentState = ACTION_LOAD_MORE_REFRESH;
+        listener.onRefresh(ACTION_LOAD_MORE_REFRESH);
+    }
 
     public void onRefreshCompleted() {
         switch (mCurrentState) {
@@ -122,7 +127,7 @@ public class SwipeRecycler extends FrameLayout implements SwipeRefreshLayout.OnR
                     mAdapter.onLoadMoreStateChanged(false);
                 } else {
                     mAdapter.onNoMoreFooter();
-                } 
+                }
                 
                 if (isPullToRefreshEnable) {
                     mSwipeRefreshLayout.setEnabled(true);

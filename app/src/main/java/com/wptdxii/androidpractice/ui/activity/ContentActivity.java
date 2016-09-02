@@ -25,6 +25,7 @@ public class ContentActivity extends BaseContentActivity {
     @Override
     protected void addItem(ArrayList<Module> mDataList) {
         mDataList.add(new Module("基于BaseSwipeRecyclerActivity", SwipeRecyclerActivity.class));
+        mDataList.add(new Module("基于BaseSwipeRecyclerFragment", SwipeRecyclerFragmentActivity.class));
         mDataList.add(new Module("BottomNavigation+ViewPager", TabViewPagerActivity.class));
         mDataList.add(new Module("ViewPagerActivity", ViewPagerActivity.class));
         mDataList.add(new Module("SDKDemo", SampleSDKActivity.class));

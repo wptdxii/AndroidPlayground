@@ -2,6 +2,7 @@ package com.wptdxii.androidpractice;
 
 import android.app.Application;
 
+import com.facebook.stetho.Stetho;
 import com.wptdxii.androidpractice.util.AppStatusTracker;
 
 /**
@@ -19,5 +20,9 @@ public class App extends Application {
         instance = this;
         AppStatusTracker.init(this);
 //        LeakCanary.install(this);
+
+        if (BuildConfig.DEBUG) {
+            Stetho.initializeWithDefaults(this);
+        }
     }
 }

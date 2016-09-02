@@ -10,15 +10,15 @@ import android.widget.TextView;
 
 import com.wptdxii.androidpractice.R;
 import com.wptdxii.androidpractice.ui.base.BaseFragment;
-import com.wptdxii.androidpractice.ui.base.ITabFragment;
 
 /**
  * Created by wptdxii on 2016/9/1 0001.
  */
-public class ContactFragment extends BaseFragment implements ITabFragment{
+public class ContactFragment extends BaseFragment {
     private static final String ARGUMENTS = "arguments";
     private TextView mTextView;
     private String content;
+    private int param = -1;
 
     /**
      * 需要向Fragment传递数据时使用该种方式创建Fragment对象
@@ -59,15 +59,5 @@ public class ContactFragment extends BaseFragment implements ITabFragment{
     @Override
     protected void initData() {
         mTextView.append(content);
-    }
-
-    @Override
-    public void onMenuItemClick() {
-        
-    }
-
-    @Override
-    public BaseFragment getFragment() {
-        return this;
     }
 }
