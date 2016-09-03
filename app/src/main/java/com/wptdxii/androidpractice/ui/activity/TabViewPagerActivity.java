@@ -46,7 +46,6 @@ public class TabViewPagerActivity extends BaseActivity implements TabLayout.OnTa
 
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
         mViewPager.addOnPageChangeListener(new PageChangeListener());
-
     }
 
     @Override
@@ -62,6 +61,7 @@ public class TabViewPagerActivity extends BaseActivity implements TabLayout.OnTa
         //Adapter中要使用tabs的数据，所以设置adapter要在tabs初始化数据后
         FragmentManager fm = getSupportFragmentManager();
         mPagerAdapter = new CusPagerAdapter(fm);
+        mViewPager.setOffscreenPageLimit(2);
         mViewPager.setAdapter(mPagerAdapter);
     }
 
