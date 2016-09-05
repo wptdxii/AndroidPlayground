@@ -47,7 +47,7 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
         this.convertView = view;
     }
 
-    public HashSet<Integer> getItemClickedIds() {
+    public HashSet<Integer> getItemViewClickedIds() {
         return itemClickedIds;
     }
 
