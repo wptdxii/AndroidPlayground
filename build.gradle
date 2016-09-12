@@ -57,7 +57,7 @@ project.ext {
 
     libOkHttpLoggingInterceptor = "com.squareup.okhttp3:logging-interceptor:${okHttpVersion}"
 
-//    libGson = "com.google.code.gson:gson:2.6.2"
+    libGson = "com.google.code.gson:gson:2.6.2"
     libFastJson = "com.alibaba:fastjson:1.1.52.android"
 
     libRxJava = "io.reactivex:rxjava:1.1.9"

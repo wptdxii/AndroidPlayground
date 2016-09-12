@@ -1,2 +1,10 @@
-include ':app', ':lib_ext'
-project(':lib_ext').projectDir = new File('sdk/lib_ext')
+include ':app', ':data', ':domain'
+include ':ext', ':uikit', ':uiframework', ':im', ':component', ':authorize', ':share', ':share', ':lbs'
+project(':ext').projectDir = new File('sdk/ext')
+project(':uikit').projectDir = new File('sdk/uikit')
+project(':uiframework').projectDir = new File('sdk/uiframework')
+project(':im').projectDir = new File('sdk/im')
+project(':component').projectDir = new File('sdk/component')
+project(':authorize').projectDir = new File('sdk/authorize')
+project(':share').projectDir = new File('sdk/share')
+project(':lbs').projectDir = new File('sdk/lbs')

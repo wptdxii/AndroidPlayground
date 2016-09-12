@@ -19,15 +19,15 @@ public interface GankApi {
     //当使用动态指定baseURl时必须有该字段
     public static  String BASE_URL = "http://gank.io/";
     
-    @GET("api/data/福利/{number}/{page}")
+    @GET("api/data/福利/{count}/{page}")
     Call<BaseModel<ArrayList<BenefitEntity>>> defaultBenefits(
-            @Path("number") int number,
+            @Path("count") int count,
             @Path("page") int page
     );
     
-    @GET("api/data/福利/{number}/{page}")
+    @GET("api/data/福利/{count}/{page}")
     Observable<BaseModel<ArrayList<BenefitEntity>>> rxBenefits(
-            @Path("number") int number,
+            @Path("count") int count,
             @Path("page") int page
     );
 }

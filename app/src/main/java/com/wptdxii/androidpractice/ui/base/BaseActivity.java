@@ -1,6 +1,7 @@
 package com.wptdxii.androidpractice.ui.base;
 
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.MenuRes;
 import android.support.annotation.StringRes;
@@ -144,4 +145,15 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
     public boolean onMenuItemClick(MenuItem item) {
         return false;
     }
+
+    /**
+     * findViewById without force transform
+     * @param resId
+     * @param <T>
+     * @return
+     */
+    public <T extends View> T findView(@IdRes int resId) {
+        return (T) super.findViewById(resId);
+    }
+
 }
