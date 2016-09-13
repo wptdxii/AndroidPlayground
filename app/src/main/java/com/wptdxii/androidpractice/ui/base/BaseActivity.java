@@ -12,8 +12,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.wptdxii.androidpractice.R;
-import com.wptdxii.androidpractice.util.ActivityStack;
-import com.wptdxii.androidpractice.util.AppStatusTracker;
+import com.wptdxii.ext.util.ActivityStack;
+import com.wptdxii.ext.util.AppStatusTracker;
 
 /**
  * Created by wptdxii on 2016/7/7 0007.

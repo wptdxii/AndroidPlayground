@@ -10,6 +10,8 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.Subscriptions;
 
 /**
+ * This interface represents a execution unit for different use cases (this means any use case
+ * in the application should implement this contract).
  * Created by wptdxii on 2016/9/12 0012.
  */
 public abstract class UseCase<T> {

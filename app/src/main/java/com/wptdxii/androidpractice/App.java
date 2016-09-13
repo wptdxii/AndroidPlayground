@@ -3,7 +3,7 @@ package com.wptdxii.androidpractice;
 import android.app.Application;
 
 import com.facebook.stetho.Stetho;
-import com.wptdxii.androidpractice.util.AppStatusTracker;
+import com.wptdxii.ext.util.AppStatusTracker;
 
 /**
  * Created by wptdxii on 2016/7/28 0028.

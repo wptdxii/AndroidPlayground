@@ -7,7 +7,7 @@ import android.view.WindowManager;
 
 import com.wptdxii.androidpractice.R;
 import com.wptdxii.androidpractice.ui.base.BaseActivity;
-import com.wptdxii.androidpractice.util.AppStatusTracker;
+import com.wptdxii.ext.util.AppStatusTracker;
 
 public class SplashActivity extends BaseActivity {
     private static final int MSG_TO_HOME_ACTIVITY = 0;

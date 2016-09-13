@@ -4,10 +4,12 @@
 //artifacts.add("default", file('ext-release.aar'))
 
 apply plugin: 'com.android.library'
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
+    useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
@@ -38,4 +40,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile rootProject.ext.libSupportV4
     compile rootProject.ext.libSupportAppcompatV7
+    compile rootProject.ext.libGson
+    compile rootProject.ext.libJavaxInject
+    compile rootProject.ext.libLogger
 }

@@ -9,7 +9,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.model.stream.StreamModelLoader;
 import com.wptdxii.androidpractice.imageloader.IImageLoaderStrategy;
 import com.wptdxii.androidpractice.imageloader.ImageLoaderConfig;
-import com.wptdxii.androidpractice.util.NetUtils;
+import com.wptdxii.ext.util.NetUtils;
 
 import java.io.IOException;
 import java.io.InputStream;

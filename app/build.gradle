@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'me.tatarka.retrolambda'
 
 //打包时使用
 def getDate() {
@@ -24,6 +25,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
+
     }
     //指定编译JDK版本
     compileOptions {
@@ -195,7 +197,6 @@ dependencies {
     compile project(':uikit')
     compile project(':uiframework')
     compile project(':im')
-    compile project(':component')
     compile project(':authorize')
     compile project(':share')
     compile project(':lbs')
@@ -210,6 +211,7 @@ dependencies {
     compile rootProject.ext.libFastJson
     compile rootProject.ext.libRxJava
     compile rootProject.ext.libRxAndroid
+    compile rootProject.ext.libEventBus
     compile rootProject.ext.libGlide
     compile rootProject.ext.libDagger
     apt rootProject.ext.libDaggerCompiler
