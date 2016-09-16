@@ -1,13 +1,14 @@
 package com.wptdxii.data.net.retrofit.rx.subscriber;
 
-import com.wptdxii.androidpractice.model.BaseModel;
+
+import com.wptdxii.domain.model.gank.BaseGankResponse;
 
 import rx.Subscriber;
 
 /**
  * Created by wptdxii on 2016/8/23 0023.
  */
-public abstract class BaseModelSubscriber<T> extends Subscriber<BaseModel<T>> {
+public abstract class BaseGankResponseSubscriber<T> extends Subscriber<BaseGankResponse<T>> {
     @Override
     public void onCompleted() {
         
@@ -21,11 +22,11 @@ public abstract class BaseModelSubscriber<T> extends Subscriber<BaseModel<T>> {
 
 
     @Override
-    public void onNext(BaseModel<T> baseModel) {
-        if (!baseModel.error) {
-            onSuccess(baseModel.results);
+    public void onNext(BaseGankResponse<T> baseGankResponse) {
+        if (!baseGankResponse.isError()) {
+            onSuccess(baseGankResponse.getResults());
         } else {
-            onError(new Throwable("error = " + baseModel.error));
+            onError(new Throwable("error = " + baseGankResponse.isError()));
         }
     }
 

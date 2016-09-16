@@ -192,14 +192,16 @@ repositories {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
 //    compile(name:'test', ext:'aar') arr文件放到libs目录下，'test'为arr文件名
-    testCompile 'junit:junit:4.12'
     compile project(':ext')
+    compile project(':data')
+    compile project(':domain')
     compile project(':uikit')
     compile project(':uiframework')
     compile project(':im')
     compile project(':authorize')
     compile project(':share')
     compile project(':lbs')
+    testCompile rootProject.ext.libJunit
     compile rootProject.ext.libSupportV4
     compile rootProject.ext.libSupportAppcompatV7
     compile rootProject.ext.libSupportDesign

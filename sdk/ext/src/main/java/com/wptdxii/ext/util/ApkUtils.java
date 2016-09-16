@@ -18,6 +18,8 @@ import java.lang.reflect.Method;
  * Created by wptdxii on 2016/9/13 0013.
  */
 public final class ApkUtils {
+    private final static String TAG = "ApkUtils";
+
     private static Class<AssetManager> CLASS_ASSET;
     private static Method METHOD_ADD_ASSET;
 

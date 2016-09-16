@@ -1,6 +1,6 @@
 package com.wptdxii.data.net.retrofit.rx.func;
 
-import com.wptdxii.androidpractice.model.BaseModel;
+import com.wptdxii.domain.model.gank.BaseGankResponse;
 import com.wptdxii.ext.util.json.JsonConvert;
 
 import rx.functions.Func1;
@@ -10,10 +10,10 @@ import rx.functions.Func1;
  * 将String转换为BaseModel<ToastUtils>
  *  RxJava 中的 flatMap()
  */
-public class BaseModelFunc<T> implements Func1<String, BaseModel<T>> {
+public class BaseGankResponseFunc<T> implements Func1<String, BaseGankResponse<T>> {
     @Override
-    public BaseModel<T> call(String result) {
-        JsonConvert<BaseModel<T>> convert = new JsonConvert<>();
+    public BaseGankResponse<T> call(String result) {
+        JsonConvert<BaseGankResponse<T>> convert = new JsonConvert<>();
         return convert.parse(result);
     }
 }

@@ -14,6 +14,8 @@ import java.security.cert.Certificate;
 import java.security.cert.CertificateEncodingException;
 
 /**
+ * APK文件的证书工具
+ *
  * Created by wptdxii on 2016/9/13 0013.
  */
 public final class CertificatesUtils {
