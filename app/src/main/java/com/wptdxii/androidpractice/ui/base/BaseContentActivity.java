@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.wptdxii.androidpractice.R;
 import com.wptdxii.androidpractice.model.Module;
-import com.wptdxii.androidpractice.widget.swiperecycler.BaseSwipeViewHolder;
+import com.wptdxii.uikit.widget.swiperecycler.BaseSwipeViewHolder;
 
 import java.util.ArrayList;
 

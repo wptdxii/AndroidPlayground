@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 
 import com.wptdxii.androidpractice.R;
-import com.wptdxii.androidpractice.ui.base.BaseActivity;
+import com.wptdxii.uiframework.base.BaseActivity;
 import com.wptdxii.androidpractice.ui.fragment.LazyLoadFragment;
 
 /**

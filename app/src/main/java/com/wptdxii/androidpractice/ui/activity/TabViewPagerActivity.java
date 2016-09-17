@@ -8,11 +8,11 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 
 import com.wptdxii.androidpractice.R;
-import com.wptdxii.androidpractice.ui.base.BaseActivity;
+import com.wptdxii.uiframework.base.BaseActivity;
 import com.wptdxii.androidpractice.ui.base.BaseSwipeRecyclerFragment;
 import com.wptdxii.androidpractice.ui.fragment.LazyLoadFragment;
 import com.wptdxii.androidpractice.ui.fragment.SwipeRecyclerFragment;
-import com.wptdxii.androidpractice.widget.bottomnavigation.TabLayout;
+import com.wptdxii.uikit.widget.bottomnavigation.TabLayout;
 
 import java.util.ArrayList;
 

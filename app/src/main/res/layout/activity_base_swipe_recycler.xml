@@ -5,7 +5,7 @@
 
     <include layout="@layout/widget_toolbar"/>
 
-    <com.wptdxii.androidpractice.widget.swiperecycler.SwipeRecycler
+    <com.wptdxii.uikit.widget.swiperecycler.SwipeRecycler
         android:id="@id/swipeRecycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

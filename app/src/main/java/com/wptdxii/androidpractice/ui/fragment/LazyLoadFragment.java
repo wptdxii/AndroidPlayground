@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.wptdxii.androidpractice.R;
-import com.wptdxii.androidpractice.ui.base.BaseFragment;
-import com.wptdxii.androidpractice.ui.base.ITabFragment;
+import com.wptdxii.uiframework.base.BaseFragment;
+import com.wptdxii.uikit.widget.bottomnavigation.ITabFragment;
 
 import java.util.Random;
 

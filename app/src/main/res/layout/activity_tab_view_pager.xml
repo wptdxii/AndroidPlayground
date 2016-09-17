@@ -14,7 +14,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"/>
     <include layout="@layout/widget_devider_line"/>
-    <com.wptdxii.androidpractice.widget.bottomnavigation.TabLayout
+    <com.wptdxii.uikit.widget.bottomnavigation.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

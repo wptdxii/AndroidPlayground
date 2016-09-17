@@ -5,12 +5,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import com.wptdxii.androidpractice.R;
-import com.wptdxii.androidpractice.widget.swiperecycler.BaseSwipeRecyclerAdapter;
-import com.wptdxii.androidpractice.widget.swiperecycler.BaseSwipeViewHolder;
-import com.wptdxii.androidpractice.widget.swiperecycler.LinearDividerItemDecoration;
-import com.wptdxii.androidpractice.widget.swiperecycler.SwipeRecycler;
-import com.wptdxii.androidpractice.widget.swiperecycler.layoutmanager.CusLinearLayoutManager;
-import com.wptdxii.androidpractice.widget.swiperecycler.layoutmanager.ILayoutManager;
+import com.wptdxii.uikit.widget.swiperecycler.BaseSwipeRecyclerAdapter;
+import com.wptdxii.uikit.widget.swiperecycler.BaseSwipeViewHolder;
+import com.wptdxii.uikit.widget.swiperecycler.LinearDividerItemDecoration;
+import com.wptdxii.uikit.widget.swiperecycler.SwipeRecycler;
+import com.wptdxii.uikit.widget.swiperecycler.layoutmanager.CusLinearLayoutManager;
+import com.wptdxii.uikit.widget.swiperecycler.layoutmanager.ILayoutManager;
+import com.wptdxii.uiframework.base.BaseActivity;
 
 import java.util.ArrayList;
 

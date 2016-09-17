@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import com.wptdxii.androidpractice.R;
-import com.wptdxii.androidpractice.ui.base.BaseActivity;
+import com.wptdxii.uiframework.base.BaseActivity;
 import com.wptdxii.androidpractice.ui.fragment.SwipeRecyclerFragment;
 
 public class SwipeRecyclerFragmentActivity extends BaseActivity {

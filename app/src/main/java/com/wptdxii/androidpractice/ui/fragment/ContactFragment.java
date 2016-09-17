@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.wptdxii.androidpractice.R;
-import com.wptdxii.androidpractice.ui.base.BaseFragment;
+import com.wptdxii.uiframework.base.BaseFragment;
 
 /**
  * Created by wptdxii on 2016/9/1 0001.

@@ -1,6 +1,6 @@
 package com.wptdxii.androidpractice.model;
 
-import com.wptdxii.androidpractice.ui.base.BaseActivity;
+import com.wptdxii.uiframework.base.BaseActivity;
 
 /**
  * Created by wptdxii on 2016/8/2 0002.
