@@ -2,4 +2,9 @@
 <resources>
     <color name="tablabel_green">#ff45c01a</color>
     <color name="tablabel_gray">#ff999999</color>
+    <color name="white">#FFFFFF</color>
+    <color name="grey">#808080</color>
+    <color name="black">#000000</color>
+    <color name="swipeRecyclerLinearDivider">#c9c9c9</color>
+    <color name="splash_bg">#FFFFFF</color>
 </resources>

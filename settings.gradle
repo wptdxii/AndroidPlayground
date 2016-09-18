@@ -1,5 +1,5 @@
-include ':app', ':data', ':domain'
-include ':ext', ':uikit', ':uiframework', ':im', ':authorize', ':share', ':share', ':lbs'
+include ':app', ':data', ':domain' ,':ext', ':uikit', ':uiframework', ':im', ':authorize', ':share', ':share', ':lbs'
+
 project(':ext').projectDir = new File('sdk/ext')
 project(':uikit').projectDir = new File('sdk/uikit')
 project(':uiframework').projectDir = new File('sdk/uiframework')

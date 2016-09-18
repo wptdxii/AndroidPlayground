@@ -8,10 +8,14 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 /**
  * Decorated ThreadPoolExecutor
  * Created by wptdxii on 2016/9/13 0013.
  */
+@Singleton
 public class JobExecutor implements ThreadExecutor {
 
     private static final int INITIAL_POOL_SIZE = 3;
@@ -24,6 +28,7 @@ public class JobExecutor implements ThreadExecutor {
     private final ThreadFactory threadFactory;
     private final ThreadPoolExecutor threadPoolExecutor;
 
+    @Inject
     public JobExecutor() {
         this.workQueue = new LinkedBlockingDeque<>();
         this.threadFactory = new JobThreadFactory();

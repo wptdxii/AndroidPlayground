@@ -26,6 +26,10 @@ android {
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
 
+//        jackOptions {
+//            enabled rootProject.ext.useJack
+//        }
+
     }
     //指定编译JDK版本
     compileOptions {

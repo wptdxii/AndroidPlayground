@@ -52,6 +52,13 @@ public abstract class BaseSwipeRecyclerFragment<T> extends BaseFragment implemen
     protected void initData() {
         initListData();
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mSwipeRecycler.onRefreshCompleted();
+    }
+
     protected abstract void initListData();
 
     protected RecyclerView.ItemDecoration getItemDecoration() {

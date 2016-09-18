@@ -1,4 +1,5 @@
 apply plugin: 'java'
+apply plugin: 'me.tatarka.retrolambda'
 
 //noinspection GroovyUnusedAssignment
 sourceCompatibility = 1.8
@@ -19,8 +20,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile rootProject.ext.libGson
     compile rootProject.ext.libRxJava
-//    compile rootProject.ext.libJavaxInject
-
+    compile rootProject.ext.libJavaxInject
     provided rootProject.ext.libDaggerCompiler
     provided rootProject.ext.libJavaxAnnotation
 
