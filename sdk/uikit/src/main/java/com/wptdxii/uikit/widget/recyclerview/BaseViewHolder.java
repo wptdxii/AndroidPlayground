@@ -35,7 +35,7 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
     private HashSet<Integer> itemClickedIds;
     private HashSet<Integer> itemLongClickedIds;
 
-    private View convertView;
+    private View mItemView;
 
     Object associatedObj;
 
@@ -44,7 +44,7 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
         this.views = new SparseArray<>();
         this.itemClickedIds = new HashSet<>();
         this.itemLongClickedIds = new HashSet<>();
-        this.convertView = view;
+        this.mItemView = view;
     }
 
     public HashSet<Integer> getItemViewClickedIds() {
@@ -55,14 +55,14 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
         return itemLongClickedIds;
     }
 
-    public View getConvertView() {
-        return convertView;
+    public View getItemView() {
+        return mItemView;
     }
 
     public <T extends View> T getView(@IdRes int viewId) {
         View view = views.get(viewId);
         if (view == null) {
-            view = convertView.findViewById(viewId);
+            view = mItemView.findViewById(viewId);
             views.put(viewId, view);
         }
 

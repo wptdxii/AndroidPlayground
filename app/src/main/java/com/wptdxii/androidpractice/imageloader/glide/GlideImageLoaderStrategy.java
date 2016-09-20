@@ -20,13 +20,18 @@ import java.io.InputStream;
 public class GlideImageLoaderStrategy implements IImageLoaderStrategy {
     /**
      * load image
+     *
      * @param context
      * @param imageLoaderConfig
      */
     @Override
     public void loadImage(Context context, ImageLoaderConfig imageLoaderConfig) {
-        loadNormal(context,imageLoaderConfig);
-        boolean flag = NetUtils.isWifiConnected(context);
+        loadNormal(context, imageLoaderConfig);
+        boolean flag = false;
+        if (NetUtils.isConnected(context)) {
+
+            flag = NetUtils.isWifiConnected(context);
+        }
         //如果不是在wifi下加载图片，加载缓存
         if (!flag) {
             loadCache(context, imageLoaderConfig);
@@ -46,11 +51,12 @@ public class GlideImageLoaderStrategy implements IImageLoaderStrategy {
         } else {
             //如果不是在wifi下才加载图片
             loadNormal(context, imageLoaderConfig);
-        } 
+        }
     }
 
     /**
      * load circel image
+     *
      * @param context
      * @param imageLoaderConfig
      */
@@ -66,6 +72,7 @@ public class GlideImageLoaderStrategy implements IImageLoaderStrategy {
 
     /**
      * load cache image with Glide
+     *
      * @param context
      * @param imageLoaderConfig
      */
@@ -104,6 +111,7 @@ public class GlideImageLoaderStrategy implements IImageLoaderStrategy {
 
     /**
      * load image with Glide
+     *
      * @param context
      * @param imageLoaderConfig
      */
@@ -111,7 +119,7 @@ public class GlideImageLoaderStrategy implements IImageLoaderStrategy {
         Glide.with(context)
                 .load(imageLoaderConfig.getUrl())
                 .centerCrop()
-//                .placeholder(imageLoaderConfig.getPlaceHolder())
+                //                .placeholder(imageLoaderConfig.getPlaceHolder())
                 .crossFade()
                 .into(imageLoaderConfig.getImgView());
     }

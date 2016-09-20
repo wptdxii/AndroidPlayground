@@ -44,12 +44,12 @@ public class NetUtils {
      */
     public static boolean isConnected(Context context) {
 
-        ConnectivityManager connectivity = (ConnectivityManager) context
+        ConnectivityManager cm = (ConnectivityManager) context
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        if (null != connectivity) {
+        if (null != cm) {
 
-            NetworkInfo info = connectivity.getActiveNetworkInfo();
+            NetworkInfo info = cm.getActiveNetworkInfo();
             if (null != info && info.isConnected()) {
                 if (info.getState() == NetworkInfo.State.CONNECTED) {
                     return true;

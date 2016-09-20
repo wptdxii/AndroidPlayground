@@ -14,7 +14,9 @@ import java.util.List;
  * Created by wptdxii on 2016/9/2 0002.
  */
 public class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder> {
-
+    private boolean isLoadMoreEnable = false;
+    private boolean isLoadingMoreEnable = false;
+    private boolean isFirstOnlyEnable =true;
     protected List<T> mData;
     protected int mLayoutResId;
     protected View mLayout;
@@ -24,12 +26,16 @@ public class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder> {
     private LinearLayout mEmptyView;
 
     public BaseAdapter(@LayoutRes int layoutResId,@Nullable List<T> data) {
-        mData = (data == null) ? new ArrayList<T>() : data;
+        this.mData = (data == null ? new ArrayList<T>() : data);
         this.mLayoutResId = layoutResId;
     }
 
     public BaseAdapter(View layout, @Nullable List<T> data) {
         this.mLayout = layout;
+        this.mData = data;
+    }
+
+    public BaseAdapter( @Nullable List<T> data) {
         this.mData = data;
     }
 
