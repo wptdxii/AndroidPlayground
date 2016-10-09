@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.view.View;
 
-import com.facebook.stetho.Stetho;
 import com.wptdxii.androidpractice.internal.di.component.AppComponent;
 import com.wptdxii.androidpractice.internal.di.component.DaggerAppComponent;
 import com.wptdxii.androidpractice.internal.di.module.AppModule;
@@ -37,9 +36,9 @@ public class App extends Application {
         AppStatusTracker.init(this);
 //        LeakCanary.install(this);
 
-        if (BuildConfig.DEBUG) {
-            Stetho.initializeWithDefaults(this);
-        }
+//        if (BuildConfig.DEBUG) {
+//            Stetho.initializeWithDefaults(this);
+//        }
 
         initInjector();
         initExtension();

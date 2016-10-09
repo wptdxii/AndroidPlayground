@@ -39,8 +39,6 @@
         </activity>
         <activity android:name=".ui.activity.WidgetActivity">
         </activity>
-        <activity android:name=".ui.activity.HoActivity">
-        </activity>
         <activity android:name=".ui.activity.TabViewPagerActivity">
         </activity>
         <activity android:name=".ui.activity.ViewPagerActivity">

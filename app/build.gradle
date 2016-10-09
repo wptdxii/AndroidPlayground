@@ -2,6 +2,22 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda'
 
+def keyStorePath
+if (System.properties['os.name'].toLowerCase().contains('windows')) {
+    keyStorePath = System.getenv('USERPROFILE') + File.separator + ".ssh"
+} else {
+    keyStorePath = System.getenv('HOME') + File.separator + ".ssh"
+}
+
+def keyStoreFile = keyStorePath + File.separator + "AndroidKeyStore.jks"
+def keyStoreConfig = keyStorePath + File.separator + "AndroidKeyStore.properties"
+
+Properties props = new Properties()
+if (new File(keyStoreConfig).exists()) {
+    props.load(new FileInputStream(file(keyStoreConfig)))
+}
+
+
 //打包时使用
 def getDate() {
     return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC")) // 注意时区
@@ -19,50 +35,50 @@ android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
 
+    compileOptions {
+        sourceCompatibility rootProject.ext.javaVersion
+        targetCompatibility rootProject.ext.javaVersion
+    }
+
     defaultConfig {
         applicationId rootProject.ext.applicationId
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
-
-//        jackOptions {
-//            enabled rootProject.ext.useJack
-//        }
-
-    }
-    //指定编译JDK版本
-    compileOptions {
-        sourceCompatibility rootProject.ext.javaVersion
-        targetCompatibility rootProject.ext.javaVersion
+        multiDexEnabled true
     }
 
-    def keystore_debug = file('../../keystore/wptdxii_debug.jks')
-    def keystore_release = file('../../keystore/wptdxii_release.jks')
     signingConfigs {
+
+        def keystore = file('../buildsystem/AndroidKeyStore.jks')
         debug {
-//            keyAlias KEY_ALIAS_DEBUG
-//            keyPassword KEY_PASSWORD
-//            storePassword STORE_PASSWORD
-//            storeFile keystore_debug
+            // metod1
+            storeFile keystore
+            storePassword keystore_password
+            keyAlias key_alias
+            keyPassword key_password
+
         }
+
         release {
-            keyAlias KEY_ALIAS_RELEASE
-            keyPassword KEY_PASSWORD
-            storePassword STORE_PASSWORD
-            storeFile file('C:/Dev/Code/github/keystore/wptdxii_release.jks')
+            // method2  keystore placed in  ../.ssh/
+           storeFile file(keyStoreFile)
+           storePassword props['keystore_password']
+           keyAlias props['key_alias']
+           keyPassword props['key_password']
+
         }
     }
 
 
     buildTypes {
         debug {
-//            versionNameSuffix "-debug"
-//            minifyEnabled false
-//            shrinkResources false
-//            zipAlignEnabled false
-//            signingConfig signingConfigs.debug
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            versionNameSuffix "-debug"
+            minifyEnabled false
+            shrinkResources false
+            zipAlignEnabled false
+            signingConfig signingConfigs.debug
 //            buildConfigField "String", "ENDPOINT", "\"${endpoint_product}\""
 //            resValue "string", "umeng_appkey", "${umeng_appkey_dev}"
 //            resValue "string", "deepshare_appid", "${deepshare_appid}"
@@ -72,17 +88,11 @@ android {
 //            resValue "string", "op_app_name", "dev_${app_name}"
         }
         release {
-            //版本后缀加上-debug
             versionNameSuffix "-release"
-            //是否开启混淆
             minifyEnabled false
-            //是否删除无效资源
             shrinkResources false
-            //是否zip对齐
             zipAlignEnabled true
-            //签名所用配置文件，在上边signingConfigs {}中定义
             signingConfig signingConfigs.release
-            //混淆所用文件
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             //在Java中通过BuildConfig.ENDPOINT调用
             buildConfigField "String", "ENDPOINT", "\"${endpoint_product}\""

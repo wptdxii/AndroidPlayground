@@ -1,9 +1,12 @@
 package com.wptdxii.uiframework.base;
 
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +15,14 @@ import android.view.ViewGroup;
  * Created by wptdxii on 2016/8/3 0003.
  */
 public abstract class BaseFragment extends Fragment {
+
+    private static final String STATE_IS_HIDDEN = "state_is_hidden";
     private boolean isVisibleToUser;
     private boolean isViewInitialized;
     private boolean isDataInitialized;
     private boolean isLazyLoadEnabled;
+
+    protected Activity mActivity;
 
     /**
      * 加载布局文件
@@ -65,6 +72,17 @@ public abstract class BaseFragment extends Fragment {
         }
     }
 
+    /**
+     * 保存宿主Activity引用，避免onDetach()后引用getActivity()后报空指针
+     * 这是一种折衷的处理方案，有内存泄漏风险
+     * @param context
+     */
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mActivity = (Activity) context;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -108,6 +126,15 @@ public abstract class BaseFragment extends Fragment {
      */
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         this.isDataInitialized = true;
+
+        boolean isHidden = savedInstanceState.getBoolean(STATE_IS_HIDDEN);
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        if (isHidden) {
+            transaction.hide(this);
+        } else {
+            transaction.show(this);
+        }
+        transaction.commit();
     }
 
     @Override
@@ -125,6 +152,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        outState.putBoolean(STATE_IS_HIDDEN, isHidden());
     }
 
     @Override
