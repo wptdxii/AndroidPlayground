@@ -1,4 +1,4 @@
-package com.wptdxii.androidpractice.ui.fragment;
+package com.wptdxii.androidpractice.ui.sample;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,28 +10,30 @@ import android.widget.TextView;
 
 import com.wptdxii.androidpractice.R;
 import com.wptdxii.uiframework.base.BaseFragment;
-import com.wptdxii.uikit.widget.bottomnavigation.ITabFragment;
 
 /**
  * Created by wptdxii on 2016/9/1 0001.
  */
-public class ProfileFragment extends BaseFragment implements ITabFragment{
+public class ContactFragment extends BaseFragment {
     private static final String ARGUMENTS = "arguments";
     private TextView mTextView;
     private String content;
+    private int param = -1;
+
     /**
      * 需要向Fragment传递数据时使用该种方式创建Fragment对象
      *
      * @param content
      * @return
      */
-    public static ProfileFragment newInstance(String content) {
+    public static ContactFragment newInstance(String content) {
         Bundle bundle = new Bundle();
         bundle.putString(ARGUMENTS, content);
-        ProfileFragment fragment = new ProfileFragment();
+        ContactFragment fragment = new ContactFragment();
         fragment.setArguments(bundle);
         return fragment;
     }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -41,30 +43,21 @@ public class ProfileFragment extends BaseFragment implements ITabFragment{
         }
         enableLazyLoad(true);
     }
+
     @Override
     protected View initContentView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_contact, container, false);
         return view;
     }
 
     @Override
     protected void initView(View view) {
-        mTextView = (TextView) view.findViewById(R.id.profile);
+        mTextView = (TextView) view.findViewById(R.id.contact);
         mTextView.setText("Page:");
     }
 
     @Override
     protected void initData() {
         mTextView.append(content);
-    }
-
-    @Override
-    public void onMenuItemClick() {
-        
-    }
-
-    @Override
-    public BaseFragment getFragment() {
-        return this;
     }
 }

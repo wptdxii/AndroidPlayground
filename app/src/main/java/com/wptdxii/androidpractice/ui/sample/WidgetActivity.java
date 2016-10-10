@@ -1,4 +1,4 @@
-package com.wptdxii.androidpractice.ui.activity;
+package com.wptdxii.androidpractice.ui.sample;
 
 import com.wptdxii.androidpractice.R;
 import com.wptdxii.androidpractice.model.Module;
@@ -6,11 +6,13 @@ import com.wptdxii.androidpractice.ui.base.BaseContentActivity;
 
 import java.util.ArrayList;
 
-public class SampleSDKActivity extends BaseContentActivity {
+/**
+ * 常用控件
+ */
+public class WidgetActivity extends BaseContentActivity {
     @Override
     protected void initToolbarTitle(int titleResId) {
-        super.initToolbarTitle(R.string.sample_sdk_activity_toolbar_title);
-        
+        super.initToolbarTitle(R.string.widget_activity_toolbar_title);
     }
 
     @Override

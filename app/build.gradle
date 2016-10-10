@@ -18,12 +18,10 @@ if (new File(keyStoreConfig).exists()) {
 }
 
 
-//打包时使用
 def getDate() {
     return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC")) // 注意时区
 }
 
-// 获取当前git的Revision，打包时使用
 def getRevision() {
     if (!System.getenv('CI_BUILD')) {
         return 0
@@ -47,26 +45,27 @@ android {
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
         multiDexEnabled true
+
     }
 
     signingConfigs {
 
-        def keystore = file('../buildsystem/AndroidKeyStore.jks')
+        def KEYSTORE = file('../buildsystem/AndroidKeyStore.jks')
         debug {
             // metod1
-            storeFile keystore
-            storePassword keystore_password
-            keyAlias key_alias
-            keyPassword key_password
+            storeFile KEYSTORE
+            storePassword KEYSTORE_PASSWORD
+            keyAlias KEY_ALIAS
+            keyPassword KEY_PASSWORD
 
         }
 
         release {
-            // method2  keystore placed in  ../.ssh/
-           storeFile file(keyStoreFile)
-           storePassword props['keystore_password']
-           keyAlias props['key_alias']
-           keyPassword props['key_password']
+            // method2  keystore placed in holder →  ../.ssh/
+            storeFile file(keyStoreFile)
+            storePassword props['KEYSTORE_PASSWORD']
+            keyAlias props['KEY_ALIAS']
+            keyPassword props['KEY_PASSWORD']
 
         }
     }

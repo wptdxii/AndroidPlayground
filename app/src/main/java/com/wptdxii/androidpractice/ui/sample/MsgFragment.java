@@ -1,4 +1,4 @@
-package com.wptdxii.androidpractice.ui.fragment;
+package com.wptdxii.androidpractice.ui.sample;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -15,7 +15,7 @@ import com.wptdxii.uikit.widget.bottomnavigation.ITabFragment;
 /**
  * Created by wptdxii on 2016/9/1 0001.
  */
-public class MomentsFragment extends BaseFragment implements ITabFragment{
+public class MsgFragment extends BaseFragment implements ITabFragment{
     private static final String ARGUMENTS = "arguments";
     private TextView mTextView;
     private String content;
@@ -25,10 +25,10 @@ public class MomentsFragment extends BaseFragment implements ITabFragment{
      * @param content
      * @return
      */
-    public static MomentsFragment newInstance(String content) {
+    public static MsgFragment newInstance(String content) {
         Bundle bundle = new Bundle();
         bundle.putString(ARGUMENTS, content);
-        MomentsFragment fragment = new MomentsFragment();
+        MsgFragment fragment = new MsgFragment();
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -43,18 +43,19 @@ public class MomentsFragment extends BaseFragment implements ITabFragment{
     }
     @Override
     protected View initContentView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_moments, container, false);
+        View view = inflater.inflate(R.layout.fragment_msg, container, false);
         return view;
     }
 
     @Override
     protected void initView(View view) {
-        mTextView = (TextView) view.findViewById(R.id.moments);
+        mTextView = (TextView) view.findViewById(R.id.msg);
         mTextView.setText("Page:");
     }
 
     @Override
     protected void initData() {
+
         mTextView.append(content);
     }
 
@@ -65,6 +66,6 @@ public class MomentsFragment extends BaseFragment implements ITabFragment{
 
     @Override
     public BaseFragment getFragment() {
-        return this;
+        return null;
     }
 }

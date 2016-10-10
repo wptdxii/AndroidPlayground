@@ -92,10 +92,10 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
      */
     protected void setContentView(@LayoutRes int layoutResID, @StringRes int titleResId, @MenuRes int menuId, int mode) {
         super.setContentView(layoutResID);
-        initToolBar(titleResId, menuId, mode);
+        initToolbar(titleResId, menuId, mode);
     }
 
-    protected void initToolBar(@StringRes int titleResId, @MenuRes int menuId, final int mode) {
+    protected void initToolbar(@StringRes int titleResId, @MenuRes int menuId, final int mode) {
         if (mode != MODE_NONE) {
             toolbar = (Toolbar) findViewById(R.id.toolbar);
             toolbarTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
@@ -109,13 +109,13 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
                     onNavigationBtnClick(mode);
                 }
             });
-            
+
             initToolbarTitle(titleResId);
             initToolbarMenu(menuId);
         }
     }
 
-    protected void initToolbarMenu(int menuId) {
+    protected void initToolbarMenu(@MenuRes int menuId) {
         if (toolbar != null) {
             toolbar.getMenu().clear();
             if (menuId > 0) {
@@ -125,17 +125,11 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
         }
     }
 
-    protected void initToolbarTitle(int titleResId) {
+    protected void initToolbarTitle(@StringRes int titleResId) {
         if (titleResId > 0 && toolbarTitle != null) {
             toolbarTitle.setText(titleResId);
         }
-    } 
-    protected void initToolbarTitle(String title) {
-        if (toolbarTitle != null) {
-            toolbarTitle.setText(title);
-        }
     }
-
     protected void onNavigationBtnClick(int mode) {
         switch (mode) {
             case MODE_BACK:

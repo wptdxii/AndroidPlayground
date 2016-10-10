@@ -11,7 +11,12 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
+
+        buildConfigField "String", "BASE_URL", "\"${BASE_URL}\""
+        buildConfigField "String", "BASE_URL_DEV", "\"${BASE_URL_DEV}\""
+        buildConfigField "String", "BASE_URL_PRODUCT", "\"${BASE_URL_PRODUCT}\""
     }
+
     compileOptions {
         sourceCompatibility rootProject.ext.javaVersion
         targetCompatibility rootProject.ext.javaVersion

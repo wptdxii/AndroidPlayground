@@ -1,4 +1,4 @@
-package com.wptdxii.androidpractice.ui.fragment;
+package com.wptdxii.androidpractice.ui.sample;
 
 import android.view.LayoutInflater;
 import android.view.View;

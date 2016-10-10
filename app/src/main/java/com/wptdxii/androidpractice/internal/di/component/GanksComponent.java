@@ -3,7 +3,7 @@ package com.wptdxii.androidpractice.internal.di.component;
 import com.wptdxii.androidpractice.internal.di.module.ActivityModule;
 import com.wptdxii.androidpractice.internal.di.module.GanksModule;
 import com.wptdxii.androidpractice.internal.di.scope.PerActivity;
-import com.wptdxii.androidpractice.ui.activity.ContentActivity;
+import com.wptdxii.androidpractice.ui.sample.home.ContentActivity;
 
 import dagger.Component;
 

@@ -1,4 +1,4 @@
-package com.wptdxii.androidpractice.ui.activity;
+package com.wptdxii.androidpractice.ui.sample;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

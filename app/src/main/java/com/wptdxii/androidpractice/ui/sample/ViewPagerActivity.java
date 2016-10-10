@@ -1,4 +1,4 @@
-package com.wptdxii.androidpractice.ui.activity;
+package com.wptdxii.androidpractice.ui.sample;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,7 +8,6 @@ import android.support.v4.view.ViewPager;
 
 import com.wptdxii.androidpractice.R;
 import com.wptdxii.uiframework.base.BaseActivity;
-import com.wptdxii.androidpractice.ui.fragment.LazyLoadFragment;
 
 /**
  * 实现数据懒加载

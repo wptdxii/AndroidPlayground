@@ -1,9 +1,8 @@
-package com.wptdxii.androidpractice.ui.activity;
+package com.wptdxii.androidpractice.ui.sample;
 
 import android.os.Bundle;
 
 import com.wptdxii.androidpractice.R;
-import com.wptdxii.androidpractice.ui.fragment.SwipeRecyclerFragment;
 import com.wptdxii.uiframework.base.BaseActivity;
 
 public class SwipeRecyclerFragmentActivity extends BaseActivity {

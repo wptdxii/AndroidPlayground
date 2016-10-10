@@ -2,14 +2,16 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_recycler_view_practice"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.wptdxii.androidpractice.ui.sample.SwipeRecyclerFragmentActivity">
+    tools:context=".ui.sample.recyclerview.SampleRecyclerViewActivity">
 
     <include layout="@layout/widget_toolbar"/>
-    <FrameLayout
-        android:id="@+id/content"
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/mRecyclerView"
+        android:layout_below="@id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/toolbar"/>
+        android:layout_height="match_parent"/>
 </RelativeLayout>

@@ -33,14 +33,15 @@ public class RetrofitClient {
     /**
      * 全局统一的baseUrl
      */
-    public static  String BASE_URL = "http://gank.io/";
+    public static String BASE_URL = BuildConfig.BASE_URL;
+
     
     
     private static final String API_PRODUCT_URL = BASE_URL;
     private static final String API_DEV_URl = BASE_URL;
 
-    private static final String WEB_DEV_URL = "http://your.api.com";
-    private static final String WEB_PRODUCT_URL = "http://your.api.com";
+    private static final String BASE_URL_DEV = BuildConfig.BASE_URL_DEV;
+    private static final String BASE_URL_PRODUCT = BuildConfig.BASE_URL_PRODUCT;
 
 
     private static final boolean IS_DEV = BuildConfig.DEBUG;
@@ -54,7 +55,7 @@ public class RetrofitClient {
     private Retrofit mRetrofit;
 
     public static String getActiveHttpScheme() {
-        return IS_DEV ? WEB_DEV_URL : WEB_PRODUCT_URL;
+        return IS_DEV ? BASE_URL_DEV : BASE_URL_PRODUCT;
     }
     private static class RetrofitClientHolder {
         private static RetrofitClient mInstance = new RetrofitClient();

@@ -1,4 +1,4 @@
-package com.wptdxii.androidpractice.ui.splash;
+package com.wptdxii.androidpractice.ui.sample.splash;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -6,7 +6,7 @@ import android.os.Message;
 import android.view.WindowManager;
 
 import com.wptdxii.androidpractice.R;
-import com.wptdxii.androidpractice.ui.activity.ContentActivity;
+import com.wptdxii.androidpractice.ui.sample.home.ContentActivity;
 import com.wptdxii.uiframework.base.BaseActivity;
 import com.wptdxii.ext.util.AppStatusTracker;
 
