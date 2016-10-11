@@ -29,14 +29,10 @@ public class SampleRecyclerViewActivity extends BaseActivity {
     @Override
     protected void initView() {
         mRecyclerView = findView(R.id.mRecyclerView);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override
     protected void initData(Bundle savedInstanceState) {
-        mDataList = new ArrayList<>();
-        mAdapter = new SampleRecyclerViewAdapter(this, mDataList);
-        mRecyclerView.setAdapter(mAdapter);
         ApiFactory.getGankApi()
                 .getGankListWithRx(100, 1)
                 .compose(new DefaultTransformer<BaseGankResponse<ArrayList<GankModel>>, BaseGankResponse<ArrayList<GankModel>>>())
@@ -45,7 +41,11 @@ public class SampleRecyclerViewActivity extends BaseActivity {
                     @Override
                     protected void onSuccess(ArrayList<GankModel> gankModels) {
                         mDataList = gankModels;
-                        mAdapter.notifyDataSetChanged();
+                        mAdapter = new SampleRecyclerViewAdapter(SampleRecyclerViewActivity.this, mDataList);
+                        mRecyclerView.setLayoutManager(new LinearLayoutManager(SampleRecyclerViewActivity.this));
+//                        mRecyclerView.setLayoutManager(new GridLayoutManager(SampleRecyclerViewActivity.this, 3));
+                        mRecyclerView.setAdapter(mAdapter);
+
 
                     }
 

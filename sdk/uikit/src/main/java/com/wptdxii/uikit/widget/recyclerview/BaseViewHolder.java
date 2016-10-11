@@ -24,50 +24,54 @@ import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Objects;
 
 /**
- * Created by wptdxii on 2016/9/2 0002.
+ * base ViewHolder for RecyclerView
+ * Created by wptdxii on 2016/10/11 0011.
  */
+
 public class BaseViewHolder extends RecyclerView.ViewHolder {
     private final SparseArray<View> views;
+    private final LinkedHashSet<Integer> itemViewClickedIds;
+    private final LinkedHashSet<Integer> itemViewLongClickedIds;
 
-    private HashSet<Integer> itemClickedIds;
-    private HashSet<Integer> itemLongClickedIds;
+    public View mItemView;
+    public Object associatedObj;
 
-    private View mItemView;
-
-    Object associatedObj;
-
-    public BaseViewHolder(View view) {
-        super(view);
+    public BaseViewHolder(View itemView) {
+        super(itemView);
         this.views = new SparseArray<>();
-        this.itemClickedIds = new HashSet<>();
-        this.itemLongClickedIds = new HashSet<>();
-        this.mItemView = view;
+        this.itemViewClickedIds = new LinkedHashSet<>();
+        this.itemViewLongClickedIds = new LinkedHashSet<>();
+        this.mItemView = itemView;
     }
 
-    public HashSet<Integer> getItemViewClickedIds() {
-        return itemClickedIds;
+    public SparseArray<View> getViews() {
+        return views;
     }
 
-    public HashSet<Integer> getItemViewLongClickedId() {
-        return itemLongClickedIds;
+    public LinkedHashSet<Integer> getItemViewClickedIds() {
+        return itemViewClickedIds;
+    }
+
+    public LinkedHashSet<Integer> getItemViewLongClickedIds() {
+        return itemViewLongClickedIds;
     }
 
     public View getItemView() {
         return mItemView;
     }
 
-    public <T extends View> T getView(@IdRes int viewId) {
-        View view = views.get(viewId);
-        if (view == null) {
-            view = mItemView.findViewById(viewId);
-            views.put(viewId, view);
-        }
-
-        return (T) view;
+    public void setAssociatedObj(Objects associatedObj) {
+        this.associatedObj = associatedObj;
     }
+
+    public Object getAssociatedObj() {
+        return associatedObj;
+    }
+
 
     public BaseViewHolder setText(@IdRes int viewId, @StringRes int resId) {
         TextView textView = getView(viewId);
@@ -171,6 +175,7 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
         view.setProgress(progress);
         return this;
     }
+
     public BaseViewHolder setMax(@IdRes int viewId, int max) {
         ProgressBar view = getView(viewId);
         view.setMax(max);
@@ -182,20 +187,27 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
         view.setRating(rating);
         return this;
     }
-    
+
+    public BaseViewHolder setRating(@IdRes int viewId, float rating, int max) {
+        RatingBar view = getView(viewId);
+        view.setMax(max);
+        view.setRating(rating);
+        return this;
+    }
+
     public BaseViewHolder setOnClickListener(@IdRes int viewId, @Nullable View.OnClickListener listener) {
         View view = getView(viewId);
         view.setOnClickListener(listener);
         return this;
     }
-    
-    public BaseViewHolder addItemClickedIds(@IdRes int viewId) {
-        itemClickedIds.add(viewId);
+
+    public BaseViewHolder addItemViewClickedIds(@IdRes int viewId) {
+        itemViewClickedIds.add(viewId);
         return this;
     }
 
-    public BaseViewHolder addItemLongClickedIds(@IdRes int viewId){
-        itemLongClickedIds.add(viewId);
+    public BaseViewHolder addItemViewLongClickedIds(@IdRes int viewId) {
+        itemViewLongClickedIds.add(viewId);
         return this;
     }
 
@@ -204,6 +216,7 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
         view.setOnTouchListener(listener);
         return this;
     }
+
     public BaseViewHolder setOnLongClickListener(@IdRes int viewId, View.OnLongClickListener listener) {
         View view = getView(viewId);
         view.setOnLongClickListener(listener);
@@ -263,11 +276,15 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
         return this;
     }
 
-    public Object getAssociatedObject() {
-        return associatedObj;
+    private <T extends View> T getView(@IdRes int viewId) {
+        View view = views.get(viewId);
+        if (view == null) {
+            view = itemView.findViewById(viewId);
+            views.put(viewId, view);
+        }
+
+        return (T) view;
     }
 
-    public void setAssociatedObject(Object associatedObj) {
-        this.associatedObj = associatedObj;
-    }
+
 }
