@@ -1,11 +1,15 @@
 package com.wptdxii.uikit.widget.recyclerview;
 
+import android.content.Context;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+
+import com.wptdxii.uikit.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,50 +22,101 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
  */
 
 public class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHolder> {
+    public static final int HEADER_VIEW = 0x00000111;
+    public static final int EMPTY_VIEW = 0x00000222;
+    public static final int FOOTER_VIEW = 0x00000333;
+    public static final int LOADING_VIEW = 0x00000444;
 
-    private View mItemView;
+    protected Context mContext;
+    protected LayoutInflater mLayoutInflater;
     protected List<T> mDataList;
     protected int mLayoutResId;
+    private int mLastPosition = -1;
 
+    private View mItemView;
     private LinearLayout mHeaderLayout;
     private LinearLayout mFooterLayout;
+    private LinearLayout mTempLayout;
     private View mEmptyView;
+    private View mTempEmptyView;
     private View mLoadMoreFailedView;
+    private View mLoadingMoreView;
 
-    private boolean mLoadMoreEnable;
+    private boolean mLoadMoreEnable = false;
+    private boolean mIsLoadingMore = false;
+    private boolean mHeaderViewEnable = false;
+    private boolean mFooterViewEnable = false;
+    private boolean mEmptyViewEnable = false;
     private int pageSize = -1;
 
     public interface OnLoadMoreListener {
         void onLoadMore();
     }
-    private OnLoadMoreListener mLoadMoreListener;
-    public void setmLoadMoreListener(OnLoadMoreListener loadMoreListener) {
-        this.mLoadMoreListener = loadMoreListener;
+
+    private OnLoadMoreListener mOnLoadMoreListener;
+
+    public void setmOnLoadMoreListener(OnLoadMoreListener loadMoreListener) {
+        this.mOnLoadMoreListener = loadMoreListener;
     }
 
 
-
-    public BaseViewAdapter(View itemView, @Nullable List<T> dataList) {
-
+    public BaseViewAdapter(Context context, View itemView, @Nullable List<T> dataList) {
+        this.mContext = context;
+        this.mLayoutInflater = LayoutInflater.from(context);
         this.mItemView = itemView;
         this.mDataList = (dataList == null ? new ArrayList<T>() : dataList);
 
     }
 
-    public BaseViewAdapter(@LayoutRes int layoutResId, @Nullable List<T> dataList) {
-        this(null, dataList);
+    public BaseViewAdapter(Context context, @LayoutRes int layoutResId, @Nullable List<T> dataList) {
+        this(context, null, dataList);
         this.mLayoutResId = layoutResId;
     }
 
 
-    public BaseViewAdapter(@Nullable List<T> dataList) {
+    public BaseViewAdapter(Context context, @Nullable List<T> dataList) {
 
-        this(null, dataList);
+        this(context, null, dataList);
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        if (mHeaderLayout != null && position == 0) {
+            return HEADER_VIEW;
+        }
+
+        if (mDataList.size() == 0 && mEmptyViewEnable && mEmptyView != null && position <= 2) {
+
+            if (mHeaderViewEnable || mFooterViewEnable) {
+                if (position == 0) {
+                    if (mHeaderLayout != null) {
+                        return HEADER_VIEW;
+                    } else {
+                        return EMPTY_VIEW;
+                    }
+                } else if (position == 1) {
+                    if (mHeaderLayout != null) {
+                        return EMPTY_VIEW;
+                    } else if (mFooterLayout != null) {
+                        return FOOTER_VIEW;
+                    }
+                } else if (position == 2) {
+                    if (mHeaderLayout != null && mFooterLayout != null) {
+                        return EMPTY_VIEW;
+                    }
+                }
+            } else {
+                if (position == 0) {
+                    return EMPTY_VIEW;
+                }
+            }
+        }
+        return super.getItemViewType(position);
+    }
 
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
         return null;
     }
 
@@ -75,7 +130,13 @@ public class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHolder> {
         return 0;
     }
 
-    public void setLoadMoreEnable(int pageSize) {
+    /**
+     * set  pagesize when need to load more
+     *
+     * @param pageSize
+     */
+    public void setPageSize(int pageSize) {
+
         this.mLoadMoreEnable = true;
         this.pageSize = pageSize;
     }
@@ -84,27 +145,90 @@ public class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHolder> {
         return this.pageSize;
     }
 
-    public void addItemData(T itemData) {
-        mDataList.add(itemData);
-        this.notifyItemInserted(mDataList.size());
-    }
-
     public void setDataList(List<T> dataList) {
+
         this.mDataList = (dataList == null) ? new ArrayList<T>() : dataList;
-        if (mLoadMoreListener != null) {
+        if (mOnLoadMoreListener != null) {
             mLoadMoreEnable = true;
         }
 
         if (mLoadMoreFailedView != null) {
             removeFooterView(mLoadMoreFailedView);
         }
-
-
+        this.mLastPosition = -1;
+        this.notifyDataSetChanged();
     }
+
+    public List<T> getDataList() {
+        return this.mDataList;
+    }
+
+    public void addItemData(T itemData) {
+
+        mDataList.add(itemData);
+        this.notifyItemInserted(mDataList.size());
+    }
+
+    public void addItemData(int position, T itemData) {
+
+        if (position >= 0 && position < mDataList.size()) {
+            this.mDataList.add(position, itemData);
+            this.notifyItemInserted(position);
+            this.notifyItemRangeChanged(position, mDataList.size() - position);
+
+        } else {
+
+            throw new ArrayIndexOutOfBoundsException();
+
+        }
+    }
+
+    public void setItemData(int position, T itemData) {
+
+        if (position >= 0 && position < mDataList.size()) {
+
+            this.mDataList.set(position, itemData);
+            this.notifyItemChanged(position);
+
+        } else {
+            throw new ArrayIndexOutOfBoundsException();
+        }
+    }
+
+    public T getItemData(int position) {
+        return this.mDataList.get(position);
+    }
+
+    public void addData(List<T> dataList) {
+
+        this.mDataList.addAll(dataList);
+
+        if (this.mLoadMoreEnable) {
+            this.mIsLoadingMore = false;
+        }
+
+        this.notifyItemRangeChanged(mDataList.size() - dataList.size() + getHeaderCount(), dataList.size());
+    }
+
+    public void addData(int position, List<T> dataList) {
+        if (position >= 0 && position < mDataList.size()) {
+            this.mDataList.addAll(position, dataList);
+            this.notifyItemInserted(position);
+            this.notifyItemRangeChanged(position, mDataList.size() - position - dataList.size());
+        } else {
+
+            throw new ArrayIndexOutOfBoundsException();
+        }
+    }
+
 
     public void addHeaderView(View headerView, int index) {
         if (mHeaderLayout == null) {
-            initLinearLayout(mHeaderLayout, headerView);
+            if (mTempLayout == null) {
+                initLinearLayout(mHeaderLayout, headerView);
+            } else {
+                mHeaderLayout = mTempLayout;
+            }
         }
 
         index = (index >= mHeaderLayout.getChildCount() ? -1 : index);
@@ -116,29 +240,65 @@ public class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHolder> {
         addHeaderView(headerView, -1);
     }
 
+
+    public void addFooterView(View footerView, int index) {
+        mLoadMoreEnable = false;
+        if (mFooterLayout == null) {
+            if (mTempLayout == null) {
+                initLinearLayout(mFooterLayout, footerView);
+            } else {
+                mFooterLayout = mTempLayout;
+            }
+        }
+
+        index = (index >= mFooterLayout.getChildCount() ? -1 : index);
+        mFooterLayout.addView(footerView, index);
+        this.notifyItemChanged(getItemCount());
+    }
+
+    public void addFooterView(View footerView) {
+        addFooterView(footerView, -1);
+    }
+
+    /**
+     * init header layout and footer layout, and cache it
+     *
+     * @param layout
+     * @param view
+     */
     private void initLinearLayout(LinearLayout layout, View view) {
         layout = new LinearLayout(view.getContext());
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.setLayoutParams(new LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT));
+        mTempLayout = layout;
     }
-    public void addFooterView(View footerView, int index) {
-        mLoadMoreEnable = false;
-        if (mFooterLayout == null) {
 
-        }
-    }
     public void removeHeaderView(View headerView) {
+
         if (mHeaderLayout == null) {
             return;
         }
+
         mHeaderLayout.removeView(headerView);
         if (mHeaderLayout.getChildCount() == 0) {
             mHeaderLayout = null;
         }
+
         this.notifyDataSetChanged();
     }
 
+    public void removeAllHeaderViews() {
+
+        if (mHeaderLayout == null) {
+            return;
+        }
+
+        mHeaderLayout.removeAllViews();
+        mHeaderLayout = null;
+    }
+
     public void removeFooterView(View footer) {
+
         if (mFooterLayout == null) {
             return;
         }
@@ -148,6 +308,85 @@ public class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHolder> {
             mFooterLayout = null;
         }
         this.notifyDataSetChanged();
+    }
+
+    public void removeAllFooterViews() {
+
+        if (mFooterLayout == null) {
+            return;
+        }
+
+        mFooterLayout.removeAllViews();
+        mFooterLayout = null;
+    }
+
+    /**
+     * custom the loadmore failed view
+     *
+     * @param failedView
+     */
+    public void setLoadMoreFailedView(View failedView) {
+        this.mLoadMoreFailedView = failedView;
+        failedView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeFooterView(mLoadMoreFailedView);
+                setPageSize(pageSize);
+            }
+        });
+    }
+
+    /**
+     * show the default loadmore failed view
+     */
+    private void showLoadMoreFailedView() {
+        loadMoreCompleted();
+        if (mLoadMoreFailedView == null) {
+            mLoadMoreFailedView = mLayoutInflater.inflate(R.layout.def_load_more_failed, null);
+            mLoadMoreFailedView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    removeFooterView(mLoadMoreFailedView);
+                    setPageSize(pageSize);
+                }
+            });
+        }
+        addFooterView(mLoadMoreFailedView);
+    }
+
+    public void loadMoreCompleted() {
+        this.mLoadMoreEnable = false;
+        this.mIsLoadingMore = false;
+        this.notifyItemChanged(getItemCount());
+    }
+
+
+    public void setEmptyView(boolean showHeaderView, boolean showFooterView, View emptyView) {
+        this.mHeaderViewEnable = showHeaderView;
+        this.mFooterViewEnable = showFooterView;
+        this.mEmptyView = emptyView;
+
+        if (mTempEmptyView == null) {
+            this.mTempEmptyView = emptyView;
+        }
+
+        this.mEmptyViewEnable = true;
+    }
+
+    public void setEmptyView(View emptyView) {
+        setEmptyView(false, false, emptyView);
+    }
+
+    public View getEmptyView() {
+        return this.mEmptyView;
+    }
+
+    public void setLoadingMoreView(View loadingMoreView) {
+        this.mLoadingMoreView = loadingMoreView;
+    }
+
+    public View getLoadingMoreView() {
+        return this.mLoadingMoreView;
     }
 
     public int getHeaderCount() {
@@ -160,6 +399,14 @@ public class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHolder> {
 
     public int getEmptyViewCount() {
         return mEmptyView == null ? 0 : 1;
+    }
+
+    private boolean isLoadMoreEnable() {
+        return mLoadMoreEnable && pageSize != -1 && mOnLoadMoreListener != null && mDataList.size() >= pageSize;
+    }
+
+    public boolean isLoadingMore() {
+        return this.mIsLoadingMore;
     }
 
 
