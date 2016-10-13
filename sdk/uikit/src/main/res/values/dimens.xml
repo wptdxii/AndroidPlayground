@@ -1,0 +1,8 @@
+<resources>
+    <dimen name="def_loading_more_height">36dp</dimen>
+    <dimen name="def_loading_more_pb_width">22dp</dimen>
+    <dimen name="def_loading_more_pb_height">22dp</dimen>
+    <dimen name="def_loading_more_pb_marginright">4dp</dimen>
+    <dimen name="def_loading_more_tv_marginleft">4dp</dimen>
+    <dimen name="def_loading_more_tv_textsize">14sp</dimen>
+</resources>
