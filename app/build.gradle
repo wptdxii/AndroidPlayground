@@ -45,7 +45,7 @@ android {
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
         multiDexEnabled true
-
+        manifestPlaceholders = [UMENG_APPKEY_VALUE : UMENG_APPKEY_RELEASE]
     }
 
     signingConfigs {
@@ -66,7 +66,6 @@ android {
             storePassword props['KEYSTORE_PASSWORD']
             keyAlias props['KEY_ALIAS']
             keyPassword props['KEY_PASSWORD']
-
         }
     }
 
@@ -78,8 +77,9 @@ android {
             shrinkResources false
             zipAlignEnabled false
             signingConfig signingConfigs.debug
+            manifestPlaceholders = [UMENG_APPKEY_VALUE : UMENG_APPKEY_DEBUG]
 //            buildConfigField "String", "ENDPOINT", "\"${endpoint_product}\""
-//            resValue "string", "umeng_appkey", "${umeng_appkey_dev}"
+//            resValue "string", "umeng_appkey", "${UMENG_APPKEY_DEBUG}"
 //            resValue "string", "deepshare_appid", "${deepshare_appid}"
 //            resValue "string", "bugly_appid", "${bugly_appid_dev}"
 //            resValue "string", "rong_appkey", "${rong_appkey}"
@@ -93,15 +93,19 @@ android {
             zipAlignEnabled true
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            // method 1   in xml  use %{} as the placeholder
+//            manifestPlaceholders = [UMENG_APPKEY_VALUE:UMENG_APPKEY_RELEASE]
+            // method 2   in xml use @string/value as the placeholder
+//            resValue "string", "umeng_appkey", "${UMENG_APPKEY_RELEASE}"
             //在Java中通过BuildConfig.ENDPOINT调用
-            buildConfigField "String", "ENDPOINT", "\"${endpoint_product}\""
-            //在xml文件中通过R.string.key调用
-            resValue "string", "umeng_appkey", "${umeng_appkey_product}"
-            resValue "string", "deepshare_appid", "${deepshare_appid}"
-            resValue "string", "bugly_appid", "${bugly_appid_product}"
-            resValue "string", "rong_appkey", "${rong_appkey}"
-            resValue "string", "channel", "product"
-            resValue "string", "op_app_name", "${app_name}"
+//            buildConfigField "String", "ENDPOINT", "\"${endpoint_product}\""
+//            //在xml文件中通过R.string.key调用
+//            resValue "string", "deepshare_appid", "${deepshare_appid}"
+//            resValue "string", "bugly_appid", "${bugly_appid_product}"
+//            resValue "string", "rong_appkey", "${rong_appkey}"
+//            resValue "string", "channel", "product"
+//            resValue "string", "op_app_name", "${app_name}"
         }
     }
 
@@ -129,19 +133,23 @@ android {
         //配置信息在lint.xml中,需手动建立
 //        lintConfig file("lint.xml")
     }
+    // if exists override the defaultConfig ,or merge the defaultConfig
+    productFlavors {
+        dev{
+            applicationId "com.wptdxii.androidpractice.dev"
+        }
 
-    //打包管理
-//    productFlavors {
-    //打包不同的so文件
+        rc_yingyongbao {}
+        rc_baidu {}
+        rc_360{}
 //        arm {
-//            
-//            //在defaultConfig基础上添加了下面配置
+//
 //            ndk {
 //                //引号内容要与jniLibs文件夹内的文件夹名相同
 //                abiFilters "arm64-v8a", "armeabi", "armeabi-v7a"
 //            }
 //        }
-//        
+//
 //        x86 {
 //            ndk {
 //                abiFilters "x86", "x86_64"
@@ -152,48 +160,33 @@ android {
 //                abiFilters "mips"
 //            }
 //        }
+    }
 
-    //需要同时安装apk时，可以更改applicationId，覆盖defaultConfig
-//        qa {
-//            applicationId ""
-//        }
-//        bata {
-//            applicationId ""
-//        }
+    productFlavors.all { flavor ->
+        flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+    }
 
-    //渠道号
-//        rc_yingyongbao {}
-//        rc_baidu {}
-//        rc_stagging {}
-//        rc_product {}
-//    }
-    //友盟统计
-//    productFlavors.all { flavor ->
-//        // 这里只是方便友盟统计每个渠道的数据
-//        flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
-//    }
+    // 修改打包后APK的文件名
+    //variant = flavor + buildType
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def outputFile = output.outputFile
+            if (variant.buildType.name.equals('release')) {
+                // 输出apk名称为ap_v1.0_2016-04-12_yingyongbao_a23f2e1.apk
+//                def releaseApkName = 'ap-v' + defaultConfig.versionName + '_' + getDate() + '_' + variant.productFlavors[0].name + "_" + getRevision() + '.apk'
+                def releaseApkName = 'ap-v' + defaultConfig.versionName + '_' + getDate() + '_' + getRevision() + '.apk'
+                output.outputFile = new File(outputFile.parent, releaseApkName)
+            }
+            if (variant.buildType.name.equals('debug')) {
+                // Do nothing
+            }
 
-//    // 修改打包后APK的文件名
-//    //variant = flavor + buildType 
-//    applicationVariants.all { variant ->
-//        variant.outputs.each { output ->
-//            def outputFile = output.outputFile
-//            if (variant.buildType.name.equals('release')) {
-//                // 输出apk名称为ap_v1.0_2016-04-12_yingyongbao_a23f2e1.apk
-////                def releaseApkName = 'ap-v' + defaultConfig.versionName + '_' + getDate() + '_' + variant.productFlavors[0].name + "_" + getRevision() + '.apk'
-//                def releaseApkName = 'ap-v' + defaultConfig.versionName + '_' + getDate() + '_' + getRevision() + '.apk'
-//                output.outputFile = new File(outputFile.parent, releaseApkName)
+//            if (outputFile != null && outputFile.name.endWith(".apk")) {
+//                def fileName = "ap_v${defaultConfig.versionName}_channel${variant.name}.apk"
+//                output.outputFile = new File(outputFile.parent,fileName)
 //            }
-//            if (variant.buildType.name.equals('debug')) {
-//                // Do nothing
-//            }
-//
-////            if (outputFile != null && outputFile.name.endWith(".apk")) {
-////                def fileName = "ap_v${defaultConfig.versionName}_channel${variant.name}.apk"
-////                output.outputFile = new File(outputFile.parent,fileName)
-////            }
-//        }
-//    }
+        }
+    }
 }
 
 repositories {
@@ -231,12 +224,9 @@ dependencies {
     compile rootProject.ext.libDagger
     apt rootProject.ext.libDaggerCompiler
     compile rootProject.ext.libJavaxAnnotation
-
 //    debugCompile rootProject.ext.debugDependencies.leakCanary
 //    releaseCompile rootProject.ext.releaseDependencies.leakCanary
 //    debugCompile rootProject.ext.debugDependencies.blockCanary
 //    releaseCompile rootProject.ext.releaseDependencies.blockCanary
-//    compile rootProject.ext.libUmengAnalytics
     debugCompile rootProject.ext.debugDependencies.stetho
-
 }

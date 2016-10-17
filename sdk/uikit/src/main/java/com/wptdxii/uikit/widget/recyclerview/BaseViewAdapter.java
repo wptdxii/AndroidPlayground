@@ -2,7 +2,6 @@ package com.wptdxii.uikit.widget.recyclerview;
 
 import android.animation.Animator;
 import android.content.Context;
-import android.support.annotation.IntDef;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -11,23 +10,29 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Interpolator;
+import android.view.animation.LinearInterpolator;
 import android.widget.LinearLayout;
 
 import com.wptdxii.uikit.R;
 import com.wptdxii.uikit.widget.recyclerview.animation.AlphaInAnimation;
+import com.wptdxii.uikit.widget.recyclerview.animation.AnimationType;
 import com.wptdxii.uikit.widget.recyclerview.animation.BaseAnimation;
 import com.wptdxii.uikit.widget.recyclerview.animation.ScaleInAnimation;
 import com.wptdxii.uikit.widget.recyclerview.animation.SlideInBottomAnimation;
 import com.wptdxii.uikit.widget.recyclerview.animation.SlideInLeftAnimation;
 import com.wptdxii.uikit.widget.recyclerview.animation.SlideInRightAnimation;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+import static com.wptdxii.uikit.widget.recyclerview.animation.AnimationType.ALPHAIN;
+import static com.wptdxii.uikit.widget.recyclerview.animation.AnimationType.SCALEIN;
+import static com.wptdxii.uikit.widget.recyclerview.animation.AnimationType.SLIDEIN_BOTTOM;
+import static com.wptdxii.uikit.widget.recyclerview.animation.AnimationType.SLIDEIN_LEFT;
+import static com.wptdxii.uikit.widget.recyclerview.animation.AnimationType.SLIDEIN_RIGHT;
 
 /**
  * Created by wptdxii on 2016/10/11 0011.
@@ -63,30 +68,24 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHo
     public interface OnLoadMoreListener {
         void onLoadMore();
     }
+
     private OnLoadMoreListener mOnLoadMoreListener;
+
     public void setmOnLoadMoreListener(OnLoadMoreListener loadMoreListener) {
         this.mOnLoadMoreListener = loadMoreListener;
     }
 
 
-
     public interface SpanSizeLookup {
         int getSpanSize(int position);
     }
+
     private SpanSizeLookup mSpanSizeLookup;
+
     public void setSpanSizeLookup(SpanSizeLookup spanSizeLookup) {
         this.mSpanSizeLookup = spanSizeLookup;
     }
 
-    public static final int ALPHAIN = 0x00000001;
-    public static final int SCALEIN = 0x00000002;
-    public static final int SLIDEIN_BOTTOM = 0x00000003;
-    public static final int SLIDEIN_LEFT = 0x00000004;
-    public static final int SLIDEIN_RIGHT = 0x00000005;
-
-    @IntDef({ALPHAIN, SCALEIN, SLIDEIN_BOTTOM, SLIDEIN_LEFT, SLIDEIN_RIGHT})
-    @Retention(RetentionPolicy.SOURCE)
-    public @interface AnimationType {}
 
     private int mDuration = 300;
     private boolean mAnimationEnable;
@@ -94,6 +93,7 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHo
     private BaseAnimation mCusAnimation;
     private BaseAnimation mDefAnimation;
     private boolean mIsFirstOnly;
+    private Interpolator mDefInterpolator;
 
     public BaseViewAdapter(Context context, View itemView, @Nullable List<T> dataList) {
         this.mContext = context;
@@ -101,6 +101,7 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHo
         this.mItemView = itemView;
         this.mDataList = (dataList == null ? new ArrayList<T>() : dataList);
         this.mDefAnimation = new AlphaInAnimation();
+        this.mDefInterpolator = new LinearInterpolator();
     }
 
     public BaseViewAdapter(Context context, @LayoutRes int layoutResId, @Nullable List<T> dataList) {
@@ -287,15 +288,16 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHo
     }
 
     private void startAnim(Animator anim, int layoutPosition) {
-//        anim.setInterpolator();
+        anim.setInterpolator(mDefInterpolator);
         anim.setDuration(mDuration).start();
     }
 
     /**
      * if orientation is vertical, the view will have full width; if orientation is horizontal, the view will
      * have full height
-     *
+     * <p>
      * if the holder use StaggeredGridLayoutManager it should using all span area
+     *
      * @param holder
      */
     protected void setFullSpan(BaseViewHolder holder) {
@@ -355,7 +357,7 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHo
         return this.pageSize;
     }
 
-    public void setDataList(List<T> dataList) {
+    public void setData(List<T> dataList) {
 
         this.mDataList = (dataList == null) ? new ArrayList<T>() : dataList;
         if (mOnLoadMoreListener != null) {
@@ -369,28 +371,46 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHo
         this.notifyDataSetChanged();
     }
 
-    public List<T> getDataList() {
+    public List<T> getData() {
         return this.mDataList;
     }
 
-    public void addItemData(T itemData) {
+    public void addData(T itemData) {
 
         mDataList.add(itemData);
-        this.notifyItemInserted(mDataList.size());
+        notifyItemInserted(mDataList.size());
     }
 
-    public void addItemData(int position, T itemData) {
+    public void addData(int position, T itemData) {
 
         if (position >= 0 && position < mDataList.size()) {
-            this.mDataList.add(position, itemData);
-            this.notifyItemInserted(position);
-            this.notifyItemRangeChanged(position, mDataList.size() - position);
+            mDataList.add(position, itemData);
+            notifyItemInserted(position);
+            notifyItemRangeChanged(position, mDataList.size() - position);
 
         } else {
 
             throw new ArrayIndexOutOfBoundsException();
 
         }
+    }
+
+    public boolean removeData(int position) {
+        boolean isRemoved = false;
+        if (mDataList != null) {
+            mDataList.remove(position);
+            isRemoved = true;
+            notifyItemRemoved(position + getHeaderCount());
+        }
+        return isRemoved;
+    }
+
+    public boolean removeData(T itemData) {
+        boolean isRemoved = false;
+        if (mDataList != null) {
+            mDataList.remove(itemData);
+        }
+        return false;
     }
 
     public void setItemData(int position, T itemData) {
@@ -629,6 +649,7 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHo
 
     /**
      * set Animation Duration
+     *
      * @param duration
      */
     public void setDuration(int duration) {
@@ -637,12 +658,12 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHo
 
     /**
      * choose one of default animation
+     *
      * @param animationType
      */
     public void setDefAnimation(@AnimationType int animationType) {
         this.mAnimationEnable = true;
         this.mCusAnimation = null;
-
         switch (animationType) {
             case ALPHAIN:
                 mDefAnimation = new AlphaInAnimation();
@@ -662,8 +683,13 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHo
         }
     }
 
+    public void setDefInterpolator(Interpolator interpolator) {
+        this.mDefInterpolator = interpolator;
+    }
+
     /**
      * set custom animation
+     *
      * @param baseAnimation
      */
     public void setCusAnimation(BaseAnimation baseAnimation) {

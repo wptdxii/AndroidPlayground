@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import com.wptdxii.androidpractice.R;
 import com.wptdxii.androidpractice.model.Module;
+import com.wptdxii.androidpractice.ui.sample.SampleUmengActivity;
 import com.wptdxii.androidpractice.ui.sample.SwipeRecyclerActivity;
 import com.wptdxii.androidpractice.ui.sample.SwipeRecyclerFragmentActivity;
 import com.wptdxii.androidpractice.ui.sample.TabViewPagerActivity;
@@ -34,6 +35,7 @@ public class ContentActivity extends BaseContentActivity {
         mDataList.add(new Module("BottomNavigation+ViewPager", TabViewPagerActivity.class));
         mDataList.add(new Module("ViewPagerActivity", ViewPagerActivity.class));
         mDataList.add(new Module("SampleRecyclerView", SampleRecyclerViewActivity.class));
+        mDataList.add(new Module("SampleUmeng", SampleUmengActivity.class));
     }
     
 }

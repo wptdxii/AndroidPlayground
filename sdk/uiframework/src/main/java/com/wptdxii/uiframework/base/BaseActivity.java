@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
 import com.wptdxii.ext.util.ActivityStack;
 import com.wptdxii.ext.util.AppStatusTracker;
 import com.wptdxii.uiframework.R;
@@ -54,9 +55,19 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
                 break;
         }
 
-
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
 
     @Override
     protected void onDestroy() {

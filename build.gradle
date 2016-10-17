@@ -13,6 +13,7 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        mavenCentral()
     }
 }
 
@@ -46,6 +47,7 @@ project.ext {
     libSupportAppcompatV7 = "com.android.support:appcompat-v7:${supportVersion}"
     libSupportDesign = "com.android.support:design:${supportVersion}"
     libRecyclerViewV7 = "com.android.support:recyclerview-v7:${supportVersion}"
+    libSupportAnnotations = "com.android.support:support-annotations:${supportVersion}"
 
     libRetrofit = "com.squareup.retrofit2:retrofit:${retrofitVersion}"
     libRetrofitConverterGson = "com.squareup.retrofit2:converter-gson:${retrofitVersion}"

@@ -14,4 +14,5 @@
     <string name="tabviewpager_activity_toolbar_title">TabViewPager</string>
     <string name="home_activity_toolbar_title">Home</string>
     <string name="activity_recyclerview_practice_title">RecyclerView</string>
+    <string name="activity_sample_umeng_title">SampleUmeng</string>
 </resources>

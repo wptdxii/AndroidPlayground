@@ -40,4 +40,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile rootProject.ext.libSupportV4
     compile rootProject.ext.libSupportAppcompatV7
+    compile rootProject.ext.libUmengAnalytics
 }
