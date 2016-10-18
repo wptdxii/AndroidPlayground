@@ -29,7 +29,7 @@ def leakCanaryVersion = "1.4-beta2"
 def blockCanaryVersion = '1.3.0'
 //def rxBindingVersion = '0.4.0'
 project.ext {
-    applicationId = "com.wptdxii.androidpractice"
+    applicationId = "com.wptdxii.playground"
     buildToolsVersion = "24.0.3"
     compileSdkVersion = 24
     minSdkVersion = 16

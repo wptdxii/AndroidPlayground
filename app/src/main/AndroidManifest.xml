@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.wptdxii.androidpractice">
+          package="com.wptdxii.playground">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
     <application
-        android:name=".App"
+        android:name="com.wptdxii.playground.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -25,7 +25,7 @@
 
 
         <activity
-            android:name=".ui.sample.splash.SplashActivity"
+            android:name="com.wptdxii.playground.ui.sample.splash.SplashActivity"
             android:theme="@style/SplashActivityTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -33,21 +33,21 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.sample.SwipeRecyclerActivity">
+        <activity android:name="com.wptdxii.playground.ui.sample.SwipeRecyclerActivity">
         </activity>
-        <activity android:name=".ui.sample.home.ContentActivity">
+        <activity android:name="com.wptdxii.playground.ui.sample.home.ContentActivity">
         </activity>
-        <activity android:name=".ui.sample.WidgetActivity">
+        <activity android:name="com.wptdxii.playground.ui.sample.WidgetActivity">
         </activity>
-        <activity android:name=".ui.sample.TabViewPagerActivity">
+        <activity android:name="com.wptdxii.playground.ui.sample.TabViewPagerActivity">
         </activity>
-        <activity android:name=".ui.sample.ViewPagerActivity">
+        <activity android:name="com.wptdxii.playground.ui.sample.ViewPagerActivity">
         </activity>
-        <activity android:name=".ui.sample.SwipeRecyclerFragmentActivity">
+        <activity android:name="com.wptdxii.playground.ui.sample.SwipeRecyclerFragmentActivity">
         </activity>
-        <activity android:name=".ui.sample.recyclerview.SampleRecyclerViewActivity">
+        <activity android:name="com.wptdxii.playground.ui.sample.recyclerview.SampleRecyclerViewActivity">
         </activity>
-        <activity android:name=".ui.sample.SampleUmengActivity">
+        <activity android:name="com.wptdxii.playground.ui.sample.SampleUmengActivity">
         </activity>
     </application>
 

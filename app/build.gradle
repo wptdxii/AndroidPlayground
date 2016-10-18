@@ -136,7 +136,7 @@ android {
     // if exists override the defaultConfig ,or merge the defaultConfig
     productFlavors {
         dev{
-            applicationId "com.wptdxii.androidpractice.dev"
+            applicationId "com.wptdxii.playground.dev"
         }
 
         rc_yingyongbao {}
