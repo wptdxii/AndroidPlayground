@@ -70,3 +70,7 @@ eclipsebin
 obj/
 #jniLibs
 
+#custom
+buildsystem/outputs
+buildsystem/*.apk
+

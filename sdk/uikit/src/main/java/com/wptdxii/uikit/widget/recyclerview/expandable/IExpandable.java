@@ -12,7 +12,7 @@ public interface IExpandable<T> {
 
     void setExpandable(boolean expandable);
 
-    List<T> getSubDataList();
+    List<T> getData();
 
     /**
      * return the item level.

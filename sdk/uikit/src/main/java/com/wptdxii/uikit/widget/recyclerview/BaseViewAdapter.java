@@ -2,6 +2,7 @@ package com.wptdxii.uikit.widget.recyclerview;
 
 import android.animation.Animator;
 import android.content.Context;
+import android.support.annotation.IntRange;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -22,6 +23,7 @@ import com.wptdxii.uikit.widget.recyclerview.animation.ScaleInAnimation;
 import com.wptdxii.uikit.widget.recyclerview.animation.SlideInBottomAnimation;
 import com.wptdxii.uikit.widget.recyclerview.animation.SlideInLeftAnimation;
 import com.wptdxii.uikit.widget.recyclerview.animation.SlideInRightAnimation;
+import com.wptdxii.uikit.widget.recyclerview.expandable.IExpandable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,12 +51,11 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHo
     protected List<T> mDataList;
     protected int mLayoutResId;
 
-    private View mItemView;
     private LinearLayout mHeaderLayout;
     private LinearLayout mFooterLayout;
     private LinearLayout mTempLayout;
+    private View mItemView;
     private View mEmptyView;
-    //    private View mTempEmptyView;
     private View mLoadMoreFailed;
     private View mLoadingMoreView;
 
@@ -91,17 +92,17 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHo
     private boolean mAnimationEnable;
     private int mLastPosition = -1;
     private BaseAnimation mCusAnimation;
-    private BaseAnimation mDefAnimation;
+    private BaseAnimation mAnimation;
     private boolean mIsFirstOnly;
-    private Interpolator mDefInterpolator;
+    private Interpolator mInterpolator;
 
     public BaseViewAdapter(Context context, View itemView, @Nullable List<T> dataList) {
         this.mContext = context;
         this.mLayoutInflater = LayoutInflater.from(context);
         this.mItemView = itemView;
         this.mDataList = (dataList == null ? new ArrayList<T>() : dataList);
-        this.mDefAnimation = new AlphaInAnimation();
-        this.mDefInterpolator = new LinearInterpolator();
+        this.mAnimation = new AlphaInAnimation();
+        this.mInterpolator = new LinearInterpolator();
     }
 
     public BaseViewAdapter(Context context, @LayoutRes int layoutResId, @Nullable List<T> dataList) {
@@ -276,20 +277,17 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHo
                 if (mCusAnimation != null) {
                     animation = mCusAnimation;
                 } else {
-                    animation = mDefAnimation;
+                    animation = mAnimation;
                 }
 
                 for (Animator anim : animation.getAnimators(holder.itemView)) {
-                    startAnim(anim, holder.getLayoutPosition());
+                    anim.setDuration(mDuration);
+                    anim.setInterpolator(mInterpolator);
+                    anim.start();
                 }
                 mLastPosition = holder.getLayoutPosition();
             }
         }
-    }
-
-    private void startAnim(Animator anim, int layoutPosition) {
-        anim.setInterpolator(mDefInterpolator);
-        anim.setDuration(mDuration).start();
     }
 
     /**
@@ -666,25 +664,25 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHo
         this.mCusAnimation = null;
         switch (animationType) {
             case ALPHAIN:
-                mDefAnimation = new AlphaInAnimation();
+                mAnimation = new AlphaInAnimation();
                 break;
             case SCALEIN:
-                mDefAnimation = new ScaleInAnimation();
+                mAnimation = new ScaleInAnimation();
                 break;
             case SLIDEIN_BOTTOM:
-                mDefAnimation = new SlideInBottomAnimation();
+                mAnimation = new SlideInBottomAnimation();
                 break;
             case SLIDEIN_LEFT:
-                mDefAnimation = new SlideInLeftAnimation();
+                mAnimation = new SlideInLeftAnimation();
                 break;
             case SLIDEIN_RIGHT:
-                mDefAnimation = new SlideInRightAnimation();
+                mAnimation = new SlideInRightAnimation();
                 break;
         }
     }
 
-    public void setDefInterpolator(Interpolator interpolator) {
-        this.mDefInterpolator = interpolator;
+    public void setInterpolator(Interpolator interpolator) {
+        this.mInterpolator = interpolator;
     }
 
     /**
@@ -703,6 +701,44 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHo
 
     public void isFirstOnly(boolean isFirstOnly) {
         this.mIsFirstOnly = isFirstOnly;
+    }
+
+    public int expand(@IntRange(from = 0) int position, boolean animEnable, boolean notify) {
+        int subItemCount;
+
+        position -= getHeaderCount();
+        IExpandable expandableItem = getExpandableItem(position);
+        if (expandableItem == null) {
+            subItemCount = 0;
+        }
+
+        if (!hasSubItems(expandableItem)) {
+            expandableItem.setExpandable(false);
+            subItemCount = 0;
+        }
+
+        if (!expandableItem.isExpandable()) {
+
+        }
+
+        return 0;
+    }
+
+    private boolean hasSubItems(IExpandable expandableItem) {
+        List<T> itemDatas = expandableItem.getData();
+        return itemDatas != null && itemDatas.size() > 0;
+    }
+
+    private IExpandable getExpandableItem(int position) {
+        T item = getItemData(position);
+        if (isExpandable(item)) {
+            return (IExpandable) item;
+        }
+        return null;
+    }
+
+    private boolean isExpandable(T item) {
+        return item != null && item instanceof IExpandable;
     }
 
 }

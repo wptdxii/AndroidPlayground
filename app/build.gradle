@@ -45,7 +45,7 @@ android {
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
         multiDexEnabled true
-        manifestPlaceholders = [UMENG_APPKEY_VALUE : UMENG_APPKEY_RELEASE]
+//        manifestPlaceholders = [UMENG_APPKEY_VALUE : UMENG_APPKEY_RELEASE]
     }
 
     signingConfigs {
@@ -77,7 +77,8 @@ android {
             shrinkResources false
             zipAlignEnabled false
             signingConfig signingConfigs.debug
-            manifestPlaceholders = [UMENG_APPKEY_VALUE : UMENG_APPKEY_DEBUG]
+//            manifestPlaceholders = [UMENG_APPKEY_VALUE : UMENG_APPKEY_DEBUG]
+            buildConfigField "String", "UMENG_APPKEY", "\"${UMENG_APPKEY_DEBUG}\""
 //            buildConfigField "String", "ENDPOINT", "\"${endpoint_product}\""
 //            resValue "string", "umeng_appkey", "${UMENG_APPKEY_DEBUG}"
 //            resValue "string", "deepshare_appid", "${deepshare_appid}"
@@ -87,12 +88,13 @@ android {
 //            resValue "string", "op_app_name", "dev_${app_name}"
         }
         release {
-            versionNameSuffix "-release"
+            versionNameSuffix "_release"
             minifyEnabled false
             shrinkResources false
             zipAlignEnabled true
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "UMENG_APPKEY", "\"${UMENG_APPKEY_RELEASE}\""
 
             // method 1   in xml  use %{} as the placeholder
 //            manifestPlaceholders = [UMENG_APPKEY_VALUE:UMENG_APPKEY_RELEASE]
@@ -134,14 +136,15 @@ android {
 //        lintConfig file("lint.xml")
     }
     // if exists override the defaultConfig ,or merge the defaultConfig
-    productFlavors {
-        dev{
-            applicationId "com.wptdxii.playground.dev"
-        }
-
-        rc_yingyongbao {}
-        rc_baidu {}
-        rc_360{}
+//    productFlavors {
+//        dev{
+//            applicationId "com.wptdxii.playground.dev"
+//        }
+//        product{}
+//
+//        rc_yingyongbao {}
+//        rc_baidu {}
+//        rc_360{}
 //        arm {
 //
 //            ndk {
@@ -160,33 +163,46 @@ android {
 //                abiFilters "mips"
 //            }
 //        }
-    }
+//    }
 
-    productFlavors.all { flavor ->
-        flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
-    }
+//    productFlavors.all { flavor ->
+//        flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
+//    }
 
     // 修改打包后APK的文件名
     //variant = flavor + buildType
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
-            def outputFile = output.outputFile
-            if (variant.buildType.name.equals('release')) {
-                // 输出apk名称为ap_v1.0_2016-04-12_yingyongbao_a23f2e1.apk
-//                def releaseApkName = 'ap-v' + defaultConfig.versionName + '_' + getDate() + '_' + variant.productFlavors[0].name + "_" + getRevision() + '.apk'
-                def releaseApkName = 'ap-v' + defaultConfig.versionName + '_' + getDate() + '_' + getRevision() + '.apk'
-                output.outputFile = new File(outputFile.parent, releaseApkName)
-            }
-            if (variant.buildType.name.equals('debug')) {
-                // Do nothing
-            }
+//            def outputFile = output.outputFile
+//            if (variant.buildType.name.equals('release')) {
+//                // 输出apk名称为ap_v1.0_2016-04-12_yingyongbao_a23f2e1.apk
+////                def releaseApkName = 'ap-v' + defaultConfig.versionName + '_' + getDate() + '_' + variant.productFlavors[0].name + "_" + getRevision() + '.apk'
+//                def releaseApkName = 'ap-v' + defaultConfig.versionName + '_' + getDate() + '_' + getRevision() + '.apk'
+//                output.outputFile = new File(outputFile.parent, releaseApkName)
+//            }
+//            if (variant.buildType.name.equals('debug')) {
+//                // Do nothing
+//            }
 
-//            if (outputFile != null && outputFile.name.endWith(".apk")) {
+//            if (outputFile != null && outputFile.name.endsWith('.apk')) {
 //                def fileName = "ap_v${defaultConfig.versionName}_channel${variant.name}.apk"
 //                output.outputFile = new File(outputFile.parent,fileName)
 //            }
+
+            if (variant.buildType.name.equals('debug')) {
+                def outputPath = output.outputFile
+                def debugApkName = "Playground_v${defaultConfig.versionName}_debug.apk"
+                output.outputFile = new File(outputPath.parent, debugApkName)
+            }
+
+            if (variant.buildType.name.equals('release')) {
+                def outputPath = './buildsystem'
+                def releaseApkName = "Playground_v${defaultConfig.versionName}.apk"
+                output.outputFile = new File(outputPath, releaseApkName)
+            }
         }
     }
+
 }
 
 repositories {

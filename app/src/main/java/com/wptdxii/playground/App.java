@@ -5,16 +5,20 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.util.Log;
 import android.view.View;
 
-import com.wptdxii.playground.internal.di.component.AppComponent;
-import com.wptdxii.playground.internal.di.component.DaggerAppComponent;
-import com.wptdxii.playground.internal.di.module.AppModule;
+import com.umeng.analytics.MobclickAgent;
 import com.wptdxii.ext.Ext;
 import com.wptdxii.ext.component.info.Device;
 import com.wptdxii.ext.component.info.Network;
 import com.wptdxii.ext.util.AppStatusTracker;
+import com.wptdxii.ext.util.ChannelUtils;
+import com.wptdxii.ext.util.DeviceUtils;
 import com.wptdxii.ext.util.ViewUtils;
+import com.wptdxii.playground.internal.di.component.AppComponent;
+import com.wptdxii.playground.internal.di.component.DaggerAppComponent;
+import com.wptdxii.playground.internal.di.module.AppModule;
 
 import java.lang.reflect.Method;
 
@@ -47,7 +51,16 @@ public class App extends Application {
 
         initInjector();
         initExtension();
+//        initUmengChannel();
+        String deviceInfo = DeviceUtils.getDeviceInfo(this);
+        Log.e(TAG, "onCreate: " + deviceInfo);
 
+    }
+
+    private void initUmengChannel() {
+        String channel = ChannelUtils.getChannel(this);
+        MobclickAgent.UMAnalyticsConfig config = new MobclickAgent.UMAnalyticsConfig(this, BuildConfig.UMENG_APPKEY, channel);
+        MobclickAgent.startWithConfigure(config);
     }
 
     private void initInjector() {

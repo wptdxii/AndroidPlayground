@@ -24,7 +24,7 @@ public class AbsExpandableItem<T> implements IExpandable<T> {
     }
 
     @Override
-    public List<T> getSubDataList() {
+    public List<T> getData() {
         return mSubDataList;
     }
 
@@ -33,11 +33,11 @@ public class AbsExpandableItem<T> implements IExpandable<T> {
         return 0;
     }
 
-    public void setSubDataList(List<T> dataList) {
+    public void setData(List<T> dataList) {
         this.mSubDataList = dataList;
     }
 
-    public T getSubItemData(int positon) {
+    public T getData(int positon) {
         if (mSubDataList != null && mSubDataList.size() > 0 &&
                 positon < mSubDataList.size()) {
             return mSubDataList.get(positon);
@@ -46,7 +46,7 @@ public class AbsExpandableItem<T> implements IExpandable<T> {
         }
     }
 
-    public void addSubItemData(T itemData) {
+    public void addData(T itemData) {
         if (mSubDataList == null) {
             mSubDataList = new ArrayList<>();
         }
@@ -55,19 +55,19 @@ public class AbsExpandableItem<T> implements IExpandable<T> {
     }
 
     /**
-     * if the position outof data size, then add the data to the end of the data collection
+     * if the position out of data size, then add the data to the end of the data collection
      * @param position
      * @param itemData
      */
-    public void addSubItemData(int position, T itemData) {
+    public void addData(int position, T itemData) {
         if (mSubDataList != null && position >= 0 && position < mSubDataList.size()) {
             mSubDataList.add(position, itemData);
         } else {
-            addSubItemData(itemData);
+            addData(itemData);
         }
     }
 
-    public boolean removeSubItemData(T itemData) {
+    public boolean removeData(T itemData) {
         return mSubDataList != null && mSubDataList.remove(itemData);
     }
 
