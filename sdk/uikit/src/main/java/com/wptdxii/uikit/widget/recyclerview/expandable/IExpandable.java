@@ -8,11 +8,11 @@ import java.util.List;
  */
 
 public interface IExpandable<T> {
-    boolean isExpandable();
+    boolean isExpanded();
 
-    void setExpandable(boolean expandable);
+    void setExpanded(boolean expandable);
 
-    List<T> getData();
+    List<T> getSubData();
 
     /**
      * return the item level.

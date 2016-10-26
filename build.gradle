@@ -21,7 +21,7 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-def supportVersion = "24.2.1"
+def supportVersion = "25.0.0"
 def retrofitVersion = "2.0.2"
 def okHttpVersion = '3.4.1'
 def daggerVersion = "2.6.1"

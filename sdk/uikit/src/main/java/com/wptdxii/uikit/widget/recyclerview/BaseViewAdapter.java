@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.content.Context;
 import android.support.annotation.IntRange;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -48,7 +49,7 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHo
 
     protected Context mContext;
     protected LayoutInflater mLayoutInflater;
-    protected List<T> mDataList;
+    protected List<T> mData;
     protected int mLayoutResId;
 
     private LinearLayout mHeaderLayout;
@@ -56,7 +57,7 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHo
     private LinearLayout mTempLayout;
     private View mItemView;
     private View mEmptyView;
-    private View mLoadMoreFailed;
+    private View mLoadMoreFailedView;
     private View mLoadingMoreView;
 
     private boolean mLoadMoreEnable = false;
@@ -100,7 +101,7 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHo
         this.mContext = context;
         this.mLayoutInflater = LayoutInflater.from(context);
         this.mItemView = itemView;
-        this.mDataList = (dataList == null ? new ArrayList<T>() : dataList);
+        this.mData = (dataList == null ? new ArrayList<T>() : dataList);
         this.mAnimation = new AlphaInAnimation();
         this.mInterpolator = new LinearInterpolator();
     }
@@ -122,7 +123,7 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHo
             return HEADER_VIEW;
         }
 
-        if (mDataList.size() == 0 && mEmptyViewEnable && mEmptyView != null && position <= 2) {
+        if (mData.size() == 0 && mEmptyViewEnable && mEmptyView != null && position <= 2) {
 
             if (mEmptyHeaderEnable || mEmptyFooterEnable) {
                 if (position == 0) {
@@ -148,13 +149,13 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHo
                 //                }
                 return EMPTY_VIEW;
             }
-        } else if (position == (mDataList.size() + getHeaderCount())) {
+        } else if (position == (mData.size() + getHeaderCount())) {
             if (mLoadMoreEnable) {
                 return LOADINGMORE_VIEW;
             } else {
                 return FOOTER_VIEW;
             }
-        } else if (position > (mDataList.size() + getHeaderCount())) {
+        } else if (position > (mData.size() + getHeaderCount())) {
             return FOOTER_VIEW;
         }
 
@@ -216,7 +217,7 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHo
                 bindLoadingMoreView();
                 break;
             default:
-                onBind(holder, mDataList.get(holder.getLayoutPosition() - getHeaderCount()));
+                onBind(holder, mData.get(holder.getLayoutPosition() - getHeaderCount()));
                 break;
         }
     }
@@ -238,8 +239,8 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHo
 
     @Override
     public int getItemCount() {
-        int count = mDataList.size() + getHeaderCount() + getFooterCount() + getLoadingCount();
-        if (mDataList.size() == 0 && mEmptyViewEnable && mEmptyView != null) {
+        int count = mData.size() + getHeaderCount() + getFooterCount() + getLoadingCount();
+        if (mData.size() == 0 && mEmptyViewEnable && mEmptyView != null) {
             if (mEmptyHeaderEnable && mEmptyFooterEnable) {
                 count = getHeaderCount() + getFooterCount() + getEmptyViewCount();
             } else if (!mEmptyHeaderEnable && !mEmptyFooterEnable) {
@@ -357,34 +358,34 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHo
 
     public void setData(List<T> dataList) {
 
-        this.mDataList = (dataList == null) ? new ArrayList<T>() : dataList;
+        this.mData = (dataList == null) ? new ArrayList<T>() : dataList;
         if (mOnLoadMoreListener != null) {
             mLoadMoreEnable = true;
         }
 
-        if (mLoadMoreFailed != null) {
-            removeFooterView(mLoadMoreFailed);
+        if (mLoadMoreFailedView != null) {
+            removeFooterView(mLoadMoreFailedView);
         }
         this.mLastPosition = -1;
         this.notifyDataSetChanged();
     }
 
     public List<T> getData() {
-        return this.mDataList;
+        return this.mData;
     }
 
     public void addData(T itemData) {
 
-        mDataList.add(itemData);
-        notifyItemInserted(mDataList.size());
+        mData.add(itemData);
+        notifyItemInserted(mData.size());
     }
 
     public void addData(int position, T itemData) {
 
-        if (position >= 0 && position < mDataList.size()) {
-            mDataList.add(position, itemData);
+        if (position >= 0 && position < mData.size()) {
+            mData.add(position, itemData);
             notifyItemInserted(position);
-            notifyItemRangeChanged(position, mDataList.size() - position);
+            notifyItemRangeChanged(position, mData.size() - position);
 
         } else {
 
@@ -395,8 +396,8 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHo
 
     public boolean removeData(int position) {
         boolean isRemoved = false;
-        if (mDataList != null) {
-            mDataList.remove(position);
+        if (mData != null) {
+            mData.remove(position);
             isRemoved = true;
             notifyItemRemoved(position + getHeaderCount());
         }
@@ -405,17 +406,17 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHo
 
     public boolean removeData(T itemData) {
         boolean isRemoved = false;
-        if (mDataList != null) {
-            mDataList.remove(itemData);
+        if (mData != null) {
+            mData.remove(itemData);
         }
         return false;
     }
 
-    public void setItemData(int position, T itemData) {
+    public void setData(int position, T itemData) {
 
-        if (position >= 0 && position < mDataList.size()) {
+        if (position >= 0 && position < mData.size()) {
 
-            this.mDataList.set(position, itemData);
+            this.mData.set(position, itemData);
             this.notifyItemChanged(position);
 
         } else {
@@ -423,26 +424,26 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHo
         }
     }
 
-    public T getItemData(int position) {
-        return this.mDataList.get(position);
+    public T getData(int position) {
+        return this.mData.get(position);
     }
 
     public void addData(List<T> dataList) {
 
-        this.mDataList.addAll(dataList);
+        this.mData.addAll(dataList);
 
         if (this.mLoadMoreEnable) {
             this.mIsLoadingMore = false;
         }
 
-        this.notifyItemRangeChanged(mDataList.size() - dataList.size() + getHeaderCount(), dataList.size());
+        this.notifyItemRangeChanged(mData.size() - dataList.size() + getHeaderCount(), dataList.size());
     }
 
     public void addData(int position, List<T> dataList) {
-        if (position >= 0 && position < mDataList.size()) {
-            this.mDataList.addAll(position, dataList);
+        if (position >= 0 && position < mData.size()) {
+            this.mData.addAll(position, dataList);
             this.notifyItemInserted(position);
-            this.notifyItemRangeChanged(position, mDataList.size() - position - dataList.size());
+            this.notifyItemRangeChanged(position, mData.size() - position - dataList.size());
         } else {
 
             throw new ArrayIndexOutOfBoundsException();
@@ -554,11 +555,11 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHo
      * @param failedView
      */
     public void setLoadMoreFailedView(View failedView) {
-        this.mLoadMoreFailed = failedView;
+        this.mLoadMoreFailedView = failedView;
         failedView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                removeFooterView(mLoadMoreFailed);
+                removeFooterView(mLoadMoreFailedView);
                 setPageSize(pageSize);
             }
         });
@@ -569,17 +570,17 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHo
      */
     private void showLoadMoreFailedView() {
         loadMoreCompleted();
-        if (mLoadMoreFailed == null) {
-            mLoadMoreFailed = mLayoutInflater.inflate(R.layout.def_load_more_failed, null);
-            mLoadMoreFailed.setOnClickListener(new View.OnClickListener() {
+        if (mLoadMoreFailedView == null) {
+            mLoadMoreFailedView = mLayoutInflater.inflate(R.layout.def_load_more_failed, null);
+            mLoadMoreFailedView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    removeFooterView(mLoadMoreFailed);
+                    removeFooterView(mLoadMoreFailedView);
                     setPageSize(pageSize);
                 }
             });
         }
-        addFooterView(mLoadMoreFailed);
+        addFooterView(mLoadMoreFailedView);
     }
 
     public void loadMoreCompleted() {
@@ -638,7 +639,7 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHo
     }
 
     private boolean isLoadMoreEnable() {
-        return mLoadMoreEnable && pageSize != -1 && mOnLoadMoreListener != null && mDataList.size() >= pageSize;
+        return mLoadMoreEnable && pageSize != -1 && mOnLoadMoreListener != null && mData.size() >= pageSize;
     }
 
     public boolean isLoadingMore() {
@@ -659,7 +660,7 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHo
      *
      * @param animationType
      */
-    public void setDefAnimation(@AnimationType int animationType) {
+    public void setAnimation(@AnimationType int animationType) {
         this.mAnimationEnable = true;
         this.mCusAnimation = null;
         switch (animationType) {
@@ -690,7 +691,7 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHo
      *
      * @param baseAnimation
      */
-    public void setCusAnimation(BaseAnimation baseAnimation) {
+    public void setAnimation(BaseAnimation baseAnimation) {
         this.mAnimationEnable = true;
         this.mCusAnimation = baseAnimation;
     }
@@ -703,34 +704,160 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHo
         this.mIsFirstOnly = isFirstOnly;
     }
 
+    /**
+     * Expand an expandable item
+     *
+     * @param position
+     * @param animEnable
+     * @param notify
+     * @return
+     */
     public int expand(@IntRange(from = 0) int position, boolean animEnable, boolean notify) {
-        int subItemCount;
-
+        int subItemCount = 0;
         position -= getHeaderCount();
+
         IExpandable expandableItem = getExpandableItem(position);
         if (expandableItem == null) {
-            subItemCount = 0;
+            return subItemCount;
         }
 
-        if (!hasSubItems(expandableItem)) {
-            expandableItem.setExpandable(false);
-            subItemCount = 0;
+        if (!hasSubData(expandableItem)) {
+            expandableItem.setExpanded(false);
+            return subItemCount;
         }
 
-        if (!expandableItem.isExpandable()) {
+        if (!expandableItem.isExpanded()) {
+            List subData = expandableItem.getSubData();
+            mData.addAll(position + 1, subData);
 
+            subItemCount += subData.size();
+            subItemCount += recursiveExpand(position + 1, subData);
+            expandableItem.setExpanded(true);
         }
 
-        return 0;
+        position += getHeaderCount();
+        if (notify) {
+            if (animEnable) {
+                notifyItemChanged(position);
+                notifyItemRangeInserted(position + 1, subItemCount);
+            } else {
+                notifyDataSetChanged();
+            }
+        }
+
+        return subItemCount;
     }
 
-    private boolean hasSubItems(IExpandable expandableItem) {
-        List<T> itemDatas = expandableItem.getData();
+    public int expandAll(@IntRange(from = 0) int position, boolean animEnable, boolean notify) {
+        int totalCount = 0;
+        position -= getHeaderCount();
+
+        IExpandable expandableItem = getExpandableItem(position);
+        if (expandableItem == null) {
+            return totalCount;
+        }
+        if (!hasSubData(expandableItem)) {
+            return totalCount;
+        }
+
+        for (int i = position; i < mData.size(); i++) {
+            T item = mData.get(i);
+            if (isExpandable(item)) {
+                totalCount += expand(position + getHeaderCount(), animEnable, notify);
+            }
+        }
+
+        position += getHeaderCount();
+        if (notify) {
+            if (animEnable) {
+                notifyItemRangeInserted(position + 1, totalCount);
+            } else {
+                notifyDataSetChanged();
+            }
+        }
+        return totalCount;
+    }
+
+
+    private int recursiveExpand(int position, @NonNull List data) {
+        int subTotalCount = 0;
+        int pos = position + data.size() - 1;
+        for (int i = 0; i <= data.size() - 1; i++) {
+            if (data.get(i) instanceof IExpandable) {
+                IExpandable expandableItem = (IExpandable) data.get(i);
+                List subData = expandableItem.getSubData();
+                mData.addAll(pos + 1, subData);
+                int subItemCount = recursiveExpand(pos + 1, subData);
+                pos += subItemCount;
+                subTotalCount += subItemCount;
+            }
+        }
+        return subTotalCount;
+    }
+
+    /**
+     * Collapse an expandable item
+     *
+     * @param position
+     * @param animEnable
+     * @param notify
+     * @return
+     */
+    public int collapse(@IntRange(from = 0) int position, boolean animEnable, boolean notify) {
+        int subItemCount = 0;
+        position -= getHeaderCount();
+
+        IExpandable expandableItem = getExpandableItem(position);
+        if (expandableItem == null) {
+            return subItemCount;
+        }
+
+        subItemCount = recursiveCollapse(position);
+        position += getHeaderCount();
+        if (notify) {
+            if (animEnable) {
+                notifyItemChanged(position);
+                notifyItemRangeInserted(position + 1, subItemCount);
+            } else {
+                notifyDataSetChanged();
+            }
+        }
+
+        return subItemCount;
+    }
+
+    private int recursiveCollapse(int position) {
+        int subItemCount = 0;
+        T item = mData.get(position);
+
+        IExpandable expandableItem = (IExpandable) item;
+        if (expandableItem.isExpanded()) {
+            List<T> subData = expandableItem.getSubData();
+            for (int i = 0; i < subData.size(); i++) {
+                T subItem = subData.get(i);
+                int pos = getItemPosition(subItem);
+                if (pos != -1 && subItem instanceof IExpandable) {
+                    subItemCount += recursiveCollapse(pos);
+                }
+                mData.remove(pos);
+                subItemCount++;
+            }
+        }
+
+        return subItemCount;
+    }
+
+    private int getItemPosition(T item) {
+        return item != null && mData != null && !mData.isEmpty() ? mData.indexOf(item) : -1;
+    }
+
+    private boolean hasSubData(IExpandable expandableItem) {
+        List<T> itemDatas = expandableItem.getSubData();
         return itemDatas != null && itemDatas.size() > 0;
     }
 
     private IExpandable getExpandableItem(int position) {
-        T item = getItemData(position);
+        T item = getData(position);
         if (isExpandable(item)) {
             return (IExpandable) item;
         }
@@ -739,6 +866,41 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHo
 
     private boolean isExpandable(T item) {
         return item != null && item instanceof IExpandable;
+    }
+
+    /**
+     * get the position of the item`s parent
+     * if the item has no parent, reutrn -1
+     * @param item
+     * @return
+     */
+    public int getParentPosition(T item) {
+        int position = getItemPosition(item);
+        if (position == -1) {
+            return -1;
+        }
+
+        int level;
+        if (item instanceof IExpandable) {
+            level = ((IExpandable) item).getLevel();
+        } else {
+            level = Integer.MAX_VALUE;
+        }
+        if (level == 0 || level == -1) {
+            return -1;
+        }
+
+        for (int i = position; i >= 0; i--) {
+            T temp = mData.get(i);
+            if (temp instanceof IExpandable) {
+                IExpandable expandableItem = (IExpandable) temp;
+                int tempLevel = expandableItem.getLevel();
+                if (tempLevel >= 0 && tempLevel < level) {
+                    return i;
+                }
+            }
+        }
+        return -1;
     }
 
 }

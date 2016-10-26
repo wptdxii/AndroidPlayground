@@ -27,7 +27,7 @@ public class SwipeRecyclerFragment extends BaseSwipeRecyclerFragment<GankModel> 
     private int page = 1;
     @Override
     protected void initListData() {
-//        if (mDataList == null || mDataList.size() == 0) {
+//        if (mData == null || mData.size() == 0) {
 //            mSwipeRecycler.setRefreshing();
 //        } else {
 //           mSwipeRecycler.onLoadMore();

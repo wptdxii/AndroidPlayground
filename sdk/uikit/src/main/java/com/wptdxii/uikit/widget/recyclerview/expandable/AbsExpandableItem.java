@@ -9,70 +9,76 @@ import java.util.List;
  * Created by wptdxii on 2016/10/14 0014.
  */
 
-public class AbsExpandableItem<T> implements IExpandable<T> {
-    protected boolean mExpandable;
-    protected List<T> mSubDataList;
+public abstract class AbsExpandableItem<T> implements IExpandable<T> {
+    protected boolean mExpanded;
+    protected List<T> mSubData;
 
     @Override
-    public boolean isExpandable() {
-        return this.mExpandable;
-    }
-
-    @Override
-    public void setExpandable(boolean expandable) {
-        this.mExpandable = expandable;
+    public boolean isExpanded() {
+        return this.mExpanded;
     }
 
     @Override
-    public List<T> getData() {
-        return mSubDataList;
+    public void setExpanded(boolean expandable) {
+        this.mExpanded = expandable;
     }
 
     @Override
-    public int getLevel() {
-        return 0;
+    public List<T> getSubData() {
+        return mSubData;
     }
 
-    public void setData(List<T> dataList) {
-        this.mSubDataList = dataList;
+    public void setSubData(List<T> subData) {
+        this.mSubData = subData;
     }
 
-    public T getData(int positon) {
-        if (mSubDataList != null && mSubDataList.size() > 0 &&
-                positon < mSubDataList.size()) {
-            return mSubDataList.get(positon);
+    public T getSubItemData(int position) {
+        if (mSubData != null && position >= 0 && position < mSubData.size()) {
+            return mSubData.get(position);
         } else {
             return null;
         }
     }
 
-    public void addData(T itemData) {
-        if (mSubDataList == null) {
-            mSubDataList = new ArrayList<>();
-        }
-
-        mSubDataList.add(itemData);
+    public int getSubItemPosition(T subItem) {
+        return mSubData != null ? mSubData.indexOf(subItem) : -1;
     }
 
-    /**
-     * if the position out of data size, then add the data to the end of the data collection
-     * @param position
-     * @param itemData
-     */
-    public void addData(int position, T itemData) {
-        if (mSubDataList != null && position >= 0 && position < mSubDataList.size()) {
-            mSubDataList.add(position, itemData);
+    public void addSubItemData(T itemData) {
+        if (mSubData == null) {
+            mSubData = new ArrayList<T>();
+        }
+
+        mSubData.add(itemData);
+    }
+
+    public void addSubItemData(int position, T itemData) {
+        if (mSubData == null) {
+            mSubData = new ArrayList<T>();
+        }
+
+        if (position >= 0 && position < mSubData.size()) {
+            mSubData.add(position, itemData);
         } else {
-            addData(itemData);
+            throw new IndexOutOfBoundsException();
         }
     }
 
-    public boolean removeData(T itemData) {
-        return mSubDataList != null && mSubDataList.remove(itemData);
+    public boolean removeSubItemData(T itemData) {
+        return mSubData != null && mSubData.remove(itemData);
     }
 
+    public boolean removeSubItemData(int position) {
+        if (mSubData != null && position >= 0 && position < mSubData.size()) {
+            mSubData.remove(position);
+
+            return true;
+        }
+
+        return false;
+    }
 
     public boolean contains(T itemData) {
-        return mSubDataList != null && mSubDataList.contains(itemData);
+        return mSubData != null && mSubData.contains(itemData);
     }
 }
