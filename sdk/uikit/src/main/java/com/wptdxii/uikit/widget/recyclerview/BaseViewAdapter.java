@@ -42,10 +42,10 @@ import static com.wptdxii.uikit.widget.recyclerview.animation.AnimationType.SLID
  */
 
 public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHolder> {
-    public static final int HEADER_VIEW = 0x00000111;
-    public static final int EMPTY_VIEW = 0x00000222;
-    public static final int FOOTER_VIEW = 0x00000333;
-    public static final int LOADINGMORE_VIEW = 0x00000444;
+   protected static final int HEADER_VIEW = 0x00000111;
+   protected static final int EMPTY_VIEW = 0x00000222;
+   protected static final int FOOTER_VIEW = 0x00000333;
+   protected static final int LOADINGMORE_VIEW = 0x00000444;
 
     protected Context mContext;
     protected LayoutInflater mLayoutInflater;
@@ -97,24 +97,24 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHo
     private boolean mIsFirstOnly;
     private Interpolator mInterpolator;
 
-    public BaseViewAdapter(Context context, View itemView, @Nullable List<T> dataList) {
+    public BaseViewAdapter(Context context, View itemView, @Nullable List<T> data) {
         this.mContext = context;
         this.mLayoutInflater = LayoutInflater.from(context);
         this.mItemView = itemView;
-        this.mData = (dataList == null ? new ArrayList<T>() : dataList);
+        this.mData = (data == null ? new ArrayList<T>() : data);
         this.mAnimation = new AlphaInAnimation();
         this.mInterpolator = new LinearInterpolator();
     }
 
-    public BaseViewAdapter(Context context, @LayoutRes int layoutResId, @Nullable List<T> dataList) {
-        this(context, null, dataList);
+    public BaseViewAdapter(Context context, @LayoutRes int layoutResId, @Nullable List<T> data) {
+        this(context, null, data);
         this.mLayoutResId = layoutResId;
     }
 
 
-    public BaseViewAdapter(Context context, @Nullable List<T> dataList) {
+    public BaseViewAdapter(Context context, @Nullable List<T> data) {
 
-        this(context, null, dataList);
+        this(context, null, data);
     }
 
     @Override
@@ -159,7 +159,20 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHo
             return FOOTER_VIEW;
         }
 
-        return super.getItemViewType(position - getHeaderCount());
+//        return super.getItemViewType(position - getHeaderCount());
+
+        return getItemType(position - getHeaderCount());
+
+
+    }
+
+    /**
+     * override this method when need
+     * @param position
+     * @return
+     */
+    protected int getItemType(int position) {
+        return super.getItemViewType(position);
     }
 
     @Override
@@ -180,13 +193,13 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHo
                 viewHolder = createLoadingMoreView(parent);
                 break;
             default:
-                viewHolder = createDefViewHolder(parent);
+                viewHolder = createViewHolder(parent);
                 break;
         }
         return viewHolder;
     }
 
-    private BaseViewHolder createDefViewHolder(ViewGroup parent) {
+    private BaseViewHolder createViewHolder(ViewGroup parent) {
         if (mItemView == null) {
             mItemView = mLayoutInflater.inflate(mLayoutResId, parent, false);
         }
@@ -356,9 +369,9 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHo
         return this.pageSize;
     }
 
-    public void setData(List<T> dataList) {
+    public void setData(List<T> data) {
 
-        this.mData = (dataList == null) ? new ArrayList<T>() : dataList;
+        this.mData = (data == null) ? new ArrayList<T>() : data;
         if (mOnLoadMoreListener != null) {
             mLoadMoreEnable = true;
         }
@@ -428,22 +441,22 @@ public abstract class BaseViewAdapter<T> extends RecyclerView.Adapter<BaseViewHo
         return this.mData.get(position);
     }
 
-    public void addData(List<T> dataList) {
+    public void addData(List<T> data) {
 
-        this.mData.addAll(dataList);
+        this.mData.addAll(data);
 
         if (this.mLoadMoreEnable) {
             this.mIsLoadingMore = false;
         }
 
-        this.notifyItemRangeChanged(mData.size() - dataList.size() + getHeaderCount(), dataList.size());
+        this.notifyItemRangeChanged(mData.size() - data.size() + getHeaderCount(), data.size());
     }
 
-    public void addData(int position, List<T> dataList) {
+    public void addData(int position, List<T> data) {
         if (position >= 0 && position < mData.size()) {
-            this.mData.addAll(position, dataList);
+            this.mData.addAll(position, data);
             this.notifyItemInserted(position);
-            this.notifyItemRangeChanged(position, mData.size() - position - dataList.size());
+            this.notifyItemRangeChanged(position, mData.size() - position - data.size());
         } else {
 
             throw new ArrayIndexOutOfBoundsException();
