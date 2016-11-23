@@ -1,4 +1,4 @@
-package com.wptdxii.playground.bean;
+package com.wptdxii.playground.test.bean;
 
 /**
  * Created by wptdxii on 2016/11/1 0001.

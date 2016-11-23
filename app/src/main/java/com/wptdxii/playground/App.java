@@ -75,7 +75,7 @@ public class App extends Application {
     static final class ExtImpl extends Ext {
         @Override
         public String getCurOpenId() {
-            //TODO get UserId from ApplicationComponent
+            // TODO get UserId from ApplicationComponent
             return null;
         }
 

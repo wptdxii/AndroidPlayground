@@ -1,4 +1,4 @@
-package com.wptdxii.playground.bean;
+package com.wptdxii.playground.test.bean;
 
 import java.util.ArrayList;
 
