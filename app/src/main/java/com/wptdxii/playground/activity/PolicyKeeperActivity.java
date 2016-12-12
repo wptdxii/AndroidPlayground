@@ -367,18 +367,16 @@ public class PolicyKeeperActivity extends BaseActivity implements
 		.execute(new StringCallback() {
 
 			@Override
-			public void onError(Call call, Exception e) {
-				
+			public void onError(Call call, Exception e, int id) {
 				Log.e("error", "获取数据异常 ", e);
 				Toast.makeText(PolicyKeeperActivity.this,
 						"网络连接失败，请确认网络连接后重试", Toast.LENGTH_SHORT).show();
 				dialog.dismiss();
-				
+
 			}
 
 			@Override
-			public void onResponse(String response) {
-			
+			public void onResponse(String response, int id) {
 				String jsonString = response;
 				Log.d("onSuccess", "onSuccess json = " + jsonString);
 				Map<String, String> errcode_map = new HashMap<String, String>();
@@ -402,7 +400,7 @@ public class PolicyKeeperActivity extends BaseActivity implements
 						// String data = jsonObject.getString("data");
 						String errcode = jsonObject.getString("errcode");
 						if (!errcode.equals("0")) {
-							
+
 							String errmsg = jsonObject.getString("errmsg");
 
 							errcode_map.put("errcode", errcode);
@@ -412,7 +410,7 @@ public class PolicyKeeperActivity extends BaseActivity implements
 
 							message2.obj = errcode_map;
 
-						null_handler.sendMessage(message2);
+							null_handler.sendMessage(message2);
 
 						} else {
 							JSONArray dataList = jsonObject
@@ -447,21 +445,20 @@ public class PolicyKeeperActivity extends BaseActivity implements
 							Message message = Message.obtain();
 
 							message.obj = list;
-//							String sousustr = policy_keeper_edit.getText()
-//									.toString();
-//							if (sousustr == null || sousustr.equals("")
-//									|| sousustr.equals("null")) {
-								Xlist_handler.sendMessage(message);
-//							} else {
-//								list_handler.sendMessage(message);
-//							}
+							//							String sousustr = policy_keeper_edit.getText()
+							//									.toString();
+							//							if (sousustr == null || sousustr.equals("")
+							//									|| sousustr.equals("null")) {
+							Xlist_handler.sendMessage(message);
+							//							} else {
+							//								list_handler.sendMessage(message);
+							//							}
 						}
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
-
 		
 		});
 		
@@ -485,7 +482,7 @@ public class PolicyKeeperActivity extends BaseActivity implements
 		.execute(new StringCallback() {
 
 			@Override
-			public void onError(Call call, Exception e) {
+			public void onError(Call call, Exception e, int id) {
 				Log.e("error", "获取数据异常 ", e);
 				Toast.makeText(PolicyKeeperActivity.this,
 						"网络连接失败，请确认网络连接后重试", Toast.LENGTH_SHORT).show();
@@ -493,8 +490,7 @@ public class PolicyKeeperActivity extends BaseActivity implements
 			}
 
 			@Override
-			public void onResponse(String response) {
-			
+			public void onResponse(String response, int id) {
 				String jsonString = response;
 				Log.d("onSuccess", "onSuccess json = " + jsonString);
 				Map<String, String> errcode_map = new HashMap<String, String>();
@@ -562,14 +558,14 @@ public class PolicyKeeperActivity extends BaseActivity implements
 							Message message = Message.obtain();
 
 							message.obj = list;
-					//		String sousustr = policy_keeper_edit.getText()
-					//				.toString();
-						//	if (sousustr == null || sousustr.equals("")
-						//			|| sousustr.equals("null")) {
-						//		Xlist_handler.sendMessage(message);
-						//	} else {
-								list_handler.sendMessage(message);
-					//		}
+							//		String sousustr = policy_keeper_edit.getText()
+							//				.toString();
+							//	if (sousustr == null || sousustr.equals("")
+							//			|| sousustr.equals("null")) {
+							//		Xlist_handler.sendMessage(message);
+							//	} else {
+							list_handler.sendMessage(message);
+							//		}
 						}
 					}
 				} catch (Exception e) {

@@ -372,7 +372,7 @@ public class MoreTopicActivity extends BaseActivity implements IXListViewListene
                 .execute(new StringCallback() {
 
                     @Override
-                    public void onError(Call call, Exception e) {
+                    public void onError(Call call, Exception e, int id) {
                         Log.e("error", "获取数据异常 ", e);
                         String status = "false";
                         Message message = Message.obtain();
@@ -380,12 +380,10 @@ public class MoreTopicActivity extends BaseActivity implements IXListViewListene
                         message.obj = status;
 
                         errcode_handler.sendMessage(message);
-
                     }
 
                     @Override
-                    public void onResponse(String response) {
-
+                    public void onResponse(String response, int id) {
                         String jsonString = response;
                         Log.d("onSuccess", "onSuccess json = " + jsonString);
                         List<Map<String, String>> titlelist = new ArrayList<Map<String, String>>();

@@ -289,8 +289,7 @@ public class OfferDetialActivity extends BaseActivity {
 		.execute(new StringCallback() {
 
 			@Override
-			public void onError(Call call, Exception e) {
-			
+			public void onError(Call call, Exception e, int id) {
 				Log.e("error", "获取数据异常 ", e);
 				String status = "false";
 				Message message = Message.obtain();
@@ -298,17 +297,15 @@ public class OfferDetialActivity extends BaseActivity {
 				message.obj = status;
 
 				errcode_handler.sendMessage(message);
-				
 			}
 
 			@Override
-			public void onResponse(String response) {
-			
+			public void onResponse(String response, int id) {
 				String jsonString = response;
 				Log.d("onSuccess", "onSuccess json = " + jsonString);
 				List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 				Map<String, Object> map_all = new HashMap<String, Object>();
-				
+
 				try {
 
 					Log.d("44444", jsonString);
@@ -338,57 +335,55 @@ public class OfferDetialActivity extends BaseActivity {
 
 						String is_bought = basicObject
 								.getString("is_bought");
-						
+
 						map_all.put("holder_name", holder_name);
 						map_all.put("cj_no", cj_no);
 						map_all.put("engine_no", engine_no);
 						map_all.put("car_msg", car_msg);
 						map_all.put("is_bought", is_bought);
-						
-						
+
+
 						JSONObject priceObject = dataObject.getJSONObject("price");
-						
-						
+
+
 						// 迭代输出json的key作为map的key
 
 						Iterator<String> iterator = priceObject.keys();
 						while (iterator.hasNext()) {
 							Map<String, String> map = new HashMap<String, String>();
 							String key = iterator.next();
-							 String ty = policy_name.get(key);
-							 String value = priceObject.getString(key);
-		                     if (ty == null || ty.equals("")) {
-		                    	 
-		                    	
-		                    	 map_all.put(key, value);
-		                    	
-		                         
-		                     }else{
-		                   
-		                    	 map.put("policy_name", ty);
-		                    	 map.put("policy_price", value);
-		                    	list.add(map);
-		                     }
-		                     
-		                 
+							String ty = policy_name.get(key);
+							String value = priceObject.getString(key);
+							if (ty == null || ty.equals("")) {
+
+
+								map_all.put(key, value);
+
+
+							}else{
+
+								map.put("policy_name", ty);
+								map.put("policy_price", value);
+								list.add(map);
+							}
+
+
 						}
-						
-						
+
+
 						map_all.put("price_list", list);
-						
-					
+
+
 						Message message = Message.obtain();
 
 						message.obj = map_all;
-                  		handler.sendMessage(message);
-						
+						handler.sendMessage(message);
+
 
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-
-
 			}
 		});
 		
@@ -410,9 +405,7 @@ public class OfferDetialActivity extends BaseActivity {
 		.execute(new StringCallback() {
 
 			@Override
-			public void onError(Call call, Exception e) {
-			
-			
+			public void onError(Call call, Exception e, int id) {
 				Log.e("error", "获取数据异常 ", e);
 				String status = "false";
 				Message message = Message.obtain();
@@ -423,14 +416,13 @@ public class OfferDetialActivity extends BaseActivity {
 			}
 
 			@Override
-			public void onResponse(String response) {
-			
-				
+			public void onResponse(String response, int id) {
+
 				String jsonString = response;
 				Log.d("onSuccess", "onSuccess json = " + jsonString);
-				
+
 				Map<String, String> map = new HashMap<String, String>();
-				
+
 				try {
 
 					Log.d("44444", jsonString);
@@ -444,13 +436,13 @@ public class OfferDetialActivity extends BaseActivity {
 						errcode_handler.sendMessage(message);
 					} else {
 						JSONObject jsonObject = new JSONObject(jsonString);
-					    
+
 						String errcode = jsonObject.getString("errcode");
 						String errmsg= jsonObject.getString("errmsg");
-						
+
 						JSONObject dataObject = jsonObject.getJSONObject("data");
 						String msg= dataObject.getString("msg");
-						
+
 						map.put("errcode", errcode);
 						map.put("errmsg", errmsg);
 						map.put("msg", msg);
@@ -459,14 +451,13 @@ public class OfferDetialActivity extends BaseActivity {
 						message.obj = map;
 
 						haddle_handler.sendMessage(message);
-						
-						
+
+
 
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-
 			}
 		});
 		

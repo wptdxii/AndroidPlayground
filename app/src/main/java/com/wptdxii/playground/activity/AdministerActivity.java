@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ExpandableListView;
@@ -13,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cloudhome.R;
-import com.cloudhome.adapter.AdministerExpandalbeListAdapter;
+import com.cloudhome.adapter.AdministerExpandableListAdapter;
 import com.cloudhome.bean.AdministerChildBean;
 import com.cloudhome.bean.AdministerGroupBean;
 import com.cloudhome.bean.BarChartBean;
@@ -57,7 +58,7 @@ public class AdministerActivity extends BaseActivity
     private ExpandListView elvAdminister;
     private boolean mStatisticsShown = false;
     private boolean mAdministerShown = false;
-    private AdministerExpandalbeListAdapter mAdapter;
+    private AdministerExpandableListAdapter mAdapter;
     private String mToken;
     private String mUserId;
     private String mUserType;
@@ -68,12 +69,14 @@ public class AdministerActivity extends BaseActivity
     private View mHeader;
     private TextView tvTotalPeriod;
     private HorizontalBarChartView mBarChart;
+    private View stasticsDivider;
+    private TextView tvStasitcs;
     private PieChartView mPieChart;
     private boolean isRefershing = false;
     private Dialog dialog;
 
     private int lastExpandedPosition = -1;
-    private int totalPeriod;
+    private Double totalPeriod;
     private List<BarChartBean> mBarChartData;
     private List<PieChartBean> mPieChartData;
 
@@ -85,21 +88,8 @@ public class AdministerActivity extends BaseActivity
         initView();
         initDialog();
         initData();
-        initMockData();
     }
 
-    private void initMockData() {
-        List<BarChartBean> barChartData = new ArrayList<>();
-        barChartData.add(new BarChartBean("寿险", "#e8382b", 1));
-        barChartData.add(new BarChartBean("非车", "#fca600", 100));
-        barChartData.add(new BarChartBean("车险", "#028be6", 70));
-        mBarChart.setBarChartData(barChartData);
-
-        List<PieChartBean> pieChartData = new ArrayList<>();
-        pieChartData.add(new PieChartBean("直接推荐人", "#028be6", 0));
-        pieChartData.add(new PieChartBean("间接推荐人", "#fca600", 0));
-        mPieChart.setPieChartData(pieChartData);
-    }
 
     private void initData() {
 
@@ -110,9 +100,8 @@ public class AdministerActivity extends BaseActivity
         mParams = new HashMap<>();
         mParams.put("user_id", mUserId);
         mParams.put("token", mToken);
-//        mUrl = IpConfig.getUri2("getAdminister");
         mUrl = IpConfig.getUri2("getUnderData");
-
+        //        mUrl = IpConfig.getUri2("getAdminister");
         mBarChartData = new ArrayList<>();
         mPieChartData = new ArrayList<>();
 
@@ -120,7 +109,8 @@ public class AdministerActivity extends BaseActivity
         mChild = new ArrayList<>();
         mAdapterGroup = new ArrayList<>();
         mAdapterChild = new ArrayList<>();
-        mAdapter = new AdministerExpandalbeListAdapter(this, mAdapterGroup, mAdapterChild, mUserType);
+        mAdapter = new AdministerExpandableListAdapter(this,
+                mAdapterGroup, mAdapterChild, mUserType);
         elvAdminister.setAdapter(mAdapter);
 
 
@@ -130,13 +120,14 @@ public class AdministerActivity extends BaseActivity
     private void initDialog() {
         dialog = new Dialog(this, R.style.progress_dialog);
         dialog.setContentView(R.layout.progress_dialog);
-        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         TextView dialogContent = (TextView) dialog.findViewById(R.id.id_tv_loadingmsg);
         dialogContent.setText("加载中...");
         dialog.show();
     }
 
+    private static final String TAG = "AdministerActivity";
 
     private void initAdministerData() {
         OkHttpUtils.get()
@@ -145,12 +136,13 @@ public class AdministerActivity extends BaseActivity
                 .build()
                 .execute(new StringCallback() {
                     @Override
-                    public void onError(Call call, Exception e) {
+                    public void onError(Call call, Exception e, int id) {
                         if (dialog.isShowing()) {
                             dialog.dismiss();
                         }
                         if (isRefershing) {
-                            Toast.makeText(AdministerActivity.this, "刷新失败", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AdministerActivity.this, "刷新失败",
+                                    Toast.LENGTH_SHORT).show();
                             elvAdminister.stopRefresh();
                             elvAdminister.setRefreshTime("刚刚");
                             isRefershing = false;
@@ -158,8 +150,11 @@ public class AdministerActivity extends BaseActivity
                     }
 
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse(String response, int id) {
+                        Log.e(TAG, "onResponse: " + response);
+
                         try {
+
 
                             if (!response.equals("") && !response.equals("null")) {
                                 if (isRefershing) {
@@ -170,10 +165,14 @@ public class AdministerActivity extends BaseActivity
                                     elvAdminister.setRefreshTime("刚刚");
                                 }
                                 JSONObject jsonObj = new JSONObject(response);
+
                                 JSONObject underObj = jsonObj.getJSONObject("data");
                                 JSONArray jsonArray = underObj.getJSONArray("underList");
 
+                                // JSONArray jsonArray = jsonObj.getJSONArray("data");
+
                                 for (int i = 0; i < jsonArray.length(); i++) {
+
                                     JSONObject dataObj = jsonArray.getJSONObject(i);
                                     AdministerGroupBean groupBean = new AdministerGroupBean();
                                     groupBean.setDirectUserTotal(dataObj.getInt("directUserTotal"));
@@ -192,7 +191,8 @@ public class AdministerActivity extends BaseActivity
                                         childBean.setAvatar(userObj.getString("avatar"));
                                         childBean.setState(userObj.getString("state"));
                                         if ("00".equals(mUserType)) {
-                                            childBean.setDirectUserCount(userObj.getInt("directUserCount"));
+                                            childBean.setDirectUserCount(
+                                                    userObj.getInt("directUserCount"));
                                         }
                                         childBean.setName(userObj.getString("name"));
                                         chidList.add(childBean);
@@ -200,18 +200,24 @@ public class AdministerActivity extends BaseActivity
                                     mChild.add(chidList);
                                 }
 
+
                                 JSONObject statisticOjb = underObj.getJSONObject("statisticData");
-                                totalPeriod = statisticOjb.getInt("totalPeriod");
+                                totalPeriod = statisticOjb.getDouble("totalPeriod");
+                                mBarChartData.clear();
                                 mBarChartData.add(new BarChartBean("寿险", "#e8382b",
                                         statisticOjb.getInt("lifeInsurance")));
                                 mBarChartData.add(new BarChartBean("非车", "#fca600",
                                         statisticOjb.getInt("noCarInsurance")));
                                 mBarChartData.add(new BarChartBean("车险", "#028be6",
                                         statisticOjb.getInt("carInsurance")));
-                                mPieChartData.add(new PieChartBean("直接推荐人", "#028be6",
-                                        statisticOjb.getInt("directCount")));
-                                mPieChartData.add(new PieChartBean("间接推荐人", "#fca600",
-                                        statisticOjb.getInt("indirectCount")));
+                                if ("00".equals(mUserType)) {
+
+                                    mPieChartData.clear();
+                                    mPieChartData.add(new PieChartBean("直接推荐人", "#028be6",
+                                            statisticOjb.getInt("directCount")));
+                                    mPieChartData.add(new PieChartBean("间接推荐人", "#fca600",
+                                            statisticOjb.getInt("indirectCount")));
+                                }
 
                                 bindStatisticData();
 
@@ -224,6 +230,16 @@ public class AdministerActivity extends BaseActivity
                                     }
                                     elvAdminister.stopRefresh();
                                     isRefershing = false;
+                                    showStastics(mStatisticsShown);
+
+                                } else {
+                                    if ("00".equals(mUserState)) {
+                                        showStastics(true);
+
+                                    } else {
+
+                                        showStastics(false);
+                                    }
                                 }
 
                                 if (dialog.isShowing()) {
@@ -240,10 +256,34 @@ public class AdministerActivity extends BaseActivity
                 });
     }
 
+    private void showStastics(boolean showStastics) {
+        if (showStastics) {
+            rlStatisticsContent.setVisibility(View.VISIBLE);
+            imgStatisticsArrow.setBackgroundResource(R.drawable.icon_down);
+        } else {
+            rlStatisticsContent.setVisibility(View.GONE);
+            imgStatisticsArrow.setBackgroundResource(R.drawable.icon_right);
+        }
+        mStatisticsShown = showStastics;
+    }
+
     private void bindStatisticData() {
         tvTotalPeriod.setText(totalPeriod + "");
         mBarChart.setBarChartData(mBarChartData);
-        mPieChart.setPieChartData(mPieChartData);
+
+        int visible;
+        if ("00".equals(mUserType)) {
+
+            visible = View.VISIBLE;
+            mPieChart.setPieChartData(mPieChartData);
+
+        } else {
+
+            visible = View.GONE;
+        }
+        stasticsDivider.setVisibility(visible);
+        tvStasitcs.setVisibility(visible);
+        mPieChart.setVisibility(visible);
 
     }
 
@@ -258,6 +298,8 @@ public class AdministerActivity extends BaseActivity
         rlStatisticsContent = (RelativeLayout) mHeader.findViewById(R.id.rl_statistics_content);
         tvTotalPeriod = (TextView) mHeader.findViewById(R.id.tv_total_period);
         mBarChart = (HorizontalBarChartView) mHeader.findViewById(R.id.bar_chart);
+        stasticsDivider = mHeader.findViewById(R.id.divider_statistics);
+        tvStasitcs = (TextView) mHeader.findViewById(R.id.tv_statistics_administer);
         mPieChart = (PieChartView) mHeader.findViewById(R.id.pie_chart);
         rlAdminister = (RelativeLayout) mHeader.findViewById(R.id.rl_administer);
         imgAdministerArrow = (ImageView) mHeader.findViewById(R.id.img_arrow_administer);
@@ -285,8 +327,24 @@ public class AdministerActivity extends BaseActivity
         } else if (view.getId() == R.id.rl_statistics) {
 
             if (!mStatisticsShown) {
+
+                if ("00".equals(mUserState)) {
+
+                    if ((mPieChartData == null || mPieChartData.size() == 0)
+                            && (mBarChartData == null || mBarChartData.size() == 0)) {
+                        Toast.makeText(this, "对不起，您还没有统计数据", Toast.LENGTH_SHORT).show();
+                    } else {
+
+                        rlStatisticsContent.setVisibility(View.VISIBLE);
+                    }
+
+
+                } else {
+
+                    showNotAuthDialog();
+                }
+
                 imgStatisticsArrow.setBackgroundResource(R.drawable.icon_down);
-                rlStatisticsContent.setVisibility(View.VISIBLE);
             } else {
                 imgStatisticsArrow.setBackgroundResource(R.drawable.icon_right);
                 rlStatisticsContent.setVisibility(View.GONE);
@@ -309,21 +367,9 @@ public class AdministerActivity extends BaseActivity
 
                 } else {
 
-                    CustomDialog.Builder builder = new CustomDialog.Builder(this);
-
-                    View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_content_commission, null);
-                    builder.setContentView(dialogView);
-                    builder.setPositiveButton("确定",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog,
-                                                    int which) {
-
-                                    dialog.dismiss();
-
-                                }
-                            });
-                    builder.create().show();
+                    showNotAuthDialog();
                 }
+                imgAdministerArrow.setBackgroundResource(R.drawable.icon_down);
             } else {
                 imgAdministerArrow.setBackgroundResource(R.drawable.icon_right);
             }
@@ -350,6 +396,25 @@ public class AdministerActivity extends BaseActivity
                 .show();
     }
 
+    private void showNotAuthDialog() {
+
+        CustomDialog.Builder builder = new CustomDialog.Builder(this);
+        View dialogView = LayoutInflater.from(this).inflate(
+                R.layout.dialog_content_commission, null);
+        builder.setContentView(dialogView);
+        builder.setPositiveButton("确定",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface
+                                                dialog,
+                                        int which) {
+
+                        dialog.dismiss();
+
+                    }
+                });
+        builder.create().show();
+    }
+
     @Override
     public void onRefresh() {
         isRefershing = true;
@@ -367,15 +432,16 @@ public class AdministerActivity extends BaseActivity
 
     }
 
-
     @Override
-    public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+    public boolean onChildClick(ExpandableListView parent, View v, int groupPosition,
+                                int childPosition, long id) {
 
         AdministerChildBean bean = mAdapterChild.get(groupPosition).get(childPosition);
         String state = bean.getState();
         if ("00".equals(state)) {
             String childId = bean.getId() + "";
-            String url = IpConfig.getIp() + "user_id=" + childId + "&token=" + mToken + "&mod=getHomepageForExpert";
+            String url = IpConfig.getIp() + "user_id=" + childId + "&token=" +
+                    mToken + "&mod=getHomepageForExpert";
             Intent intent = new Intent();
             intent.putExtra("title", "我的微站");
             intent.putExtra("url", url);

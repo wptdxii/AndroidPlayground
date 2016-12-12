@@ -488,8 +488,7 @@ public class MakeInsurancePlanActivity extends BaseActivity implements OnClickLi
 		ids=intent.getStringExtra("id");
 		title=intent.getStringExtra("title");
 //		ids="30003";
-		Log.i("传过来的ids--------------------------", ids);
-		
+
 		  dialog = new Dialog(this,R.style.progress_dialog);
           dialog.setContentView(R.layout.progress_dialog);
           dialog.setCancelable(true);
@@ -679,20 +678,17 @@ public class MakeInsurancePlanActivity extends BaseActivity implements OnClickLi
 		.execute(new StringCallback() {
 
 			@Override
-			public void onError(Call call, Exception e) {
-			
+			public void onError(Call call, Exception e, int id) {
 				Message msg=new Message();
 				msg.what=4;
 				resultHandler.sendMessage(msg);
-				
 			}
 
 			@Override
-			public void onResponse(String response) {
-			
+			public void onResponse(String response, int id) {
 				String jsonString = response;
 				Log.d("获取到数据了-----------------", "onSuccess json = " + jsonString);
-				
+
 				try {
 
 					Log.d("44444", jsonString);
@@ -716,9 +712,9 @@ public class MakeInsurancePlanActivity extends BaseActivity implements OnClickLi
 						JSONObject ageObj=paramsObj.getJSONObject("age");
 						min_age= Integer.parseInt(ageObj.getString("min_age"));
 						max_age= Integer.parseInt(ageObj.getString("max_age"));
-						
-						
-						
+
+
+
 						JSONArray dataList = dataObj.getJSONArray("products");
 						outlist=new ArrayList<MakeInsuranceTemplateBean>();
 						//先清空数据，避免重复添加
@@ -726,23 +722,23 @@ public class MakeInsurancePlanActivity extends BaseActivity implements OnClickLi
 						for(int i=0;i<dataList.length();i++){
 							MakeInsuranceTemplateBean bean=new MakeInsuranceTemplateBean();
 							JSONObject obj=(JSONObject) dataList.get(i);
-							
+
 							JSONObject insuranceObj=obj.getJSONObject("prodinfo");
 							JSONObject riskObj=obj.getJSONObject("riskamount");
-//							JSONObject premObj=obj.getJSONObject("prem");
+							//							JSONObject premObj=obj.getJSONObject("prem");
 							JSONArray arrayInput=obj.getJSONArray("inputfields");
-							
-//							bean.setProduct_id(map.get("id"));
-//							bean.setProduct_name(map.get("name"));
-//							bean.setCompany_id(map.get("company_code"));
-//							bean.setIshuomian(Integer.parseInt(map.get("ishuomian")));
-//							bean.setIsmust(Integer.parseInt(map.get("ismust")));
-//							bean.setMaster_id(map.get("master_id"));
+
+							//							bean.setProduct_id(map.get("id"));
+							//							bean.setProduct_name(map.get("name"));
+							//							bean.setCompany_id(map.get("company_code"));
+							//							bean.setIshuomian(Integer.parseInt(map.get("ishuomian")));
+							//							bean.setIsmust(Integer.parseInt(map.get("ismust")));
+							//							bean.setMaster_id(map.get("master_id"));
 							//可有可无的属性
-//							bean.setDisplay_order(0);
-//							bean.setId("");
-//							bean.setSuggest_id("");
-//							bean.setAdd_time("");
+							//							bean.setDisplay_order(0);
+							//							bean.setId("");
+							//							bean.setSuggest_id("");
+							//							bean.setAdd_time("");
 							//这个集合存储用于提交制作建议书
 							InsuranceTemplateBean templateBean=new InsuranceTemplateBean();
 							templateBean.setProduct_id(insuranceObj.getString("id"));
@@ -756,9 +752,8 @@ public class MakeInsurancePlanActivity extends BaseActivity implements OnClickLi
 							templateBean.setSuggest_id("");
 							templateBean.setAdd_time("");
 							insuranceTemplateLists.add(templateBean);
-							Log.i("insuranceTemplateLists添加一个templateBean", "templateBean--------");
-							
-							
+
+
 							bean.setInsuranceId(insuranceObj.getString("id"));
 							bean.setHuomian(insuranceObj.getString("ishuomian"));
 							bean.setIcon(insuranceObj.getString("icon"));
@@ -774,11 +769,11 @@ public class MakeInsurancePlanActivity extends BaseActivity implements OnClickLi
 								for(int n=0;n<additionsArray.length();n++){
 									MakeInsuranceTemplateBean additionalBean=new MakeInsuranceTemplateBean();
 									JSONObject additionalObj=(JSONObject) additionsArray.get(n);
-									
+
 									JSONObject additionalInsuranceObj=additionalObj.getJSONObject("prodinfo");
 									JSONObject additionalRiskObj=additionalObj.getJSONObject("riskamount");
 									JSONArray additionalArrayInput=additionalObj.getJSONArray("inputfields");
-									
+
 									//这个集合存储用于提交制作建议书
 									InsuranceTemplateBean templateBean1=new InsuranceTemplateBean();
 									templateBean1.setProduct_id(additionalInsuranceObj.getString("id"));
@@ -792,19 +787,18 @@ public class MakeInsurancePlanActivity extends BaseActivity implements OnClickLi
 									templateBean1.setSuggest_id("");
 									templateBean1.setAdd_time("");
 									insuranceTemplateLists.add(n+1,templateBean1);
-									Log.i("insuranceTemplateLists添加一个templateBean", "templateBean--------");
-									
+
 									additionalBean.setInsuranceId(additionalInsuranceObj.getString("id"));
 									additionalBean.setHuomian(additionalInsuranceObj.getString("ishuomian"));
 									additionalBean.setIcon(additionalInsuranceObj.getString("icon"));
 									additionalBean.setInsuranceName(additionalInsuranceObj.getString("name"));
 									additionalBean.setInsuranceType(additionalInsuranceObj.getString("type"));
 									additionalBean.setInsuranceType_name(additionalInsuranceObj.getString("type_name"));
-									
+
 									additionalBean.setRiskHint(additionalRiskObj.getString("hint"));
 									additionalBean.setRiskTitle(additionalRiskObj.getString("title"));
 									additionalBean.setRiskUnitTitle(additionalRiskObj.getString("unit_title"));
-									
+
 									additionInnerList=new ArrayList<MakeInsuranceTemplateInnerBean>();
 									for(int k=0;k<additionalArrayInput.length();k++){
 										MakeInsuranceTemplateInnerBean innerBean=new MakeInsuranceTemplateInnerBean();
@@ -812,37 +806,35 @@ public class MakeInsurancePlanActivity extends BaseActivity implements OnClickLi
 										innerBean.setInput_type(innerObj.getString("input_type"));
 										innerBean.setTitle(innerObj.getString("title"));
 										innerBean.setTitle_key(innerObj.getString("title_key"));
-										
+
 										JSONArray innerEnd=innerObj.getJSONArray("valueoptions");
 										ArrayList<String> valueCode=new ArrayList<String>();
 										ArrayList<String> valueString=new ArrayList<String>();
 										for(int p=0;p<innerEnd.length();p++){
 											JSONArray array=(JSONArray) innerEnd.get(p);
 											valueCode.add(p, array.get(0).toString());
-											Log.i("valueCode-------------------"+p, array.get(0).toString());
 											valueString.add(p, array.get(1).toString());
-											Log.i("valueString-------------------"+p, array.get(1).toString());
 										}
 										innerBean.setValueCode(valueCode);
 										innerBean.setValueString(valueString);
 										additionInnerList.add(innerBean);
 									}
-									
+
 									additionalBean.setInnerBeanList(additionInnerList);
 									//最外层的集合添加数据
 									additionOutList.add(additionalBean);
-									
+
 								}
 							}else{
 								bean.setHasAdditionalInsurance(false);
 							}
-							
-							
-							
+
+
+
 							bean.setRiskHint(riskObj.getString("hint"));
 							bean.setRiskTitle(riskObj.getString("title"));
 							bean.setRiskUnitTitle(riskObj.getString("unit_title"));
-							
+
 							//解析inner
 							innerlist=new ArrayList<MakeInsuranceTemplateInnerBean>();
 							for(int m=0;m<arrayInput.length();m++){
@@ -851,22 +843,20 @@ public class MakeInsurancePlanActivity extends BaseActivity implements OnClickLi
 								innerBean.setInput_type(innerObj.getString("input_type"));
 								innerBean.setTitle(innerObj.getString("title"));
 								innerBean.setTitle_key(innerObj.getString("title_key"));
-								
+
 								JSONArray innerEnd=innerObj.getJSONArray("valueoptions");
 								ArrayList<String> valueCode=new ArrayList<String>();
 								ArrayList<String> valueString=new ArrayList<String>();
 								for(int n=0;n<innerEnd.length();n++){
 									JSONArray array=(JSONArray) innerEnd.get(n);
 									valueCode.add(n, array.get(0).toString());
-									Log.i("valueCode-------------------"+n, array.get(0).toString());
 									valueString.add(n, array.get(1).toString());
-									Log.i("valueString-------------------"+n, array.get(1).toString());
 								}
 								innerBean.setValueCode(valueCode);
 								innerBean.setValueString(valueString);
 								innerlist.add(innerBean);
 							}
-							
+
 							bean.setInnerBeanList(innerlist);
 							//最外层的集合添加数据
 							outlist.add(bean);
@@ -874,7 +864,7 @@ public class MakeInsurancePlanActivity extends BaseActivity implements OnClickLi
 						Message msg=new Message();
 						msg.what=0;
 						resultHandler.sendMessage(msg);
-						
+
 					}
 
 				} catch (Exception e) {
@@ -885,6 +875,7 @@ public class MakeInsurancePlanActivity extends BaseActivity implements OnClickLi
 				}
 
 			}
+
 		});
 		
 		
@@ -1502,7 +1493,6 @@ public class MakeInsurancePlanActivity extends BaseActivity implements OnClickLi
 		    Log.i("------------token:",token);
 		    Log.i("------------url:",url);
 		    Log.i("------------user_id:",user_id);
-		    Log.i("------------suggest_info:",str);
 		    Log.i("========end====","");
 		    
 			OkHttpUtils.post()//
@@ -1512,17 +1502,14 @@ public class MakeInsurancePlanActivity extends BaseActivity implements OnClickLi
 			.execute(new StringCallback() {
 
 				@Override
-				public void onError(Call call, Exception e) {
-				
+				public void onError(Call call, Exception e, int id) {
 					Message msg=new Message();
 					msg.what=4;
 					generateTemplateHandler.sendMessage(msg);
-					
 				}
 
 				@Override
-				public void onResponse(String response) {
-				
+				public void onResponse(String response, int id) {
 					String jsonString= response;
 					Log.i("返回的数据---------------", jsonString);
 					try {
@@ -1531,23 +1518,23 @@ public class MakeInsurancePlanActivity extends BaseActivity implements OnClickLi
 							message.what = 3;
 							generateTemplateHandler.sendMessage(message);}
 						else{
-						JSONObject objResult=new JSONObject(jsonString);
-						String status=objResult.getString("status");
-						if(status.equals("true")){
-							JSONObject obj=objResult.getJSONObject("data");
-							resultUrl=obj.getString("url");
-							resultDescription=obj.getString("description");
-							resulTitle=obj.getString("title");
-							resultLogo=obj.getString("logourl");
-							forward_url=obj.getString("forward_url");
-							Message msg=new Message();
-							msg.what=0;
-							generateTemplateHandler.sendMessage(msg);
-						}else{
-							Message msg=new Message();
-							msg.what=2;
-							generateTemplateHandler.sendMessage(msg);
-						}
+							JSONObject objResult=new JSONObject(jsonString);
+							String status=objResult.getString("status");
+							if(status.equals("true")){
+								JSONObject obj=objResult.getJSONObject("data");
+								resultUrl=obj.getString("url");
+								resultDescription=obj.getString("description");
+								resulTitle=obj.getString("title");
+								resultLogo=obj.getString("logourl");
+								forward_url=obj.getString("forward_url");
+								Message msg=new Message();
+								msg.what=0;
+								generateTemplateHandler.sendMessage(msg);
+							}else{
+								Message msg=new Message();
+								msg.what=2;
+								generateTemplateHandler.sendMessage(msg);
+							}
 						}
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
@@ -1556,7 +1543,6 @@ public class MakeInsurancePlanActivity extends BaseActivity implements OnClickLi
 						msg.what=1;
 						generateTemplateHandler.sendMessage(msg);
 					}
-
 				}
 			});
 			
@@ -1676,31 +1662,28 @@ public class MakeInsurancePlanActivity extends BaseActivity implements OnClickLi
 			.execute(new StringCallback() {
 
 				@Override
-				public void onError(Call call, Exception e) {
-				
+				public void onError(Call call, Exception e, int id) {
 					Log.i("联网失败了------------", "获取主险费率");
 					MainInsuranceHandler.sendEmptyMessage(4);
-					
 				}
 
 				@Override
-				public void onResponse(String response) {
-				
+				public void onResponse(String response, int id) {
 					String jsonString= response;
 					Log.i("返回的数据---------------", jsonString);
 					try {
 						JSONObject objResult=new JSONObject(jsonString);
 						String status=objResult.getString("status");
 						if(status.equals("true")){
-//							holder2.tv_insurance_warn.setText("");
-//							holder2.tv_insurance_warn.setVisibility(View.GONE);
+							//							holder2.tv_insurance_warn.setText("");
+							//							holder2.tv_insurance_warn.setVisibility(View.GONE);
 							JSONObject dataObj=objResult.getJSONObject("data");
 							JSONObject planObj=dataObj.getJSONObject("plan");
 							JSONArray productsArray=planObj.getJSONArray("products");
-							
+
 							sum_premium=planObj.getDouble("sum_premium");
 							JSONObject productObject=productsArray.getJSONObject(0);
-							
+
 							JSONArray inputfieldsArray=productObject.getJSONArray("inputfields");
 							ArrayList<String> factorsName=new ArrayList<String>();
 							ArrayList<String> factorsValue=new ArrayList<String>();
@@ -1709,31 +1692,30 @@ public class MakeInsurancePlanActivity extends BaseActivity implements OnClickLi
 								factorsName.add(b,array1.getString(0));
 								factorsValue.add(b,array1.getString(1));
 							}
-							
+
 							insuranceTemplateLists.get(0).setFactorsName(factorsName);
 							insuranceTemplateLists.get(0).setFactorsValue(factorsValue);
-							
+
 							JSONObject tableObject=productObject.getJSONObject("table");
 							JSONArray rowArray=tableObject.getJSONArray("row");
 							insuranceTemplateLists.get(0).setPrem(Double.parseDouble(rowArray.get(3).toString()));
 							insuranceTemplateLists.get(0).setAmount(Integer.parseInt(rowArray.get(2).toString()));
-							
-							 Message msg=new Message();
-							 msg.what=0;
-							 msg.obj=rowArray;
-							 MainInsuranceHandler.sendMessage(msg);
-						}else{
-							 String errmsg=objResult.getString("errmsg");
+
 							Message msg=new Message();
-							 msg.what=2;
-							 msg.obj=errmsg;
-							 MainInsuranceHandler.sendMessage(msg);
+							msg.what=0;
+							msg.obj=rowArray;
+							MainInsuranceHandler.sendMessage(msg);
+						}else{
+							String errmsg=objResult.getString("errmsg");
+							Message msg=new Message();
+							msg.what=2;
+							msg.obj=errmsg;
+							MainInsuranceHandler.sendMessage(msg);
 						}
 					} catch (JSONException e) {
 						e.printStackTrace();
 						MainInsuranceHandler.sendEmptyMessage(1);
 					}
-
 				}
 			});
 			
@@ -1761,7 +1743,6 @@ public class MakeInsurancePlanActivity extends BaseActivity implements OnClickLi
 			//接收返回的附加险信息
 			additionalInsuranceList=(ArrayList<SubmitInsurancePlanBean>) data.getSerializableExtra("additionalInsuranceList");
 			ArrayList<InsuranceTemplateBean> list=(ArrayList<InsuranceTemplateBean>) data.getSerializableExtra("backInsuranceTemplateLists");
-			Log.i("返回的的附加险list长度-----------", list.size()+"-------");
 			if(submitInsuranceList.size()>1){
 				submitInsuranceList.clear();
 				submitInsuranceList.add(insuranceTemplateLists.get(0));

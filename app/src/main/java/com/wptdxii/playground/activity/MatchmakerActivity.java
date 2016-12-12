@@ -22,9 +22,9 @@ import android.widget.TextView;
 import com.cloudhome.R;
 import com.cloudhome.listener.NetResultListener;
 import com.cloudhome.network.Statistics;
+import com.cloudhome.network.interceptor.MyInterceptor;
 import com.cloudhome.utils.IpConfig;
 import com.umeng.socialize.utils.Log;
-import com.zhy.http.okhttp.utils.MyInterceptor;
 
 public class MatchmakerActivity extends BaseActivity implements NetResultListener {
     private WebView webView;

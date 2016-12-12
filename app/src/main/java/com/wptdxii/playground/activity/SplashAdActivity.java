@@ -34,7 +34,7 @@ public class SplashAdActivity extends BaseActivity implements View.OnClickListen
     private Button adSkipBtn;
     private String mToken;
     private String mUserIdEncode;
-    private Handler handler = new Handler(){
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -74,15 +74,15 @@ public class SplashAdActivity extends BaseActivity implements View.OnClickListen
         sp2 = this.getSharedPreferences("otherinfo", 0);
         sp5 = this.getSharedPreferences("temp", 0);
         loginString = sp.getString("Login_STATE", "none");
-        mUserIdEncode= sp.getString("Login_UID_ENCODE", "");
+        mUserIdEncode = sp.getString("Login_UID_ENCODE", "");
         mToken = sp.getString("Login_TOKEN", "");
         data = AdPreference.getInstance().getSplashAdPage();
         File file = new File(AD_PATH);
         if (file.exists() && file.isFile()) {
             Bitmap bm = BitmapFactory.decodeFile(AD_PATH);
-            if (bm!=null) {
+            if (bm != null) {
                 splahAdImg.setImageBitmap(bm);
-            }else {
+            } else {
                 AdFileUtils.deleteFile(AD_PATH);
             }
         }
@@ -101,40 +101,44 @@ public class SplashAdActivity extends BaseActivity implements View.OnClickListen
     }
 
     private static final String TAG = "SplashAdActivity";
+
     @Override
     public void onClick(View v) {
-        handler.removeCallbacksAndMessages(null);
         if (v.getId() == R.id.ad_skip_btn) {
+            handler.removeCallbacksAndMessages(null);
             Intent intent = new Intent(SplashAdActivity.this, AllPageActivity.class);
             startActivity(intent);
             finish();
         } else if (v.getId() == R.id.splash_ad_img) {
             String brief = data.getBrief();
             int is_share = data.getIsShare();
-            String title =data.getTitle();
+            String title = data.getTitle();
             String img = data.getShare_img();
-            String url = data.getUrl() + "";
+            String url = data.getUrl();
 
-            if ( url.contains("?")) {
 
-                url = url + "&userId="
-                        + mUserIdEncode+"&token="+ mToken ;
+            if (!"".equals(data.getUrl())) {
+                handler.removeCallbacksAndMessages(null);
 
-            }else{
-                url = url + "?userId="
-                        + mUserIdEncode+"&token="+ mToken;
-            }
+                if (url.contains("?")) {
+
+                    url = url + "&userId="
+                            + mUserIdEncode + "&token=" + mToken;
+
+                } else {
+                    url = url + "?userId="
+                            + mUserIdEncode + "&token=" + mToken;
+                }
 
 
                 Intent intentAllPage = new Intent(this, AllPageActivity.class);
-
-                Intent intentHomeWebShare = new Intent(this,HomeWebShareActivity.class);
+                Intent intentHomeWebShare = new Intent(this, HomeWebShareActivity.class);
                 intentHomeWebShare.putExtra("brief", brief);
                 intentHomeWebShare.putExtra("title", title);
                 intentHomeWebShare.putExtra("img", img);
                 intentHomeWebShare.putExtra("is_share", is_share + "");
                 intentHomeWebShare.putExtra("url", url);
-            Log.e(TAG, "onClick: " + url);
+                Log.e(TAG, "onClick: " + url);
                 intentHomeWebShare.putExtra("share_title", title);
 
                 cancelFullScreen();
@@ -142,6 +146,9 @@ public class SplashAdActivity extends BaseActivity implements View.OnClickListen
                 startActivities(intents);
                 finish();
             }
+
+
+        }
     }
 
     @Override

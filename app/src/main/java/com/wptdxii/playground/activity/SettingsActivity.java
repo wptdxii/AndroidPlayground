@@ -27,13 +27,13 @@ import android.widget.Toast;
 import com.cloudhome.R;
 import com.cloudhome.application.MyApplication;
 import com.cloudhome.event.LoginEvent;
+import com.cloudhome.network.interceptor.MyInterceptor;
 import com.cloudhome.utils.Common;
 import com.cloudhome.utils.DataCleanManager;
 import com.cloudhome.utils.IpConfig;
 import com.zcw.togglebutton.ToggleButton;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
-import com.zhy.http.okhttp.utils.MyInterceptor;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -285,10 +285,6 @@ public class SettingsActivity extends BaseActivity {
 
         toggle_micro_card = (ToggleButton) findViewById(R.id.toggle_micro_card);
         toggle_allow_other_see = (ToggleButton) findViewById(R.id.toggle_allow_other_see);
-        toggle_micro_card.setToggleColor(getResources().getColor(R.color.toggle_on), getResources().getColor(R.color.toggle_off),
-                getResources().getColor(R.color.toggle_off), getResources().getColor(R.color.white));
-        toggle_allow_other_see.setToggleColor(getResources().getColor(R.color.toggle_on), getResources().getColor(R.color.toggle_off),
-                getResources().getColor(R.color.toggle_off), getResources().getColor(R.color.white));
 
         quit_login = (TextView) findViewById(R.id.quit_login);
         setting_rel4 = (RelativeLayout) findViewById(R.id.setting_rel4);
@@ -499,15 +495,13 @@ public class SettingsActivity extends BaseActivity {
                 .execute(new StringCallback() {
 
                     @Override
-                    public void onError(Call call, Exception e) {
+                    public void onError(Call call, Exception e, int id) {
 
                         finish();
-
                     }
 
                     @Override
-                    public void onResponse(String response) {
-
+                    public void onResponse(String response, int id) {
                         Map<String, String> map = new HashMap<String, String>();
                         String jsonString = response;
                         Log.d("onmsg", "onmsg json = " + jsonString);
@@ -575,14 +569,14 @@ public class SettingsActivity extends BaseActivity {
                 .build()//
                 .execute(new StringCallback() {
                     @Override
-                    public void onError(Call call, Exception e) {
+                    public void onError(Call call, Exception e, int id) {
                         Log.e("error", "获取数据异常 ", e);
                         Toast.makeText(SettingsActivity.this, "网络连接失败，请重试",
                                 Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse(String response, int id) {
                         String jsonString = response;
                         Log.d("onSuccess", "onSuccess json = " + jsonString);
                         try {
@@ -611,12 +605,13 @@ public class SettingsActivity extends BaseActivity {
                 .build()//
                 .execute(new StringCallback() {
                     @Override
-                    public void onError(Call call, Exception e) {
+                    public void onError(Call call, Exception e, int id) {
+
                         Log.e("error", "获取数据异常 ", e);
                     }
 
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse(String response, int id) {
                         Map<String, String> map = new HashMap<String, String>();
                         String jsonString = response;
                         Log.d("onSuccess", "onSuccess json = " + jsonString);
@@ -651,12 +646,13 @@ public class SettingsActivity extends BaseActivity {
                 .build()
                 .execute(new StringCallback() {
                     @Override
-                    public void onError(Call call, Exception e) {
+                    public void onError(Call call, Exception e, int id) {
+
                         Log.e("error", "获取数据异常 ", e);
                     }
 
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse(String response, int id) {
                         Map<String, String> map = new HashMap<String, String>();
                         String jsonString = response;
                         Log.d("onSuccess", "onSuccess json = " + jsonString);
@@ -694,7 +690,6 @@ public class SettingsActivity extends BaseActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
                     }
                 });
     }

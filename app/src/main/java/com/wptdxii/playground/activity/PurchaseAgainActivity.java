@@ -536,19 +536,18 @@ public class PurchaseAgainActivity extends BaseActivity {
 		.execute(new StringCallback() {
 
 			@Override
-			public void onError(Call call, Exception e) {
-			
+			public void onError(Call call, Exception e, int id) {
 				Log.e("error", "获取数据异常 ", e);
 
 				dialog.dismiss();
 				Toast.makeText(PurchaseAgainActivity.this, "网络连接失败，请确认网络连接后重试",
 						Toast.LENGTH_SHORT).show();
-				
+
 			}
 
 			@Override
-			public void onResponse(String response) {
-			
+			public void onResponse(String response, int id) {
+
 				String jsonString = response;
 				Log.d("onSuccess", "onSuccess json = " + jsonString);
 				List<Map<String, String>> list = new ArrayList<Map<String, String>>();
@@ -566,15 +565,15 @@ public class PurchaseAgainActivity extends BaseActivity {
 						JSONObject obj = new JSONObject(jsonString);
 						JSONObject obj1=obj.getJSONObject("data");
 						beanOther=new TouBaoBean();
-//						 "product_id": "30001", --------------产品ID
-//					        "total_amount": "40.00", -----------总价
-//					        "price": "40.00", -------------单价
-//					        "count": "1", ------------份数
-//					        "period": "01", ---------------保障期间
-//					        "package": "PAJH01", -------------套餐code
-//					        "policy_begin": "2015-12-3 ", -----------起保日期
-//						"relationship": "07", -----------------投被保人关系
-//						 "rate": "1", ---------------费率
+						//						 "product_id": "30001", --------------产品ID
+						//					        "total_amount": "40.00", -----------总价
+						//					        "price": "40.00", -------------单价
+						//					        "count": "1", ------------份数
+						//					        "period": "01", ---------------保障期间
+						//					        "package": "PAJH01", -------------套餐code
+						//					        "policy_begin": "2015-12-3 ", -----------起保日期
+						//						"relationship": "07", -----------------投被保人关系
+						//						 "rate": "1", ---------------费率
 
 						beanOther.setProduct_id(obj1.getString("product_id"));
 						beanOther.setTotalPrice(obj1.getString("total_amount"));
@@ -585,15 +584,15 @@ public class PurchaseAgainActivity extends BaseActivity {
 						beanOther.setPeriod(obj1.getString("period"));
 						beanOther.setRealationShip(obj1.getString("relationship"));
 						beanOther.setRate(obj1.getString("rate"));
-						
-//						 "name": "王亚东", 
-//				            "pinyin": "WANGYADONG", 
-//				            "id_type": "01", 
-//				            "id_no": "41032319891021001X", 
-//				            "birthday": "1989-10-21", 
-//				            "sex": "01", 
-//				            "tel": "18500212308", 
-//				            "email": "trhthyj@163.com"
+
+						//						 "name": "王亚东",
+						//				            "pinyin": "WANGYADONG",
+						//				            "id_type": "01",
+						//				            "id_no": "41032319891021001X",
+						//				            "birthday": "1989-10-21",
+						//				            "sex": "01",
+						//				            "tel": "18500212308",
+						//				            "email": "trhthyj@163.com"
 
 						JSONObject obj2=obj1.getJSONObject("holder");
 						holderOldBean=new TouBaoBean();
@@ -605,7 +604,7 @@ public class PurchaseAgainActivity extends BaseActivity {
 						holderOldBean.setSex(obj2.getString("sex"));
 						holderOldBean.setPhoneNumber(obj2.getString("tel"));
 						holderOldBean.setEmail(obj2.getString("email"));
-						
+
 
 						insuredBeanOld=new BeiBaoBean();
 						JSONObject obj3=obj1.getJSONObject("insurance");
@@ -617,8 +616,8 @@ public class PurchaseAgainActivity extends BaseActivity {
 						insuredBeanOld.setSex(obj3.getString("sex"));
 						insuredBeanOld.setPhoneNumber(obj3.getString("tel"));
 						insuredBeanOld.setEmail(obj3.getString("email"));
-						
-//
+
+						//
 						otherOldBean=new OtherInfoBean();
 						JSONObject obj4=obj1.getJSONObject("other");
 						otherOldBean.setTripDestination(obj4.getString("to"));
@@ -628,14 +627,13 @@ public class PurchaseAgainActivity extends BaseActivity {
 						otherOldBean.setEmergencyNum(obj4.getString("emergency_tel"));
 
 						old_success_handler.sendEmptyMessage(0);
-						
+
 
 					}
 
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-
 			}
 		});
 		
@@ -693,19 +691,16 @@ public class PurchaseAgainActivity extends BaseActivity {
 		.execute(new StringCallback() {
 
 			@Override
-			public void onError(Call call, Exception e) {
-			
+			public void onError(Call call, Exception e, int id) {
 				Log.e("error", "获取数据异常 ", e);
 
 				dialog.dismiss();
 				Toast.makeText(PurchaseAgainActivity.this, "网络连接失败，请确认网络连接后重试",
 						Toast.LENGTH_SHORT).show();
-				
 			}
 
 			@Override
-			public void onResponse(String response) {
-			
+			public void onResponse(String response, int id) {
 				String jsonString = response;
 				Log.d("onSuccess", "onSuccess json = " + jsonString);
 				List<Map<String, String>> list = new ArrayList<Map<String, String>>();
@@ -738,7 +733,6 @@ public class PurchaseAgainActivity extends BaseActivity {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-
 
 			}
 		});

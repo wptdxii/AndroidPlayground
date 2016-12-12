@@ -690,8 +690,8 @@ Log.i("user_idtoken",user_id+"----"+token);
 		.execute(new StringCallback() {
 
 			@Override
-			public void onError(Call call, Exception e) {
-			
+			public void onError(Call call, Exception e, int id) {
+
 				Log.e("error", "获取数据异常 ", e);
 				String status = "false";
 				Message message = Message.obtain();
@@ -699,12 +699,10 @@ Log.i("user_idtoken",user_id+"----"+token);
 				message.obj = status;
 
 				errcode_handler.sendMessage(message);
-				
 			}
 
 			@Override
-			public void onResponse(String response) {
-			
+			public void onResponse(String response, int id) {
 				String jsonString = response;
 				Log.d("haha", "onSuccess json = " + jsonString);
 				Map<String, String> map = new HashMap<String, String>();
@@ -756,8 +754,6 @@ Log.i("user_idtoken",user_id+"----"+token);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-
-
 			}
 		});
 		
@@ -777,8 +773,7 @@ Log.i("user_idtoken",user_id+"----"+token);
 		.execute(new StringCallback() {
 
 			@Override
-			public void onError(Call call, Exception e) {
-			
+			public void onError(Call call, Exception e, int id) {
 				Log.e("error", "获取数据异常 ", e);
 				String status = "false";
 				Message message = Message.obtain();
@@ -786,12 +781,10 @@ Log.i("user_idtoken",user_id+"----"+token);
 				message.obj = status;
 
 				errcode_handler.sendMessage(message);
-				
 			}
 
 			@Override
-			public void onResponse(String response) {
-			
+			public void onResponse(String response, int id) {
 				String jsonString = response;
 				Log.d("onSuccess", "onSuccess json = " + jsonString);
 				List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
@@ -833,7 +826,6 @@ Log.i("user_idtoken",user_id+"----"+token);
 					e.printStackTrace();
 				}
 
-
 			}
 		});
 		
@@ -853,7 +845,7 @@ Log.i("user_idtoken",user_id+"----"+token);
 		.execute(new StringCallback() {
 
 			@Override
-			public void onError(Call call, Exception e) {
+			public void onError(Call call, Exception e, int id) {
 				Log.e("error", "获取数据异常 ", e);
 				String status = "false";
 				Message message = Message.obtain();
@@ -861,12 +853,10 @@ Log.i("user_idtoken",user_id+"----"+token);
 				message.obj = status;
 
 				errcode_handler.sendMessage(message);
-			
-				
 			}
 
 			@Override
-			public void onResponse(String response) {
+			public void onResponse(String response, int id) {
 				String jsonString = response;
 				Log.d("onSuccess", "onSuccess json = " + jsonString);
 				List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
@@ -921,7 +911,6 @@ Log.i("user_idtoken",user_id+"----"+token);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-			
 
 			}
 		});

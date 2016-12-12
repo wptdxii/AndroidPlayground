@@ -339,15 +339,12 @@ public class MoreExpertActivity extends BaseActivity implements IXListViewListen
                 .execute(new StringCallback() {
 
                     @Override
-                    public void onError(Call call, Exception e) {
-
+                    public void onError(Call call, Exception e, int id) {
                         Log.e("error", "获取数据异常 ", e);
-
                     }
 
                     @Override
-                    public void onResponse(String response) {
-
+                    public void onResponse(String response, int id) {
                         String jsonString = response;
                         //	Log.d("onSuccess", "onSuccess json = " + jsonString);
                         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
@@ -379,7 +376,6 @@ public class MoreExpertActivity extends BaseActivity implements IXListViewListen
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-
 
                     }
                 });

@@ -291,15 +291,15 @@ public class AdditionalInsuranceActivity extends BaseActivity implements OnClick
 						.execute(new StringCallback() {
 
 							@Override
-							public void onError(Call call, Exception e) {
+							public void onError(Call call, Exception e, int id) {
+
 
 								Log.i("联网失败了------------", "获取主险费率");
 								AdditionalInsuranceHandler.sendEmptyMessage(4);
-
 							}
 
 							@Override
-							public void onResponse(String response) {
+							public void onResponse(String response, int id) {
 
 								// TODO Auto-generated method stub
 								String jsonString = response;
@@ -308,8 +308,8 @@ public class AdditionalInsuranceActivity extends BaseActivity implements OnClick
 									JSONObject objResult = new JSONObject(jsonString);
 									String status = objResult.getString("status");
 									if (status.equals("true")) {
-//							holder2.tv_insurance_warn.setText("");
-//							holder2.tv_insurance_warn.setVisibility(View.GONE);
+										//							holder2.tv_insurance_warn.setText("");
+										//							holder2.tv_insurance_warn.setVisibility(View.GONE);
 										JSONObject dataObj = objResult.getJSONObject("data");
 										JSONObject planObj = dataObj.getJSONObject("plan");
 										JSONArray productsArray = planObj.getJSONArray("products");

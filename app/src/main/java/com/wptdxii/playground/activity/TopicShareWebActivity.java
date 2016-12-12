@@ -30,6 +30,7 @@ import android.widget.TextView;
 import com.cloudhome.R;
 import com.cloudhome.listener.NetResultListener;
 import com.cloudhome.network.Statistics;
+import com.cloudhome.network.interceptor.MyInterceptor;
 import com.cloudhome.utils.IpConfig;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.bean.SHARE_MEDIA;
@@ -47,7 +48,6 @@ import com.umeng.socialize.weixin.media.CircleShareContent;
 import com.umeng.socialize.weixin.media.WeiXinShareContent;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
-import com.zhy.http.okhttp.utils.MyInterceptor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -215,12 +215,14 @@ public class TopicShareWebActivity extends BaseActivity implements NetResultList
         // 添加微信平台
         UMWXHandler wxHandler = new UMWXHandler(TopicShareWebActivity.this,
                 appID, appSecret);
+        wxHandler.showCompressToast(false);
         wxHandler.addToSocialSDK();
 
         // 添加微信朋友圈
         UMWXHandler wxCircleHandler = new UMWXHandler(
                 TopicShareWebActivity.this, appID, appSecret);
         wxCircleHandler.setToCircle(true);
+        wxHandler.showCompressToast(false);
         wxCircleHandler.addToSocialSDK();
 
         UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(
@@ -446,19 +448,19 @@ public class TopicShareWebActivity extends BaseActivity implements NetResultList
                 .build()//
                 .execute(new StringCallback() {
                     @Override
-                    public void onError(Call call, Exception e) {
+                    public void onError(Call call, Exception e, int id) {
+
                         String status = "false";
                         Message message = Message.obtain();
                         message.obj = status;
                     }
 
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse(String response, int id) {
 
                         String jsonString = response;
                         Log.d("onSuccess", "调用成功-------------------");
                         Log.d("onSuccess", "onSuccess json = " + jsonString);
-
                     }
                 });
 

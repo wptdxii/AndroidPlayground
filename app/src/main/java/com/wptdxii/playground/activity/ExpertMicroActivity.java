@@ -497,15 +497,13 @@ public class ExpertMicroActivity extends BaseActivity {
 				.execute(new StringCallback() {
 
 					@Override
-					public void onError(Call call, Exception e) {
+					public void onError(Call call, Exception e, int id) {
 
 						Log.e("error", "获取数据异常 ", e);
-
 					}
 
-					@SuppressWarnings("RedundantStringConstructorCall")
 					@Override
-					public void onResponse(String response) {
+					public void onResponse(String response, int id) {
 
 						Map<String, String> map = new HashMap<String, String>();
 						String jsonString = response;
@@ -536,7 +534,6 @@ public class ExpertMicroActivity extends BaseActivity {
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
-
 					}
 				});
 

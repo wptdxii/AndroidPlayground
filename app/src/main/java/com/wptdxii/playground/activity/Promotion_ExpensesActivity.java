@@ -592,7 +592,6 @@ public class Promotion_ExpensesActivity extends BaseActivity {
 			jsonObj.put("end", end);
 
 			jsonresult = jsonObj.toString();
-			Log.i("SUBMIT_ORDER_______________", jsonresult);
 
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
@@ -613,8 +612,7 @@ public class Promotion_ExpensesActivity extends BaseActivity {
 		.execute(new StringCallback() {
 
 			@Override
-			public void onError(Call call, Exception e) {
-			
+			public void onError(Call call, Exception e, int id) {
 				Log.e("error", "获取数据异常 ", e);
 
 				String status = "false";
@@ -623,12 +621,10 @@ public class Promotion_ExpensesActivity extends BaseActivity {
 				message.obj = status;
 
 				errcode_handler.sendMessage(message);
-				
 			}
 
 			@Override
-			public void onResponse(String response) {
-			
+			public void onResponse(String response, int id) {
 				String jsonString = response;
 				Log.d("onSuccess", "onSuccess json = " + jsonString);
 				List<Map<String, String>> gexian_list = new ArrayList<Map<String, String>>();
@@ -698,16 +694,16 @@ public class Promotion_ExpensesActivity extends BaseActivity {
 
 							String startstr = dataObject
 									.getString("start");
-							
+
 							String endstr = dataObject
 									.getString("end");
-							
+
 							String zongshourustr = dataObject
 									.getString("zongshouru");
 							total_map.put("gexian_list", gexian_list);
 							total_map.put("chexian_list", chexian_list);
 							total_map.put("zongshouru", zongshourustr);
-							
+
 							total_map.put("start", startstr);
 							total_map.put("end", endstr);
 							Message message = Message.obtain();
@@ -720,7 +716,6 @@ public class Promotion_ExpensesActivity extends BaseActivity {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-
 			}
 		});
 		

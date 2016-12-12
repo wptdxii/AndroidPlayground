@@ -271,8 +271,7 @@ public class MyBankCardInfoActivity extends BaseActivity implements OnClickListe
                 .execute(new StringCallback() {
 
                     @Override
-                    public void onError(Call call, Exception e) {
-
+                    public void onError(Call call, Exception e, int id) {
                         Log.e("error", "获取数据异常 ", e);
 
                         Message msg = Message.obtain();
@@ -280,12 +279,10 @@ public class MyBankCardInfoActivity extends BaseActivity implements OnClickListe
                         msg.what = 2;
 
                         handler.sendMessage(msg);
-
-
                     }
 
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse(String response, int id) {
                         String jsonString = response;
                         Log.d("onSuccess", "onSuccess json = " + jsonString);
                         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();

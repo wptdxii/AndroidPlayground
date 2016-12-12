@@ -240,9 +240,6 @@ public class Product_C_InfoActivity extends BaseActivity {
 
 			String channelname = data.get("channelname");
 
-			Log.i("-----------------------------", name + code + city
-					+ channelcode + channelname + user_id + cid);
-
 			key_value.put("channel", channelcode);
 
 			Log.d("channel", channelcode);
@@ -619,15 +616,13 @@ public class Product_C_InfoActivity extends BaseActivity {
 		.execute(new StringCallback() {
 
 			@Override
-			public void onError(Call call, Exception e) {
-			
+			public void onError(Call call, Exception e, int id) {
+
 				Log.e("error", "获取数据异常 ", e);
-				
 			}
 
 			@Override
-			public void onResponse(String response) {
-			
+			public void onResponse(String response, int id) {
 				ArrayList<String> stringArrayList = new ArrayList<String>();
 				ArrayList<String> stringArrayList1 = new ArrayList<String>();
 				String[] channelcode;
@@ -677,7 +672,6 @@ public class Product_C_InfoActivity extends BaseActivity {
 					e.printStackTrace();
 				}
 
-
 			}
 		});
 		
@@ -698,8 +692,7 @@ public class Product_C_InfoActivity extends BaseActivity {
 		.execute(new StringCallback() {
 
 			@Override
-			public void onError(Call call, Exception e) {
-			
+			public void onError(Call call, Exception e, int id) {
 				Log.e("error", "获取数据异常 ", e);
 
 				String status = "false";
@@ -708,115 +701,111 @@ public class Product_C_InfoActivity extends BaseActivity {
 				message.obj = status;
 
 				errcode_handler.sendMessage(message);
-				
 			}
 
 			@Override
-			public void onResponse(String response) {
-			
-			
-			String jsonString = response;
-			Log.d("onSuccess", "onSuccess json = " + jsonString);
-			List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-			try {
+			public void onResponse(String response, int id) {
+				String jsonString = response;
+				Log.d("onSuccess", "onSuccess json = " + jsonString);
+				List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+				try {
 
-				Log.d("44444", jsonString);
-				if (jsonString == null || jsonString.equals("")
-						|| jsonString.equals("null")) {
-					String status = "false";
-					Message message = Message.obtain();
-
-					message.obj = status;
-
-					errcode_handler.sendMessage(message);
-				} else {
-
-					JSONObject jsonObject = new JSONObject(jsonString);
-
-					String errcode = jsonObject.getString("errcode");
-
-					String errmsg = jsonObject.getString("errmsg");
-
-					if (errcode.equals("0")) {
-						JSONObject contentObject = jsonObject
-								.getJSONObject("show_content");
-						show_content = contentObject
-								.getString("content");
-						show_flag = contentObject
-								.getString("show_flag");
-						show_title = contentObject.getString("title");
-
-						JSONObject dataObject = jsonObject
-								.getJSONObject("data");
-
-						String name = dataObject.getString("name");
-						String code = dataObject.getString("code");
-						String city = dataObject.getString("city");
-
-						JSONObject channelObject = dataObject
-								.getJSONObject("channel");
-
-						String channelcode = channelObject
-								.getString("code");
-
-						String channelname = channelObject
-								.getString("name");
-
-						Map<String, String> text_map = new HashMap<String, String>();
-
-						text_map.put("name", name);
-						text_map.put("code", code);
-						text_map.put("city", city);
-						text_map.put("channelcode", channelcode);
-						text_map.put("channelname", channelname);
-
-						Message message2 = Message.obtain();
-
-						message2.obj = text_map;
-
-						text_handler.sendMessage(message2);
-
-						JSONArray payinfoList = dataObject
-								.getJSONArray("payinfo");
-
-						for (int i = 0; i < payinfoList.length(); i++) {
-							JSONObject jsonObject2 = payinfoList
-									.getJSONObject(i);
-							Map<String, Object> map = new HashMap<String, Object>();
-							// 迭代输出json的key作为map的key
-
-							Iterator<String> iterator = jsonObject2
-									.keys();
-							while (iterator.hasNext()) {
-								String key = iterator.next();
-								Object value = jsonObject2.get(key);
-								map.put(key, value);
-							}
-							list.add(map);
-						}
+					Log.d("44444", jsonString);
+					if (jsonString == null || jsonString.equals("")
+							|| jsonString.equals("null")) {
+						String status = "false";
 						Message message = Message.obtain();
 
-						message.obj = list;
+						message.obj = status;
 
-						handler.sendMessage(message);
+						errcode_handler.sendMessage(message);
 					} else {
-						Map<String, String> map = new HashMap<String, String>();
 
-						map.put("errmsg", errmsg);
+						JSONObject jsonObject = new JSONObject(jsonString);
 
-						Message message = Message.obtain();
+						String errcode = jsonObject.getString("errcode");
 
-						message.obj = map;
+						String errmsg = jsonObject.getString("errmsg");
 
-						nodata_handler.sendMessage(message);
+						if (errcode.equals("0")) {
+							JSONObject contentObject = jsonObject
+									.getJSONObject("show_content");
+							show_content = contentObject
+									.getString("content");
+							show_flag = contentObject
+									.getString("show_flag");
+							show_title = contentObject.getString("title");
+
+							JSONObject dataObject = jsonObject
+									.getJSONObject("data");
+
+							String name = dataObject.getString("name");
+							String code = dataObject.getString("code");
+							String city = dataObject.getString("city");
+
+							JSONObject channelObject = dataObject
+									.getJSONObject("channel");
+
+							String channelcode = channelObject
+									.getString("code");
+
+							String channelname = channelObject
+									.getString("name");
+
+							Map<String, String> text_map = new HashMap<String, String>();
+
+							text_map.put("name", name);
+							text_map.put("code", code);
+							text_map.put("city", city);
+							text_map.put("channelcode", channelcode);
+							text_map.put("channelname", channelname);
+
+							Message message2 = Message.obtain();
+
+							message2.obj = text_map;
+
+							text_handler.sendMessage(message2);
+
+							JSONArray payinfoList = dataObject
+									.getJSONArray("payinfo");
+
+							for (int i = 0; i < payinfoList.length(); i++) {
+								JSONObject jsonObject2 = payinfoList
+										.getJSONObject(i);
+								Map<String, Object> map = new HashMap<String, Object>();
+								// 迭代输出json的key作为map的key
+
+								Iterator<String> iterator = jsonObject2
+										.keys();
+								while (iterator.hasNext()) {
+									String key = iterator.next();
+									Object value = jsonObject2.get(key);
+									map.put(key, value);
+								}
+								list.add(map);
+							}
+							Message message = Message.obtain();
+
+							message.obj = list;
+
+							handler.sendMessage(message);
+						} else {
+							Map<String, String> map = new HashMap<String, String>();
+
+							map.put("errmsg", errmsg);
+
+							Message message = Message.obtain();
+
+							message.obj = map;
+
+							nodata_handler.sendMessage(message);
+						}
+
 					}
 
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
 			}
 		});
 		
@@ -835,8 +824,7 @@ public class Product_C_InfoActivity extends BaseActivity {
 		.execute(new StringCallback() {
 
 			@Override
-			public void onError(Call call, Exception e) {
-			
+			public void onError(Call call, Exception e, int id) {
 				Log.e("error", "获取数据异常 ", e);
 
 				String status = "false";
@@ -845,12 +833,10 @@ public class Product_C_InfoActivity extends BaseActivity {
 				message.obj = status;
 
 				errcode_handler.sendMessage(message);
-				
 			}
 
 			@Override
-			public void onResponse(String response) {
-			
+			public void onResponse(String response, int id) {
 				String jsonString = response;
 				Log.d("onSuccess", "onSuccess json = " + jsonString);
 				List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
@@ -916,7 +902,6 @@ public class Product_C_InfoActivity extends BaseActivity {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-
 			}
 		});
 		

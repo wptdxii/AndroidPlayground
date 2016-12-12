@@ -356,8 +356,7 @@ public class Havebeenpaid_O_InfoActivity extends BaseActivity {
 		.execute(new StringCallback() {
 
 			@Override
-			public void onError(Call call, Exception e) {
-			
+			public void onError(Call call, Exception e, int id) {
 				Log.e("error", "获取数据异常 ", e);
 				String status = "false";
 				Message message = Message.obtain();
@@ -365,12 +364,10 @@ public class Havebeenpaid_O_InfoActivity extends BaseActivity {
 				message.obj = status;
 
 				errcode_handler.sendMessage(message);
-				
 			}
 
 			@Override
-			public void onResponse(String response) {
-			
+			public void onResponse(String response, int id) {
 				String jsonString = response;
 				Log.d("onSuccess", "onSuccess json = " + jsonString);
 
@@ -393,7 +390,7 @@ public class Havebeenpaid_O_InfoActivity extends BaseActivity {
 					} else {
 
 						JSONObject jsonObject = new JSONObject(jsonString);
-						
+
 						String errcode = jsonObject.getString("errcode");
 						if (!errcode.equals("0")) {
 							String errmsg = jsonObject.getString("errmsg");
@@ -408,77 +405,77 @@ public class Havebeenpaid_O_InfoActivity extends BaseActivity {
 							null_handler.sendMessage(message2);
 
 						} else {
-						JSONObject dataObject = jsonObject
-								.getJSONObject("data");
+							JSONObject dataObject = jsonObject
+									.getJSONObject("data");
 
-						JSONArray itemsArray = dataObject
-								.getJSONArray("items");
+							JSONArray itemsArray = dataObject
+									.getJSONArray("items");
 
-						for (int i = 0; i < itemsArray.length(); i++) {
+							for (int i = 0; i < itemsArray.length(); i++) {
 
-							Map<String, String> map = new HashMap<String, String>();
-							JSONArray jsonArray1 = itemsArray
-									.getJSONArray(i);
+								Map<String, String> map = new HashMap<String, String>();
+								JSONArray jsonArray1 = itemsArray
+										.getJSONArray(i);
 
-							map.put("policy_name", jsonArray1.getString(0));
-							map.put("policy_price", jsonArray1.getString(1));
+								map.put("policy_name", jsonArray1.getString(0));
+								map.put("policy_price", jsonArray1.getString(1));
 
-							price_list.add(map);
-						}
+								price_list.add(map);
+							}
 
-						JSONArray holderArray = dataObject
-								.getJSONArray("holder");
+							JSONArray holderArray = dataObject
+									.getJSONArray("holder");
 
-						for (int i = 0; i < holderArray.length(); i++) {
+							for (int i = 0; i < holderArray.length(); i++) {
 
-							Map<String, String> map = new HashMap<String, String>();
-							JSONArray jsonArray1 = holderArray
-									.getJSONArray(i);
+								Map<String, String> map = new HashMap<String, String>();
+								JSONArray jsonArray1 = holderArray
+										.getJSONArray(i);
 
-							map.put("holder_title", jsonArray1.getString(0));
-							map.put("holder_value", jsonArray1.getString(1));
+								map.put("holder_title", jsonArray1.getString(0));
+								map.put("holder_value", jsonArray1.getString(1));
 
-							holder_list.add(map);
-						}
+								holder_list.add(map);
+							}
 
-						JSONArray insuredArray = dataObject
-								.getJSONArray("insured");
+							JSONArray insuredArray = dataObject
+									.getJSONArray("insured");
 
-						for (int i = 0; i < insuredArray.length(); i++) {
+							for (int i = 0; i < insuredArray.length(); i++) {
 
-							Map<String, String> map = new HashMap<String, String>();
-							JSONArray jsonArray1 = insuredArray
-									.getJSONArray(i);
+								Map<String, String> map = new HashMap<String, String>();
+								JSONArray jsonArray1 = insuredArray
+										.getJSONArray(i);
 
-							map.put("insured_title",
-									jsonArray1.getString(0));
-							map.put("insured_value",
-									jsonArray1.getString(1));
+								map.put("insured_title",
+										jsonArray1.getString(0));
+								map.put("insured_value",
+										jsonArray1.getString(1));
 
-							insured_list.add(map);
-						}
+								insured_list.add(map);
+							}
 
-						JSONArray otherArray = dataObject
-								.getJSONArray("other");
+							JSONArray otherArray = dataObject
+									.getJSONArray("other");
 
-						for (int i = 0; i < otherArray.length(); i++) {
+							for (int i = 0; i < otherArray.length(); i++) {
 
-							Map<String, String> map = new HashMap<String, String>();
-							JSONArray jsonArray1 = otherArray
-									.getJSONArray(i);
+								Map<String, String> map = new HashMap<String, String>();
+								JSONArray jsonArray1 = otherArray
+										.getJSONArray(i);
 
-							map.put("other_title", jsonArray1.getString(0));
-							map.put("other_value", jsonArray1.getString(1));
+								map.put("other_title", jsonArray1.getString(0));
+								map.put("other_value", jsonArray1.getString(1));
 
-							other_list.add(map);
-						}
+								other_list.add(map);
+							}
 
-						JSONArray benefitArray = dataObject
-								.getJSONArray("benefit");
+							JSONArray benefitArray = dataObject
+									.getJSONArray("benefit");
 
-				
+
 							Map<String, String> map3 = new HashMap<String, String>();
-						
+
 
 							map3.put("benefit_title",
 									benefitArray.getString(0));
@@ -486,57 +483,55 @@ public class Havebeenpaid_O_InfoActivity extends BaseActivity {
 									benefitArray.getString(1));
 
 							benefit_list.add(map3);
-					
-						
-						
-						map_all.put("price_list", price_list);
-						map_all.put("holder_list", holder_list);
-						map_all.put("insured_list", insured_list);
-						map_all.put("other_list", other_list);
-						map_all.put("benefit_list", benefit_list);
-						
-						String subs_code  = dataObject.getString("subs_code");
-						String product_id  = dataObject.getString("product_id");
-						String img_url  = dataObject.getString("img_url");
-						String product_name  = dataObject.getString("product_name");
-						String price  = dataObject.getString("price");
-						String amount  = dataObject.getString("amount");
-						String count  = dataObject.getString("count");
-						String period_from  = dataObject.getString("period_from");
-						String period_to    = dataObject.getString("period_to");
-						String relation_ship    = dataObject.getString("relation_ship");
-						
-						
-						map_all.put("subs_code", subs_code);
-						map_all.put("product_id", product_id);
-						map_all.put("img_url", img_url);
-						map_all.put("product_name", product_name);
-						map_all.put("relation_ship", relation_ship);
-						
-						map_all.put("price", price);
-						map_all.put("amount", amount);
-						map_all.put("count", count);
-						map_all.put("period_from", period_from);
-						map_all.put("period_to", period_to);
-					
-						
-						
-					
 
-						
-						
-						
-						Message message = Message.obtain();
 
-						message.obj = map_all;
-						handler.sendMessage(message);
+
+							map_all.put("price_list", price_list);
+							map_all.put("holder_list", holder_list);
+							map_all.put("insured_list", insured_list);
+							map_all.put("other_list", other_list);
+							map_all.put("benefit_list", benefit_list);
+
+							String subs_code  = dataObject.getString("subs_code");
+							String product_id  = dataObject.getString("product_id");
+							String img_url  = dataObject.getString("img_url");
+							String product_name  = dataObject.getString("product_name");
+							String price  = dataObject.getString("price");
+							String amount  = dataObject.getString("amount");
+							String count  = dataObject.getString("count");
+							String period_from  = dataObject.getString("period_from");
+							String period_to    = dataObject.getString("period_to");
+							String relation_ship    = dataObject.getString("relation_ship");
+
+
+							map_all.put("subs_code", subs_code);
+							map_all.put("product_id", product_id);
+							map_all.put("img_url", img_url);
+							map_all.put("product_name", product_name);
+							map_all.put("relation_ship", relation_ship);
+
+							map_all.put("price", price);
+							map_all.put("amount", amount);
+							map_all.put("count", count);
+							map_all.put("period_from", period_from);
+							map_all.put("period_to", period_to);
+
+
+
+
+
+
+
+
+							Message message = Message.obtain();
+
+							message.obj = map_all;
+							handler.sendMessage(message);
 						}
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-
-
 			}
 		});
 		

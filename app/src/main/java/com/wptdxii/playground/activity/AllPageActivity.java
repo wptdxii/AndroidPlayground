@@ -94,7 +94,7 @@ public class AllPageActivity extends BaseActivity {
         initView();
         setOnClickListener();
         //接收无序跳转回首页
-//        registerDisorderJumpReceiver();
+        //        registerDisorderJumpReceiver();
         EventBus.getDefault().register(this);
 
         getSplashAdData();
@@ -104,61 +104,64 @@ public class AllPageActivity extends BaseActivity {
 
     private void getSplashAdData() {
         String url = IpConfig.getUri2("splashAd");
+
         OkHttpUtils.get()
                 .url(url)
                 .build()
                 .execute(new StringCallback() {
                     @Override
-                    public void onError(Call call, Exception e) {
+                    public void onError(Call call, Exception e, int id) {
 
                     }
 
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse(String response, int id) {
                         if (response != null && !response.equals("") && !response.equals("null")) {
 
                             SplashAdBean adBean = JSON.parseObject(response, SplashAdBean.class);
                             List<SplashAdBean.DataBean> data = adBean.getData();
-                            int random = new Random().nextInt(data.size());
-                            downloadSplashAd(data.get(random));
-                        }
+                            if (data != null && data.size() > 0) {
 
+                                int random = new Random().nextInt(data.size());
+                                downloadSplashAd(data.get(random));
+                            } else {
+                                File oldFile = new File(AdPreference.getInstance().getSplashAdPage().getImg());
+                                if (oldFile.exists() && oldFile.isFile()) {
+
+                                    AdFileUtils.deleteFile(AdPreference.getInstance().getSplashAdPage().getImg());
+                                }
+                                AdPreference.getInstance().clear();
+                            }
+                        }
 
                     }
                 });
     }
 
-    private void downloadSplashAd(SplashAdBean.DataBean data) {
+    private void downloadSplashAd(final SplashAdBean.DataBean data) {
 
-        AdPreference.getInstance().saveSplashAdPage(data);
-
-        String AD_PATH
-                = Environment.getExternalStorageDirectory() + "/MFAd/" + AdFileUtils.getImgName(AdPreference.getInstance().getSplashAdPage().getImg());
-
-        if (data.getImg() != AdPreference.getInstance().getSplashAdPage().getImg()) {
-            AdFileUtils.deleteFile(AD_PATH);
-        }
-
-        File file = new File(AD_PATH);
-        if (!file.exists()) {
+        if (data.getImg() != AdPreference.getInstance().getSplashAdPage().getImg()
+                && !"".equals(data.getImg())) {
             OkHttpUtils.get()
                     .url(data.getImg())
                     .build()
-                    .execute(new FileCallBack(this.AD_PATH, AdFileUtils.getImgName(AdPreference.getInstance().getSplashAdPage().getImg())) {
+                    .execute(new FileCallBack(this.AD_PATH,
+                            AdFileUtils.getImgName(data.getImg())) {
                         @Override
-                        public void inProgress(float progress) {
+                        public void onError(Call call, Exception e, int id) {
 
                         }
 
                         @Override
-                        public void onError(Call call, Exception e) {
-                            AdPreference.getInstance().clear();
+                        public void onResponse(File response, int id) {
+                            File oldFile = new File(AdPreference.getInstance().getSplashAdPage().getImg());
+                            if (oldFile.exists() && oldFile.isFile()) {
+
+                                AdFileUtils.deleteFile(AdPreference.getInstance().getSplashAdPage().getImg());
+                            }
+                            AdPreference.getInstance().saveSplashAdPage(data);
                         }
 
-                        @Override
-                        public void onResponse(File response) {
-
-                        }
                     });
         }
 
@@ -384,7 +387,7 @@ public class AllPageActivity extends BaseActivity {
     }*/
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(DisorderJumpEvent event){
+    public void onEvent(DisorderJumpEvent event) {
         int page = event.page;
         switch (page) {
             case 0:

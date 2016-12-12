@@ -311,70 +311,65 @@ public class CreToBlanceActivity extends BaseActivity {
 		.execute(new StringCallback() {
 
 			@Override
-			public void onError(Call call, Exception e) {
+			public void onError(Call call, Exception e, int id) {
 				Log.e("error", "获取数据异常 ", e);
-				
+
 				String status ="false";
 				Message message = Message.obtain();
 
 				message.obj = status;
 
 				errcode_handler.sendMessage(message);
-			
-				
 			}
 
 			@Override
-			public void onResponse(String response) {
-			
-				
+			public void onResponse(String response, int id) {
 				Map<String, String> map = new HashMap<String, String>();
 				String jsonString = response;
 				Log.d("onSuccess", "onSuccess json = " + jsonString);
-			
+
 				try {
 
-				if(jsonString.equals("")||jsonString.equals("")||jsonString.equals("null"))
-				{
-					String status ="false";
-					Message message = Message.obtain();
-
-					message.obj = status;
-
-					errcode_handler.sendMessage(message);
-					
-				}else{
-					JSONObject jsonObject = new JSONObject(jsonString);
-					String data = jsonObject.getString("data");
-			
-				    
-					String errcode = jsonObject.getString("errcode");
-					if(errcode.equals("0"))
+					if(jsonString.equals("")||jsonString.equals("")||jsonString.equals("null"))
 					{
-					JSONObject dataObject = new JSONObject(data);
-					
-					String score = dataObject.getString("score");
-					 map.put("errcode",errcode);				
-					 map.put("score",score);
+						String status ="false";
+						Message message = Message.obtain();
+
+						message.obj = status;
+
+						errcode_handler.sendMessage(message);
+
 					}else{
-					String errmsg = jsonObject.getString("errmsg");
-					Log.d("44444", data);
-				
-                    map.put("errcode",errcode);
-                    map.put("errmsg",errmsg);
-                  
+						JSONObject jsonObject = new JSONObject(jsonString);
+						String data = jsonObject.getString("data");
+
+
+						String errcode = jsonObject.getString("errcode");
+						if(errcode.equals("0"))
+						{
+							JSONObject dataObject = new JSONObject(data);
+
+							String score = dataObject.getString("score");
+							map.put("errcode",errcode);
+							map.put("score",score);
+						}else{
+							String errmsg = jsonObject.getString("errmsg");
+							Log.d("44444", data);
+
+							map.put("errcode",errcode);
+							map.put("errmsg",errmsg);
+
+						}
+						Message message = Message.obtain();
+
+						message.obj = map;
+
+						handler.sendMessage(message);
 					}
-                    Message message = Message.obtain();
 
-					message.obj = map;
-
-					handler.sendMessage(message);	
-				}
-				
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-
 			}
 		});
 		

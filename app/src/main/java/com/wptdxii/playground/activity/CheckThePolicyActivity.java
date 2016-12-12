@@ -197,18 +197,16 @@ public class CheckThePolicyActivity extends BaseActivity {
 		.execute(new StringCallback() {
 
 			@Override
-			public void onError(Call call, Exception e) {
-			
+			public void onError(Call call, Exception e, int id) {
 				Log.e("error", "获取数据异常 ", e);
 				Toast.makeText(CheckThePolicyActivity.this, "网络连接失败，请确认网络连接后重试",
 						Toast.LENGTH_SHORT).show();
 				dialog.dismiss();
-				
 			}
 
 			@Override
-			public void onResponse(String response) {
-			
+			public void onResponse(String response, int id) {
+
 				String jsonString = response;
 				Log.d("onSuccess", "onSuccess json = " + jsonString);
 				Map<String, String> errcode_map = new HashMap<String, String>();
@@ -250,7 +248,7 @@ public class CheckThePolicyActivity extends BaseActivity {
 								JSONObject jsonObject2 = dataList
 										.getJSONObject(i);
 								Map<String, String> map = new HashMap<String, String>();
-								
+
 								// 迭代输出json的key作为map的key
 
 								Iterator<String> iterator = jsonObject2

@@ -355,15 +355,13 @@ public class AddRelationActivity extends BaseActivity {
 		.execute(new StringCallback() {
 
 			@Override
-			public void onError(Call call, Exception e) {
-			
+			public void onError(Call call, Exception e, int id) {
+
 				Log.e("error", "获取数据异常 ", e);
-				
 			}
 
 			@Override
-			public void onResponse(String response) {
-			
+			public void onResponse(String response, int id) {
 				Map<String, String> map = new HashMap<String, String>();
 				String jsonString = response;
 				Log.d("onSuccess", "onSuccess json = " + jsonString);
@@ -375,7 +373,7 @@ public class AddRelationActivity extends BaseActivity {
 					String data = jsonObject.getString("data");
 
 					String errcode = jsonObject.getString("errcode");
-					
+
 					String errmsg = jsonObject.getString("errmsg");
 
 					Log.d("44444", data);
@@ -383,7 +381,7 @@ public class AddRelationActivity extends BaseActivity {
 					map.put("errcode", errcode);
 
 					map.put("errmsg", errmsg);
-					
+
 					Message message = Message.obtain();
 
 					message.obj = map;
@@ -393,7 +391,6 @@ public class AddRelationActivity extends BaseActivity {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-
 
 			}
 		});

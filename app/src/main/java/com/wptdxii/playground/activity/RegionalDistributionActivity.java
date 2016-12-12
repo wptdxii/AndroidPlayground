@@ -215,19 +215,16 @@ public class RegionalDistributionActivity extends BaseActivity {
 		.execute(new StringCallback() {
 
 			@Override
-			public void onError(Call call, Exception e) {
-			
+			public void onError(Call call, Exception e, int id) {
 				Log.e("error", "获取数据异常 ", e);
 				Toast.makeText(RegionalDistributionActivity.this,
 						"网络连接失败，请确认网络连接后重试", Toast.LENGTH_SHORT).show();
 				dialog.dismiss();
-				
 			}
 
 			@Override
-			public void onResponse(String response) {
-			
-				
+			public void onResponse(String response, int id) {
+
 				String jsonString = response;
 				Log.d("onSuccess", "onSuccess json = " + jsonString);
 				Map<String, String> errcode_map = new HashMap<String, String>();
@@ -253,12 +250,12 @@ public class RegionalDistributionActivity extends BaseActivity {
 								.getJSONArray("data");
 
 						String totalCnt= jsonObject.getString("totalCnt");
-						
+
 						Message message2 = Message.obtain();
 						message2.obj = totalCnt;
 
 						total_handler.sendMessage(message2);
-					    
+
 						for (int i = 0; i < dataList.length(); i++) {
 							JSONObject jsonObject2 = dataList
 									.getJSONObject(i);
@@ -368,7 +365,6 @@ public class RegionalDistributionActivity extends BaseActivity {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-
 			}
 		});
 		

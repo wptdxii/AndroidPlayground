@@ -318,31 +318,28 @@ public class SearchProductActivity extends BaseActivity{
 		.execute(new StringCallback() {
 
 			@Override
-			public void onError(Call call, Exception e) {
-			
+			public void onError(Call call, Exception e, int id) {
 				Log.e("error", "获取数据异常 ", e);
-				
+
 				String status ="false";
 				Message message = Message.obtain();
 
 				message.obj = status;
 
 				errcode_handler.sendMessage(message);
-				
 			}
 
 			@Override
-			public void onResponse(String response) {
-			
+			public void onResponse(String response, int id) {
 				String jsonString = response;
 				Log.d("onSuccess", "onSuccess json = " + jsonString);
 				List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 				try {
-					
+
 
 					Log.d("44444", jsonString);
 					if(jsonString==null||jsonString.equals("")||jsonString.equals("null"))
-					{ 
+					{
 						String status ="false";
 						Message message = Message.obtain();
 
@@ -351,9 +348,9 @@ public class SearchProductActivity extends BaseActivity{
 						errcode_handler.sendMessage(message);
 					}
 					else{
-						
-						
-						
+
+
+
 						JSONObject jsonObject = new JSONObject(jsonString);
 						JSONArray dataList = jsonObject.getJSONArray("data");
 
@@ -371,23 +368,19 @@ public class SearchProductActivity extends BaseActivity{
 							list.add(map);
 						}
 						Message message = Message.obtain();
-                        Log.d("44545545","99999999");
+						Log.d("44545545","99999999");
 						message.obj = list;
 
 						handler.sendMessage(message);
-						
-					
+
+
 					}
-					
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-
-
 			}
 		});
-		
-		
 	
 	}
 	

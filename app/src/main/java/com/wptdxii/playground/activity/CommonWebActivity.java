@@ -7,12 +7,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.webkit.CookieManager;
-import android.webkit.CookieSyncManager;
 import android.webkit.DownloadListener;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
@@ -27,6 +24,7 @@ import android.widget.Toast;
 import com.cloudhome.R;
 import com.cloudhome.application.MyApplication;
 import com.cloudhome.event.DisorderJumpEvent;
+import com.cloudhome.network.interceptor.MyInterceptor;
 import com.cloudhome.utils.GetIp;
 import com.cloudhome.utils.IpConfig;
 import com.tencent.mm.sdk.constants.Build;
@@ -36,8 +34,6 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.umeng.analytics.MobclickAgent;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
-import com.zhy.http.okhttp.cookie.SimpleCookieJar;
-import com.zhy.http.okhttp.utils.MyInterceptor;
 
 import net.sourceforge.simcpux.Constants;
 
@@ -45,11 +41,9 @@ import org.greenrobot.eventbus.EventBus;
 import org.json.JSONObject;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import okhttp3.Call;
-import okhttp3.Cookie;
 
 public class CommonWebActivity extends BaseActivity {
 
@@ -266,7 +260,7 @@ public class CommonWebActivity extends BaseActivity {
                     + token
                     + "&user_id="
                     + user_id_encode;
-            synCookies(CommonWebActivity.this, url);
+//            synCookies(CommonWebActivity.this, url);
         }
         Log.i("shareUrl--------",shareUrl);
             Log.i("url--------",url);
@@ -412,42 +406,42 @@ public class CommonWebActivity extends BaseActivity {
         }
     }
 
-    private void synCookies(Context context, String url) {
-        CookieSyncManager.createInstance(context);
-        CookieManager cookieManager = CookieManager.getInstance();
-        cookieManager.setAcceptCookie(true);
-        // cookieManager.removeSessionCookie();// 移除
-
-        cookieManager.removeAllCookie();
-        // String[] cookie = mCookieStr.split(";");
-
-        // Cookie[] cookie = CookieUtil.getCookies().toArray(
-        // new Cookie[CookieUtil.getCookies().size()]);
-
-        List<Cookie> cookies = SimpleCookieJar.getCookies();
-
-
-        StringBuffer sb = new StringBuffer();
-
-
-        for (Cookie cookie : cookies) {
-
-            String cookieName = cookie.name();
-            String cookieValue = cookie.value();
-            if (!TextUtils.isEmpty(cookieName)
-                    && !TextUtils.isEmpty(cookieValue)) {
-                sb.append(cookieName).append("=");
-                sb.append(cookieValue).append(";");
-            }
-        }
-
-        String[] cookie = sb.toString().split(";");
-        for (int i = 0; i < cookie.length; i++) {
-            com.umeng.socialize.utils.Log.d("cookie[i]", cookie[i]);
-            cookieManager.setCookie(url, cookie[i]);// cookies是在HttpClient中获得的cookie
-        }
-        CookieSyncManager.getInstance().sync();
-    }
+//    private void synCookies(Context context, String url) {
+//        CookieSyncManager.createInstance(context);
+//        CookieManager cookieManager = CookieManager.getInstance();
+//        cookieManager.setAcceptCookie(true);
+//        // cookieManager.removeSessionCookie();// 移除
+//
+//        cookieManager.removeAllCookie();
+//        // String[] cookie = mCookieStr.split(";");
+//
+//        // Cookie[] cookie = CookieUtil.getCookies().toArray(
+//        // new Cookie[CookieUtil.getCookies().size()]);
+//
+//        List<Cookie> cookies = SimpleCookieJar.getCookies();
+//
+//
+//        StringBuffer sb = new StringBuffer();
+//
+//
+//        for (Cookie cookie : cookies) {
+//
+//            String cookieName = cookie.name();
+//            String cookieValue = cookie.value();
+//            if (!TextUtils.isEmpty(cookieName)
+//                    && !TextUtils.isEmpty(cookieValue)) {
+//                sb.append(cookieName).append("=");
+//                sb.append(cookieValue).append(";");
+//            }
+//        }
+//
+//        String[] cookie = sb.toString().split(";");
+//        for (int i = 0; i < cookie.length; i++) {
+//            com.umeng.socialize.utils.Log.d("cookie[i]", cookie[i]);
+//            cookieManager.setCookie(url, cookie[i]);// cookies是在HttpClient中获得的cookie
+//        }
+//        CookieSyncManager.getInstance().sync();
+//    }
 
 
     @Override
@@ -470,15 +464,16 @@ public class CommonWebActivity extends BaseActivity {
                 .build()//
                 .execute(new StringCallback() {
                     @Override
-                    public void onError(Call call, Exception e) {
+                    public void onError(Call call, Exception e, int id) {
                         android.util.Log.e("error", "获取数据异常 ", e);
                         String status = "false";
                         Message message = Message.obtain();
                         message.obj = status;
                         errcode_handler.sendMessage(message);
                     }
+
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse(String response, int id) {
                         String jsonString = response;
                         android.util.Log.d("onSuccess", "onSuccess json = " + jsonString);
                         Map<String, String> errcode_map = new HashMap<String, String>();

@@ -144,39 +144,36 @@ public class MyReferralActivity extends BaseActivity {
 		.execute(new StringCallback() {
 
 			@Override
-			public void onError(Call call, Exception e) {
-			
+			public void onError(Call call, Exception e, int id) {
 				Log.e("error", "获取数据异常 ", e);
-				
 			}
 
 			@Override
-			public void onResponse(String response) {
-			
+			public void onResponse(String response, int id) {
 				Map<String, String> map = new HashMap<String, String>();
 				String jsonString = response;
 				Log.d("onSuccess", "onSuccess json = " + jsonString);
-			
+
 				try {
 
 					// Log.d("44444", jsonString);
 					JSONObject jsonObject = new JSONObject(jsonString);
 					String data = jsonObject.getString("data");
-			
-				    
+
+
 					String errcode = jsonObject.getString("errcode");
 					String errmsg = jsonObject.getString("errmsg");
-					
+
 					if(errcode.equals("0"))
 					{
-					JSONObject dataObject = new JSONObject(data);
-					String name = dataObject.getString("name");
-					   map.put("name",name);
-					Log.d("44444", data);
+						JSONObject dataObject = new JSONObject(data);
+						String name = dataObject.getString("name");
+						map.put("name",name);
+						Log.d("44444", data);
 					}
-                     map.put("errcode",errcode);
-                  
-                     map.put("errmsg",errmsg);
+					map.put("errcode",errcode);
+
+					map.put("errmsg",errmsg);
 					Message message = Message.obtain();
 
 					message.obj = map;
@@ -186,9 +183,8 @@ public class MyReferralActivity extends BaseActivity {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-
-
 			}
+
 		});
 		
 		

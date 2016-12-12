@@ -18,8 +18,8 @@ import com.cloudhome.R;
 import com.cloudhome.application.MyApplication;
 import com.cloudhome.bean.UserBean;
 import com.cloudhome.listener.NetResultListener;
+import com.cloudhome.network.AmendPassword;
 import com.cloudhome.network.AuthLogin;
-import com.cloudhome.network.ForgetPassword;
 import com.cloudhome.network.SaveDeviceMsg;
 import com.cloudhome.utils.HttpMd5;
 import com.cloudhome.view.iosalertview.CustomDialog;
@@ -35,7 +35,7 @@ public class ModifyPasswordActivity extends BaseActivity implements View.OnClick
     private Button btn_done;
     private String mobile;
     private String code;
-    private ForgetPassword forgetPassword;
+    private AmendPassword amendPassword;
     public static final int MODIFY_PASSWORD =1;
     public static final int ACCOUNT_PASSWORD_LOGIN=2;
     public static final int SAVE_DEVICE_MSG=3;
@@ -45,6 +45,8 @@ public class ModifyPasswordActivity extends BaseActivity implements View.OnClick
     private Dialog dialog;
     private UserBean bean;
     private String device_id, os_version;
+    private String user_id;
+    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,8 @@ public class ModifyPasswordActivity extends BaseActivity implements View.OnClick
         Intent intent=getIntent();
         mobile=intent.getStringExtra("mobile");
         code=intent.getStringExtra("code");
+        user_id = sp.getString("Login_UID", "");
+        token = sp.getString("Login_TOKEN", "");
         initView();
         initEvent();
     }
@@ -113,8 +117,8 @@ public class ModifyPasswordActivity extends BaseActivity implements View.OnClick
                 }else{
                     dialog.show();
                     passMd5= HttpMd5.getMD5(et_second);
-                    forgetPassword=new ForgetPassword(this);
-                    forgetPassword.execute(mobile,passMd5,"amend_password",code, MODIFY_PASSWORD);
+                    amendPassword=new AmendPassword(this);
+                    amendPassword.execute(mobile,passMd5,"amend_password",code, MODIFY_PASSWORD,user_id,token);
                 }
 
                 break;

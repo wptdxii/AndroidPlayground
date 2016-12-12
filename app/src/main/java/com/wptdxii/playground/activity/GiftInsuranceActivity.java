@@ -298,11 +298,12 @@ public class GiftInsuranceActivity extends BaseActivity implements View.OnClickL
                 .execute(new StringCallback() {
 
                     @Override
-                    public void onError(Call call, Exception e) {
+                    public void onError(Call call, Exception e, int id) {
+
                     }
 
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse(String response, int id) {
                         String jsonString = response;
                         android.util.Log.d("onSuccess", "onSuccess json = " + jsonString);
                         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
@@ -310,7 +311,7 @@ public class GiftInsuranceActivity extends BaseActivity implements View.OnClickL
                             android.util.Log.d("5555", jsonString);
                             if (jsonString == null || jsonString.equals("")
                                     || jsonString.equals("null")) {
-//                                Toast.makeText(GiftInsuranceActivity.this, "刷新积分失败", Toast.LENGTH_SHORT).show();
+                                //                                Toast.makeText(GiftInsuranceActivity.this, "刷新积分失败", Toast.LENGTH_SHORT).show();
                             } else {
                                 Map<String, String> map = new HashMap<String, String>();
                                 JSONObject jsonObject = new JSONObject(
@@ -322,11 +323,11 @@ public class GiftInsuranceActivity extends BaseActivity implements View.OnClickL
                                         .getString("errcode");
                                 String newScore = dataObject.getString("score");
                                 score= Integer.parseInt(newScore);
-//                                Toast.makeText(GiftInsuranceActivity.this, "刷新积分成功"+score, Toast.LENGTH_SHORT).show();
+                                //                                Toast.makeText(GiftInsuranceActivity.this, "刷新积分成功"+score, Toast.LENGTH_SHORT).show();
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
-//                            Toast.makeText(GiftInsuranceActivity.this, "刷新积分失败", Toast.LENGTH_SHORT).show();
+                            //                            Toast.makeText(GiftInsuranceActivity.this, "刷新积分失败", Toast.LENGTH_SHORT).show();
                         }
 
                     }

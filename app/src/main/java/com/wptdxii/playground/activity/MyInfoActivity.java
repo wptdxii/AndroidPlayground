@@ -888,15 +888,13 @@ public class MyInfoActivity extends BaseActivity implements NetResultListener{
                 .execute(new StringCallback() {
 
                     @Override
-                    public void onError(Call call, Exception e) {
+                    public void onError(Call call, Exception e, int id) {
 
                         Log.e("error", "获取数据异常 ", e);
-
                     }
 
                     @Override
-                    public void onResponse(String response) {
-
+                    public void onResponse(String response, int id) {
                         Map<String, String> map = new HashMap<String, String>();
                         String jsonString = response;
                         Log.d("onSuccess", "onSuccess json = " + jsonString);
@@ -1064,8 +1062,7 @@ public class MyInfoActivity extends BaseActivity implements NetResultListener{
                 .execute(new StringCallback() {
 
                     @Override
-                    public void onError(Call call, Exception e) {
-
+                    public void onError(Call call, Exception e, int id) {
                         Log.e("error", "获取数据异常 ", e);
 
                         String status = "false";
@@ -1077,7 +1074,7 @@ public class MyInfoActivity extends BaseActivity implements NetResultListener{
                     }
 
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse(String response, int id) {
                         String jsonString = response;
                         Log.d("onSuccess", "onSuccess json = " + jsonString);
                         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
@@ -1131,8 +1128,8 @@ public class MyInfoActivity extends BaseActivity implements NetResultListener{
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-
                     }
+
                 });
 
 
@@ -1315,17 +1312,14 @@ public class MyInfoActivity extends BaseActivity implements NetResultListener{
                 .url(url).params(map).build().execute(new StringCallback() {
 
             @Override
-            public void onError(Call call, Exception e) {
-
+            public void onError(Call call, Exception e, int id) {
                 pdialog.dismiss();
                 Toast.makeText(MyInfoActivity.this, "设置头像失败",
                         Toast.LENGTH_SHORT).show();
-
             }
 
             @Override
-            public void onResponse(String response) {
-                // TODO Auto-generated method stub
+            public void onResponse(String response, int id) {
                 String jsonString = response;
                 Map<String, String> codemap = new HashMap<String, String>();
                 try {
@@ -1368,7 +1362,6 @@ public class MyInfoActivity extends BaseActivity implements NetResultListener{
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
             }
         });
 
@@ -1443,16 +1436,13 @@ public class MyInfoActivity extends BaseActivity implements NetResultListener{
                 .execute(new StringCallback() {
 
                     @Override
-                    public void onError(Call call, Exception e) {
+                    public void onError(Call call, Exception e, int id) {
 
                         Log.e("error", "获取数据异常 ", e);
-
                     }
 
                     @Override
-                    public void onResponse(String response) {
-
-
+                    public void onResponse(String response, int id) {
                         Map<String, String> map = new HashMap<String, String>();
                         String jsonString = response;
                         Log.d("onSuccess", "onSuccess json = " + jsonString);
@@ -1479,7 +1469,6 @@ public class MyInfoActivity extends BaseActivity implements NetResultListener{
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-
 
                     }
                 });

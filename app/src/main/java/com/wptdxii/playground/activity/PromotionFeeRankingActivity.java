@@ -176,14 +176,14 @@ public class PromotionFeeRankingActivity extends BaseActivity implements View.On
                 .build()
                 .execute(new StringCallback() {
                     @Override
-                    public void onError(Call call, Exception e) {
+                    public void onError(Call call, Exception e, int id) {
                         Message msg = new Message();
                         msg.what = 1;
                         handler.sendMessage(msg);
                     }
 
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse(String response, int id) {
                         String jsonString = response;
                         Log.d("onSuccess", "onSuccess json = " + jsonString);
                         try {

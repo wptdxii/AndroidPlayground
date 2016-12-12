@@ -496,7 +496,7 @@ public class InsuranceShopSceneActivity extends BaseActivity implements
 		.execute(new StringCallback() {
 
 			@Override
-			public void onError(Call call, Exception e) {
+			public void onError(Call call, Exception e, int id) {
 				Log.e("error", "获取数据异常 ", e);
 
 				String status = "false";
@@ -505,13 +505,10 @@ public class InsuranceShopSceneActivity extends BaseActivity implements
 				message.obj = status;
 
 				errcode_handler.sendMessage(message);
-			
-				
 			}
 
 			@Override
-			public void onResponse(String response) {
-			
+			public void onResponse(String response, int id) {
 				String jsonString = response;
 				Log.d("onSuccess", "in_shopScene = " + jsonString);
 				List<Map<String, String>> info_list = new ArrayList<Map<String, String>>();
@@ -574,8 +571,6 @@ public class InsuranceShopSceneActivity extends BaseActivity implements
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-
-
 			}
 		});
 		
@@ -604,8 +599,6 @@ public class InsuranceShopSceneActivity extends BaseActivity implements
 	private void setVisitData(String url) {
 
 		
-		
-		
 		OkHttpUtils.post()//
 		.url(url)//
 		.params(key_value2)//
@@ -613,15 +606,13 @@ public class InsuranceShopSceneActivity extends BaseActivity implements
 		.execute(new StringCallback() {
 
 			@Override
-			public void onError(Call call, Exception e) {
+			public void onError(Call call, Exception e, int id) {
+
 				Log.e("error", "获取数据异常 ", e);
-			
-				
 			}
 
 			@Override
-			public void onResponse(String response) {
-			
+			public void onResponse(String response, int id) {
 				String jsonString = response;
 
 				Log.d("onSuccess", "onSuccess json = " + jsonString);

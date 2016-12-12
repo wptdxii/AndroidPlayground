@@ -139,33 +139,31 @@ public class MyNicknameActivity extends BaseActivity {
 		.execute(new StringCallback() {
 
 			@Override
-			public void onError(Call call, Exception e) {
-			
+			public void onError(Call call, Exception e, int id) {
+
 				Log.e("error", "获取数据异常 ", e);
-				
 			}
 
 			@Override
-			public void onResponse(String response) {
-			
-				
+			public void onResponse(String response, int id) {
+
 				Map<String, String> map = new HashMap<String, String>();
 				String jsonString = response;
 				Log.d("onSuccess", "onSuccess json = " + jsonString);
-			
+
 				try {
 
 					// Log.d("44444", jsonString);
 					JSONObject jsonObject = new JSONObject(jsonString);
 					String data = jsonObject.getString("data");
-			
-				    
+
+
 					String errcode = jsonObject.getString("errcode");
-					
+
 					Log.d("44444", data);
-				
-                     map.put("errcode",errcode);
-				
+
+					map.put("errcode",errcode);
+
 					Message message = Message.obtain();
 
 					message.obj = map;
@@ -178,11 +176,6 @@ public class MyNicknameActivity extends BaseActivity {
 
 			}
 		});
-		
-		
-		
-		
-
 	}
 
 }

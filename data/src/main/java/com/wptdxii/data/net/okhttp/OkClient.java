@@ -1,7 +1,7 @@
 package com.wptdxii.data.net.okhttp;
 
+import com.wptdxii.data.BuildConfig;
 import com.wptdxii.data.net.okhttp.interceptor.OfflineCacheInterceptor;
-import com.wptdxii.ext.BuildConfig;
 import com.wptdxii.ext.Ext;
 
 import java.io.File;

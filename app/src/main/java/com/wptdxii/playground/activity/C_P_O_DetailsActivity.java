@@ -372,8 +372,7 @@ public class C_P_O_DetailsActivity extends BaseActivity {
 		.execute(new StringCallback() {
 
 			@Override
-			public void onError(Call call, Exception e) {
-			
+			public void onError(Call call, Exception e, int id) {
 				Log.e("error", "获取数据异常 ", e);
 				String status = "false";
 				Message message = Message.obtain();
@@ -381,17 +380,15 @@ public class C_P_O_DetailsActivity extends BaseActivity {
 				message.obj = status;
 
 				errcode_handler.sendMessage(message);
-				
 			}
 
 			@Override
-			public void onResponse(String response) {
-			
+			public void onResponse(String response, int id) {
 				String jsonString = response;
 				Log.d("onSuccess", "onSuccess json = " + jsonString);
 				List<Map<String, String>> price_list = new ArrayList<Map<String, String>>();
 				Map<String, Object> map_all = new HashMap<String, Object>();
-				
+
 				try {
 
 					Log.d("44444", jsonString);
@@ -405,10 +402,10 @@ public class C_P_O_DetailsActivity extends BaseActivity {
 					} else {
 						JSONObject jsonObject = new JSONObject(jsonString);
 						JSONObject dataObject = jsonObject.getJSONObject("data");
-						
-						
+
+
 						JSONObject basicObject = dataObject.getJSONObject("basic");
-						
+
 						String cj_no =basicObject.getString("cj_no");
 						String engine_no =basicObject.getString("engine_no");
 						String car_msg =basicObject.getString("car_msg");
@@ -418,7 +415,7 @@ public class C_P_O_DetailsActivity extends BaseActivity {
 						String total_amount =basicObject.getString("total_amount");
 						String period =basicObject.getString("period");
 						String period_syx =basicObject.getString("period_syx");
-						
+
 						map_all.put("holder_name", holder_name);
 						map_all.put("cj_no", cj_no);
 						map_all.put("engine_no", engine_no);
@@ -428,28 +425,28 @@ public class C_P_O_DetailsActivity extends BaseActivity {
 						map_all.put("total_amount", total_amount);
 						map_all.put("period", period);
 						map_all.put("period_syx", period_syx);
-					
-						
+
+
 						JSONArray priceList = dataObject.getJSONArray("price");
-						
-						
+
+
 						for (int i = 0; i < priceList.length(); i++) {
-							
+
 							Map<String, String> map = new HashMap<String, String>();
 							JSONArray jsonArray1 = priceList.getJSONArray(i);
-						
-								
-								
-								map.put("policy_name", jsonArray1.getString(0));
-								map.put("policy_price", jsonArray1.getString(1));
-							
-								price_list.add(map);
+
+
+
+							map.put("policy_name", jsonArray1.getString(0));
+							map.put("policy_price", jsonArray1.getString(1));
+
+							price_list.add(map);
 						}
-						
-						
-						
+
+
+
 						JSONObject policyObject = dataObject.getJSONObject("policy");
-						
+
 						String policy_for_name =policyObject.getString("policy_for_name");
 						String card_no =policyObject.getString("card_no");
 						String card_type =policyObject.getString("card_type");
@@ -462,7 +459,7 @@ public class C_P_O_DetailsActivity extends BaseActivity {
 						String insured_card_type =policyObject.getString("insured_card_type");
 						String insured_card_no =policyObject.getString("insured_card_no");
 						String insured_birthday =policyObject.getString("insured_birthday");
-						
+
 						String insured_card_sex =policyObject.getString("insured_card_sex");
 						String insured_mobile =policyObject.getString("insured_mobile");
 						String insured_email =policyObject.getString("insured_email");
@@ -472,8 +469,8 @@ public class C_P_O_DetailsActivity extends BaseActivity {
 						String remarks_type =policyObject.getString("remarks_type");
 						String remarks =policyObject.getString("remarks");
 						String insured_card_person_type =policyObject.getString("insured_card_person_type");
-					
-				
+
+
 						map_all.put("policy_for_name", policy_for_name);
 						map_all.put("card_no", card_no);
 						map_all.put("card_type", card_type);
@@ -495,21 +492,20 @@ public class C_P_O_DetailsActivity extends BaseActivity {
 						map_all.put("remarks_type", remarks_type);
 						map_all.put("remarks", remarks);
 						map_all.put("insured_card_person_type", insured_card_person_type);
-				
-						
-						
+
+
+
 						map_all.put("pricelist", price_list);
 						Message message = Message.obtain();
 
 						message.obj = map_all;
-                  		handler.sendMessage(message);
-                  		
-						
+						handler.sendMessage(message);
+
+
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-
 
 			}
 		});

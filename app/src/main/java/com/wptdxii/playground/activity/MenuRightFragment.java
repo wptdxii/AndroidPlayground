@@ -274,8 +274,7 @@ public class MenuRightFragment extends BaseFragment {
                 .execute(new StringCallback() {
 
                     @Override
-                    public void onError(Call call, Exception e) {
-
+                    public void onError(Call call, Exception e, int id) {
                         Log.e("error", "获取数据异常 ", e);
 
                         String status = "false";
@@ -284,11 +283,10 @@ public class MenuRightFragment extends BaseFragment {
                         message.obj = status;
 
                         errcode_handler.sendMessage(message);
-
                     }
 
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse(String response, int id) {
                         String jsonString = response;
                         Log.d("onSuccess", "onSuccess json = " + jsonString);
                         Map<String, String> errcode_map = new HashMap<String, String>();
@@ -422,7 +420,6 @@ public class MenuRightFragment extends BaseFragment {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-
 
                     }
                 });

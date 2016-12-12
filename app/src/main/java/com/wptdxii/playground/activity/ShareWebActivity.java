@@ -7,11 +7,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.webkit.CookieManager;
-import android.webkit.CookieSyncManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
@@ -22,14 +19,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cloudhome.R;
+import com.cloudhome.network.interceptor.MyInterceptor;
 import com.cloudhome.utils.IpConfig;
 import com.umeng.socialize.utils.Log;
-import com.zhy.http.okhttp.cookie.SimpleCookieJar;
-import com.zhy.http.okhttp.utils.MyInterceptor;
-
-import java.util.List;
-
-import okhttp3.Cookie;
 
 public class ShareWebActivity extends BaseActivity {
 
@@ -130,7 +122,7 @@ public class ShareWebActivity extends BaseActivity {
             if (!loginString.equals("none")) {
                 url = url + "token=" + token + "&user_id=" + user_id_encode;
                 Log.d("9999999", url);
-                synCookies(ShareWebActivity.this, url);
+//                synCookies(ShareWebActivity.this, url);
 
             }
 
@@ -191,44 +183,44 @@ public class ShareWebActivity extends BaseActivity {
     }
 
 
-    @SuppressWarnings("deprecation")
-    private void synCookies(Context context, String url) {
-        CookieSyncManager.createInstance(context);
-        CookieManager cookieManager = CookieManager.getInstance();
-        cookieManager.setAcceptCookie(true);
-        // cookieManager.removeSessionCookie();// 移除
-
-        cookieManager.removeAllCookie();
-        // String[] cookie = mCookieStr.split(";");
-
-        // Cookie[] cookie = CookieUtil.getCookies().toArray(
-        // new Cookie[CookieUtil.getCookies().size()]);
-
-        List<Cookie> cookies = SimpleCookieJar.getCookies();
-
-
-        StringBuffer sb = new StringBuffer();
-
-
-        for (Cookie cookie : cookies) {
-
-            String cookieName = cookie.name();
-            String cookieValue = cookie.value();
-            if (!TextUtils.isEmpty(cookieName)
-                    && !TextUtils.isEmpty(cookieValue)) {
-                sb.append(cookieName).append("=");
-                sb.append(cookieValue).append(";");
-            }
-        }
-
-        String[] cookie = sb.toString().split(";");
-        for (int i = 0; i < cookie.length; i++) {
-            Log.d("cookie[i]", cookie[i]);
-            cookieManager.setCookie(url, cookie[i]);// cookies是在HttpClient中获得的cookie
-        }
-
-        CookieSyncManager.getInstance().sync();
-    }
+//    @SuppressWarnings("deprecation")
+//    private void synCookies(Context context, String url) {
+//        CookieSyncManager.createInstance(context);
+//        CookieManager cookieManager = CookieManager.getInstance();
+//        cookieManager.setAcceptCookie(true);
+//        // cookieManager.removeSessionCookie();// 移除
+//
+//        cookieManager.removeAllCookie();
+//        // String[] cookie = mCookieStr.split(";");
+//
+//        // Cookie[] cookie = CookieUtil.getCookies().toArray(
+//        // new Cookie[CookieUtil.getCookies().size()]);
+//
+//        List<Cookie> cookies = SimpleCookieJar.getCookies();
+//
+//
+//        StringBuffer sb = new StringBuffer();
+//
+//
+//        for (Cookie cookie : cookies) {
+//
+//            String cookieName = cookie.name();
+//            String cookieValue = cookie.value();
+//            if (!TextUtils.isEmpty(cookieName)
+//                    && !TextUtils.isEmpty(cookieValue)) {
+//                sb.append(cookieName).append("=");
+//                sb.append(cookieValue).append(";");
+//            }
+//        }
+//
+//        String[] cookie = sb.toString().split(";");
+//        for (int i = 0; i < cookie.length; i++) {
+//            Log.d("cookie[i]", cookie[i]);
+//            cookieManager.setCookie(url, cookie[i]);// cookies是在HttpClient中获得的cookie
+//        }
+//
+//        CookieSyncManager.getInstance().sync();
+//    }
 
     public class redPackageInterface {
         Context mContext;

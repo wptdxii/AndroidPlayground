@@ -242,7 +242,7 @@ public class DiscoverActiveListActivity extends BaseActivity implements
 		.execute(new StringCallback() {
 
 			@Override
-			public void onError(Call call, Exception e) {
+			public void onError(Call call, Exception e, int id) {
 				Log.e("error", "获取数据异常 ", e);
 
 				String status = "false";
@@ -251,13 +251,10 @@ public class DiscoverActiveListActivity extends BaseActivity implements
 				message.obj = status;
 
 				errcode_handler.sendMessage(message);
-			
-				
 			}
 
 			@Override
-			public void onResponse(String response) {
-			
+			public void onResponse(String response, int id) {
 				String jsonString = response;
 				Log.d("onSuccess", "onSuccess json = " + jsonString);
 				List<Map<String, String>> list = new ArrayList<Map<String, String>>();
@@ -318,7 +315,6 @@ public class DiscoverActiveListActivity extends BaseActivity implements
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-
 
 			}
 		});

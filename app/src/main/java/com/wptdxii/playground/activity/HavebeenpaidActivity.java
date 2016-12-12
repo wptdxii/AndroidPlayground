@@ -43,480 +43,470 @@ import java.util.Map;
 import okhttp3.Call;
 
 public class HavebeenpaidActivity extends BaseActivity implements
-		IXListViewListener {
-
-
-	private Map<String, String> key_value = new HashMap<String, String>();
-	private String user_id;
-	private String token;
-	private Dialog dialog;
-	private RadioGroup radio_group;
-	private ClearEditText my_orders_search;
-	private ImageView search_img;
-	private RelativeLayout h_b_p_back;
-	private RelativeLayout rl_right;
-	private TextView tv_text;
-	private XListView to_be_paid_list;
-	private HavebeenpaidAdapter adapter;
-	private Handler mHandler;
-	List<Map<String, String>> search_data = new ArrayList<Map<String, String>>();
-	List<Map<String, String>> total_data = new ArrayList<Map<String, String>>();
-	private int pagenum = 0;
-	private String RBstr = "01";
+        IXListViewListener {
+
+
+    private Map<String, String> key_value = new HashMap<String, String>();
+    private String user_id;
+    private String token;
+    private Dialog dialog;
+    private RadioGroup radio_group;
+    private ClearEditText my_orders_search;
+    private ImageView search_img;
+    private RelativeLayout h_b_p_back;
+    private RelativeLayout rl_right;
+    private TextView tv_text;
+    private XListView to_be_paid_list;
+    private HavebeenpaidAdapter adapter;
+    private Handler mHandler;
+    List<Map<String, String>> search_data = new ArrayList<Map<String, String>>();
+    List<Map<String, String>> total_data = new ArrayList<Map<String, String>>();
+    private int pagenum = 0;
+    private String RBstr = "01";
 
-	private String search_show = "false";
-	public  static HavebeenpaidActivity Havebeenpaidinstance=null;
+    private String search_show = "false";
+    public static HavebeenpaidActivity Havebeenpaidinstance = null;
 
-	@SuppressLint("HandlerLeak")
-	private Handler errcode_handler = new Handler() {
+    @SuppressLint("HandlerLeak")
+    private Handler errcode_handler = new Handler() {
 
-		@Override
-		public void handleMessage(android.os.Message msg) {
-			// Map<String, String> data = (Map<String, String>) msg.obj;
-			String data = (String) msg.obj;
-			dialog.dismiss();
-			String status = data;
+        @Override
+        public void handleMessage(android.os.Message msg) {
+            // Map<String, String> data = (Map<String, String>) msg.obj;
+            String data = (String) msg.obj;
+            dialog.dismiss();
+            String status = data;
 
-			Log.d("455454", "455445" + status);
-			if (status.equals("false")) {
+            Log.d("455454", "455445" + status);
+            if (status.equals("false")) {
 
-				Toast.makeText(HavebeenpaidActivity.this, "网络连接失败，请确认网络连接后重试",
-						Toast.LENGTH_SHORT).show();
-			}
-		}
+                Toast.makeText(HavebeenpaidActivity.this, "网络连接失败，请确认网络连接后重试",
+                        Toast.LENGTH_SHORT).show();
+            }
+        }
 
-	};
+    };
 
-	@SuppressLint("HandlerLeak")
-	private Handler handler = new Handler() {
-		@SuppressWarnings("unchecked")
-		@Override
-		public void handleMessage(android.os.Message msg) {
-			List<Map<String, String>> list = (List<Map<String, String>>) msg.obj;
+    @SuppressLint("HandlerLeak")
+    private Handler handler = new Handler() {
+        @SuppressWarnings("unchecked")
+        @Override
+        public void handleMessage(android.os.Message msg) {
+            List<Map<String, String>> list = (List<Map<String, String>>) msg.obj;
 
-			dialog.dismiss();
-			if (search_show.equals("false")) {
-				total_data.addAll(list);
+            dialog.dismiss();
+            if (search_show.equals("false")) {
+                total_data.addAll(list);
 
-				if (pagenum == 0) {
+                if (pagenum == 0) {
 
-					adapter.setData(total_data);
-					to_be_paid_list.setAdapter(adapter);
-					adapter.notifyDataSetChanged();
+                    adapter.setData(total_data);
+                    to_be_paid_list.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
 
-					if (list.size() < 1) {
+                    if (list.size() < 1) {
 
-						Toast.makeText(HavebeenpaidActivity.this, "没有找到订单信息",
-								Toast.LENGTH_SHORT).show();
+                        Toast.makeText(HavebeenpaidActivity.this, "没有找到订单信息",
+                                Toast.LENGTH_SHORT).show();
 
-					}
-				} else if (list.size() < 1) {
+                    }
+                } else if (list.size() < 1) {
 
-					Toast.makeText(HavebeenpaidActivity.this, "没有找到订单信息",
-							Toast.LENGTH_SHORT).show();
-					to_be_paid_list.stopLoadMore();
-				} else {
-					
-					adapter.notifyDataSetChanged();
-					to_be_paid_list.stopLoadMore();
+                    Toast.makeText(HavebeenpaidActivity.this, "没有找到订单信息",
+                            Toast.LENGTH_SHORT).show();
+                    to_be_paid_list.stopLoadMore();
+                } else {
 
-				}
-			} else {
+                    adapter.notifyDataSetChanged();
+                    to_be_paid_list.stopLoadMore();
 
-				search_data.addAll(list);
+                }
+            } else {
 
-				if (pagenum == 0) {
+                search_data.addAll(list);
 
-					adapter.setData(list);
-					to_be_paid_list.setAdapter(adapter);
-					adapter.notifyDataSetChanged();
+                if (pagenum == 0) {
 
-					if (list.size() < 1) {
+                    adapter.setData(list);
+                    to_be_paid_list.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
 
-						Toast.makeText(HavebeenpaidActivity.this, "没有找到订单信息",
-								Toast.LENGTH_SHORT).show();
+                    if (list.size() < 1) {
 
-					}
-				} else if (list.size() < 1) {
+                        Toast.makeText(HavebeenpaidActivity.this, "没有找到订单信息",
+                                Toast.LENGTH_SHORT).show();
 
-					Toast.makeText(HavebeenpaidActivity.this, "没有找到订单信息",
-							Toast.LENGTH_SHORT).show();
-					to_be_paid_list.stopLoadMore();
-				} else {
-					adapter.notifyDataSetChanged();
-					to_be_paid_list.stopLoadMore();
+                    }
+                } else if (list.size() < 1) {
 
-				}
+                    Toast.makeText(HavebeenpaidActivity.this, "没有找到订单信息",
+                            Toast.LENGTH_SHORT).show();
+                    to_be_paid_list.stopLoadMore();
+                } else {
+                    adapter.notifyDataSetChanged();
+                    to_be_paid_list.stopLoadMore();
 
-			}
+                }
 
-		}
+            }
 
-	};
+        }
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    };
 
-		setContentView(R.layout.have_been_paid);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.have_been_paid);
 
-		Havebeenpaidinstance =this;
 
-		init();
-		initEvent();
+        Havebeenpaidinstance = this;
 
-	}
+        init();
+        initEvent();
 
-	void init() {
+    }
 
-		key_value.put("page", "0");
-		user_id = sp.getString("Login_UID", "");
-		token = sp.getString("Login_TOKEN", "");
+    void init() {
 
-		key_value.put("user_id", user_id);
-		key_value.put("token", token);
+        key_value.put("page", "0");
+        user_id = sp.getString("Login_UID", "");
+        token = sp.getString("Login_TOKEN", "");
 
-		dialog = new Dialog(this, R.style.progress_dialog);
-		dialog.setContentView(R.layout.progress_dialog);
-		dialog.setCancelable(true);
-		dialog.getWindow().setBackgroundDrawableResource(
-				android.R.color.transparent);
-		TextView p_dialog = (TextView) dialog
-				.findViewById(R.id.id_tv_loadingmsg);
-		p_dialog.setText("请稍后...");
+        key_value.put("user_id", user_id);
+        key_value.put("token", token);
 
-		adapter = new HavebeenpaidAdapter(HavebeenpaidActivity.this);
+        dialog = new Dialog(this, R.style.progress_dialog);
+        dialog.setContentView(R.layout.progress_dialog);
+        dialog.setCancelable(true);
+        dialog.getWindow().setBackgroundDrawableResource(
+                android.R.color.transparent);
+        TextView p_dialog = (TextView) dialog
+                .findViewById(R.id.id_tv_loadingmsg);
+        p_dialog.setText("请稍后...");
 
-		radio_group = (RadioGroup) findViewById(R.id.radio_group);
+        adapter = new HavebeenpaidAdapter(HavebeenpaidActivity.this);
 
-		to_be_paid_list = (XListView) findViewById(R.id.to_be_paid_list);
-		to_be_paid_list.setPullLoadEnable(true);
-		to_be_paid_list.setXListViewListener(HavebeenpaidActivity.this);
+        radio_group = (RadioGroup) findViewById(R.id.radio_group);
 
-		search_img = (ImageView) findViewById(R.id.search_img);
-		h_b_p_back = (RelativeLayout) findViewById(R.id.iv_back);
-		rl_right=(RelativeLayout) findViewById(R.id.rl_right);
-		rl_right.setVisibility(View.INVISIBLE);
-		tv_text= (TextView) findViewById(R.id.tv_text);
-		tv_text.setText("已支付订单");
-		h_b_p_back.setOnClickListener(new OnClickListener() {
+        to_be_paid_list = (XListView) findViewById(R.id.to_be_paid_list);
+        to_be_paid_list.setPullLoadEnable(true);
+        to_be_paid_list.setXListViewListener(HavebeenpaidActivity.this);
 
-			@Override
-			public void onClick(View arg0) {
+        search_img = (ImageView) findViewById(R.id.search_img);
+        h_b_p_back = (RelativeLayout) findViewById(R.id.iv_back);
+        rl_right = (RelativeLayout) findViewById(R.id.rl_right);
+        rl_right.setVisibility(View.INVISIBLE);
+        tv_text = (TextView) findViewById(R.id.tv_text);
+        tv_text.setText("已支付订单");
+        h_b_p_back.setOnClickListener(new OnClickListener() {
 
-				HavebeenpaidActivity.this.finish();
+            @Override
+            public void onClick(View arg0) {
 
-			}
-		});
+                HavebeenpaidActivity.this.finish();
 
-		my_orders_search = (ClearEditText) findViewById(R.id.my_orders_search);
+            }
+        });
 
-		my_orders_search.addTextChangedListener(new TextWatcher() {
+        my_orders_search = (ClearEditText) findViewById(R.id.my_orders_search);
 
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before,
-									  int count) {
+        my_orders_search.addTextChangedListener(new TextWatcher() {
 
-			}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
 
-			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count,
-										  int after) {
-			}
+            }
 
-			@Override
-			public void afterTextChanged(Editable s) {
-				String text = s.toString();
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+            }
 
-				int len = s.toString().length();
-				if (len == 0 && search_show.equals("ture")) {
+            @Override
+            public void afterTextChanged(Editable s) {
+                String text = s.toString();
 
-					adapter.setData(total_data);
-					to_be_paid_list.setAdapter(adapter);
-					adapter.notifyDataSetChanged();
-					to_be_paid_list.stopLoadMore();
-					search_show = "false";
-				}
+                int len = s.toString().length();
+                if (len == 0 && search_show.equals("ture")) {
 
-			}
-		});
+                    adapter.setData(total_data);
+                    to_be_paid_list.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                    to_be_paid_list.stopLoadMore();
+                    search_show = "false";
+                }
 
-		mHandler = new Handler();
-		closeInputMethod();
-	}
+            }
+        });
 
-	void initEvent() {
+        mHandler = new Handler();
+        closeInputMethod();
+    }
 
-		final String orderurl = IpConfig.getUri("getRecOrderList");
+    void initEvent() {
 
-		key_value.put("status", "03");
+        final String orderurl = IpConfig.getUri("getRecOrderList");
 
-		dialog.show();
+        key_value.put("status", "03");
 
-		setRecOrderList(orderurl);
-		radio_group.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+        dialog.show();
 
-			@Override
-			public void onCheckedChanged(RadioGroup arg0, int checkedId) {
+        setRecOrderList(orderurl);
+        radio_group.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
-				switch (checkedId) {
+            @Override
+            public void onCheckedChanged(RadioGroup arg0, int checkedId) {
 
-				case R.id.has_insured_radio:
+                switch (checkedId) {
 
-					pagenum = 0;
-					RBstr = "01";
-					key_value.put("status", "03");
-					key_value.put("page", "0");
-					dialog.show();
-					search_show = "false";
-					key_value.put("key", "");
-					total_data.clear();
-					adapter.notifyDataSetChanged();
-					setRecOrderList(orderurl);
+                    case R.id.has_insured_radio:
 
-					break;
-				case R.id.not_insurance_radio:
+                        pagenum = 0;
+                        RBstr = "01";
+                        key_value.put("status", "03");
+                        key_value.put("page", "0");
+                        dialog.show();
+                        search_show = "false";
+                        key_value.put("key", "");
+                        total_data.clear();
+                        adapter.notifyDataSetChanged();
+                        setRecOrderList(orderurl);
 
-					pagenum = 0;
-					RBstr = "02";
-					dialog.show();
-					search_show = "false";
-					key_value.put("page", "0");
-					key_value.put("key", "");
-					key_value.put("status", "04");
-					total_data.clear();
-					adapter.notifyDataSetChanged();
-					setRecOrderList(orderurl);
+                        break;
+                    case R.id.not_insurance_radio:
 
-					break;
-				case R.id.has_expired_radio:
-					pagenum = 0;
-					RBstr = "03";
-					dialog.show();
-					search_show = "false";
-					key_value.put("page", "0");
-					key_value.put("key", "");
-					key_value.put("status", "05");
-					total_data.clear();
-					adapter.notifyDataSetChanged();
-					setRecOrderList(orderurl);
+                        pagenum = 0;
+                        RBstr = "02";
+                        dialog.show();
+                        search_show = "false";
+                        key_value.put("page", "0");
+                        key_value.put("key", "");
+                        key_value.put("status", "04");
+                        total_data.clear();
+                        adapter.notifyDataSetChanged();
+                        setRecOrderList(orderurl);
 
-					break;
-				default:
-					break;
-				}
-			}
-		});
+                        break;
+                    case R.id.has_expired_radio:
+                        pagenum = 0;
+                        RBstr = "03";
+                        dialog.show();
+                        search_show = "false";
+                        key_value.put("page", "0");
+                        key_value.put("key", "");
+                        key_value.put("status", "05");
+                        total_data.clear();
+                        adapter.notifyDataSetChanged();
+                        setRecOrderList(orderurl);
 
-		search_img.setOnClickListener(new OnClickListener() {
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
 
-			@Override
-			public void onClick(View arg0) {
+        search_img.setOnClickListener(new OnClickListener() {
 
-				String searchstr = my_orders_search.getText().toString();
-				if (searchstr.equals("null") || searchstr.equals("")) {
-					Toast.makeText(HavebeenpaidActivity.this, "请输入投保人姓名、被保人姓名",
-							Toast.LENGTH_SHORT).show();
-				} else {
+            @Override
+            public void onClick(View arg0) {
 
-					pagenum = 0;
-					search_show = "ture";
+                String searchstr = my_orders_search.getText().toString();
+                if (searchstr.equals("null") || searchstr.equals("")) {
+                    Toast.makeText(HavebeenpaidActivity.this, "请输入投保人姓名、被保人姓名",
+                            Toast.LENGTH_SHORT).show();
+                } else {
 
-					search_data.clear();
+                    pagenum = 0;
+                    search_show = "ture";
 
-					key_value.put("key", searchstr);
-					key_value.put("page", "0");
-					final String url = IpConfig.getUri("getRecOrderList");
-					dialog.show();
-					setRecOrderList(url);
+                    search_data.clear();
 
-				}
-			}
-		});
+                    key_value.put("key", searchstr);
+                    key_value.put("page", "0");
+                    final String url = IpConfig.getUri("getRecOrderList");
+                    dialog.show();
+                    setRecOrderList(url);
 
-		to_be_paid_list.setOnItemClickListener(new OnItemClickListener() {
+                }
+            }
+        });
 
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1,
-									int position, long arg3) {
+        to_be_paid_list.setOnItemClickListener(new OnItemClickListener() {
 
-				int pos = position - 1;
-				if (pos >= 0 && pos < adapter.list.size()) {
-					Intent intent = new Intent();
-					intent.putExtra("id", adapter.list.get(pos).get("id"));
-					intent.putExtra("RBstr", RBstr);
-					intent.setClass(HavebeenpaidActivity.this,
-							Havebeenpaid_O_InfoActivity.class);
-					HavebeenpaidActivity.this.startActivity(intent);
-				}
-			}
-		});
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1,
+                                    int position, long arg3) {
 
-	}
+                int pos = position - 1;
+                if (pos >= 0 && pos < adapter.list.size()) {
+                    Intent intent = new Intent();
+                    intent.putExtra("id", adapter.list.get(pos).get("id"));
+                    intent.putExtra("RBstr", RBstr);
+                    intent.setClass(HavebeenpaidActivity.this,
+                            Havebeenpaid_O_InfoActivity.class);
+                    HavebeenpaidActivity.this.startActivity(intent);
+                }
+            }
+        });
 
-	private void setRecOrderList(String url) {
+    }
 
+    private void setRecOrderList(String url) {
 
-		OkHttpUtils.post()
-				.url(url)
-				.params(key_value)
-				.build()
-				.execute(new StringCallback() {
 
-					@Override
-					public void onError(Call call, Exception e) {
+        OkHttpUtils.post()
+                .url(url)
+                .params(key_value)
+                .build()
+                .execute(new StringCallback() {
 
-						Log.e("error", "获取数据异常 ", e);
-						String status = "false";
-						Message message = Message.obtain();
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        Log.e("error", "获取数据异常 ", e);
+                        String status = "false";
+                        Message message = Message.obtain();
 
-						message.obj = status;
+                        message.obj = status;
 
-						errcode_handler.sendMessage(message);
+                        errcode_handler.sendMessage(message);
+                    }
 
-					}
+                    @Override
+                    public void onResponse(String response, int id) {
+                        String jsonString = response;
+                        Log.d("onSuccess", "onSuccess json = " + jsonString);
+                        List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+                        try {
 
-					@Override
-					public void onResponse(String response) {
+                            if (jsonString.equals("") || jsonString.equals("null")) {
+                                String status = "false";
+                                Message message = Message.obtain();
 
+                                message.obj = status;
 
-						String jsonString = response;
-						Log.d("onSuccess", "onSuccess json = " + jsonString);
-						List<Map<String, String>> list = new ArrayList<Map<String, String>>();
-						try {
+                                errcode_handler.sendMessage(message);
+                            } else {
+                                JSONObject jsonObject = new JSONObject(jsonString);
+                                JSONArray dataList = jsonObject
+                                        .getJSONArray("data");
 
-							if (jsonString.equals("") || jsonString.equals("null")) {
-								String status = "false";
-								Message message = Message.obtain();
+                                for (int i = 0; i < dataList.length(); i++) {
+                                    JSONObject jsonObject2 = dataList
+                                            .getJSONObject(i);
+                                    Map<String, String> map = new HashMap<String, String>();
 
-								message.obj = status;
+                                    Iterator<String> iterator = jsonObject2.keys();
+                                    while (iterator.hasNext()) {
 
-								errcode_handler.sendMessage(message);
-							} else {
-								JSONObject jsonObject = new JSONObject(jsonString);
-								JSONArray dataList = jsonObject
-										.getJSONArray("data");
+                                        String key = iterator.next();
+                                        String value = jsonObject2.getString(key);
+                                        map.put(key, value);
 
-								for (int i = 0; i < dataList.length(); i++) {
-									JSONObject jsonObject2 = dataList
-											.getJSONObject(i);
-									Map<String, String> map = new HashMap<String, String>();
+                                    }
+                                    list.add(map);
+                                }
 
-									Iterator<String> iterator = jsonObject2.keys();
-									while (iterator.hasNext()) {
+                                Message message = Message.obtain();
 
-										String key = iterator.next();
-										String value = jsonObject2.getString(key);
-										map.put(key, value);
+                                message.obj = list;
 
-									}
-									list.add(map);
-								}
+                                handler.sendMessage(message);
 
-								Message message = Message.obtain();
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
-								message.obj = list;
+                    }
+                });
 
-								handler.sendMessage(message);
 
-							}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+    }
 
+    private void closeInputMethod() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        boolean isOpen = imm.isActive();
+        if (isOpen) {
+            // imm.toggleSoftInput(0,
+            // InputMethodManager.HIDE_NOT_ALWAYS);//没有显示则显示
+            imm.hideSoftInputFromWindow(my_orders_search.getWindowToken(),
+                    InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
 
-			}
-		});
-		
-		
-	
 
-	}
+    private void getRefreshItem() {
 
-	private void closeInputMethod() {
-		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-		boolean isOpen = imm.isActive();
-		if (isOpen) {
-			// imm.toggleSoftInput(0,
-			// InputMethodManager.HIDE_NOT_ALWAYS);//没有显示则显示
-			imm.hideSoftInputFromWindow(my_orders_search.getWindowToken(),
-					InputMethodManager.HIDE_NOT_ALWAYS);
-		}
-	}
+        pagenum = 0;
 
+        if (search_show.equals("false")) {
+            total_data.clear();
+        } else {
+            search_data.clear();
+        }
+        key_value.put("page", "0");
 
+        final String url = IpConfig.getUri("getRecOrderList");
 
+        setRecOrderList(url);
 
+    }
 
-	private void getRefreshItem() {
+    private void getLoadMoreItem() {
+        pagenum++;
+        Log.d("555555", pagenum + "");
+        key_value.put("page", pagenum + "");
+        final String url = IpConfig.getUri("getRecOrderList");
 
-		pagenum = 0;
-		
-		if (search_show.equals("false")) {
-			total_data.clear();
-		} else {
-			search_data.clear();
-		}
-		key_value.put("page", "0");
+        setRecOrderList(url);
+    }
 
-		final String url = IpConfig.getUri("getRecOrderList");
+    @Override
+    public void onRefresh() {
 
-		setRecOrderList(url);
+        mHandler.postDelayed(new Runnable() {
+            public void run() {
 
-	}
+                to_be_paid_list.stopLoadMore();
+                getRefreshItem();
 
-	private void getLoadMoreItem() {
-		pagenum++;
-		Log.d("555555", pagenum + "");
-		key_value.put("page", pagenum + "");
-		final String url = IpConfig.getUri("getRecOrderList");
+                adapter.notifyDataSetChanged();
 
-		setRecOrderList(url);
-	}
+                onLoad();
+            }
+        }, 2000);
+    }
 
-	@Override
-	public void onRefresh() {
+    @Override
+    public void onLoadMore() {
 
-		mHandler.postDelayed(new Runnable() {
-			public void run() {
+        mHandler.postDelayed(new Runnable() {
+            public void run() {
 
-				to_be_paid_list.stopLoadMore();
-				getRefreshItem();
+                to_be_paid_list.stopRefresh();
+                getLoadMoreItem();
 
-				adapter.notifyDataSetChanged();
+                // adapter.notifyDataSetChanged();
 
-				onLoad();
-			}
-		}, 2000);
-	}
+                // mListView.stopLoadMore();
 
-	@Override
-	public void onLoadMore() {
+            }
+        }, 2000);
 
-		mHandler.postDelayed(new Runnable() {
-			public void run() {
+    }
 
-				to_be_paid_list.stopRefresh();
-				getLoadMoreItem();
+    private void onLoad() {
 
-				// adapter.notifyDataSetChanged();
+        to_be_paid_list.stopRefresh();
 
-				// mListView.stopLoadMore();
+        to_be_paid_list.stopLoadMore();
 
-			}
-		}, 2000);
+        to_be_paid_list.setRefreshTime("刚刚");
 
-	}
-
-	private void onLoad() {
-
-		to_be_paid_list.stopRefresh();
-
-		to_be_paid_list.stopLoadMore();
-
-		to_be_paid_list.setRefreshTime("刚刚");
-
-	}
+    }
 
 }

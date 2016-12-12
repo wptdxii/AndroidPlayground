@@ -138,29 +138,26 @@ public class MessageDetailActivity extends BaseActivity {
 		.execute(new StringCallback() {
 
 			@Override
-			public void onError(Call call, Exception e) {
-			
+			public void onError(Call call, Exception e, int id) {
 				Log.e("error", "获取数据异常 ", e);
-				
+
 				String status = "false";
 				Message message = Message.obtain();
 
 				message.obj = status;
 
 				errcode_handler.sendMessage(message);
-				
 			}
 
 			@Override
-			public void onResponse(String response) {
-			
+			public void onResponse(String response, int id) {
 				Map<String, String> map = new HashMap<String, String>();
 				String jsonString = response;
 				Log.d("onSuccess", "onSuccess json = " + jsonString);
 				List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 				try {
 
-					
+
 					if (jsonString == null || jsonString.equals("")
 							|| jsonString.equals("null")) {
 						String status = "false";
@@ -170,27 +167,26 @@ public class MessageDetailActivity extends BaseActivity {
 
 						errcode_handler.sendMessage(message);
 					} else {
-					// Log.d("44444", jsonString);
-					JSONObject jsonObject = new JSONObject(jsonString);
-					String data = jsonObject.getString("data");
-					JSONObject dataObject = new JSONObject(data);
-				    
-					String content = dataObject.getString("content");
-					
-					Log.d("44444", data);
-				
-                     map.put("content",content);
-				
-					Message message = Message.obtain();
+						// Log.d("44444", jsonString);
+						JSONObject jsonObject = new JSONObject(jsonString);
+						String data = jsonObject.getString("data");
+						JSONObject dataObject = new JSONObject(data);
 
-					message.obj = map;
+						String content = dataObject.getString("content");
 
-					handler.sendMessage(message);
+						Log.d("44444", data);
+
+						map.put("content",content);
+
+						Message message = Message.obtain();
+
+						message.obj = map;
+
+						handler.sendMessage(message);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-
 			}
 		});
 		

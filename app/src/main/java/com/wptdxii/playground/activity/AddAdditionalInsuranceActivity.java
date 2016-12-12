@@ -144,8 +144,7 @@ public class AddAdditionalInsuranceActivity extends BaseActivity implements OnCl
 		additionOutList=(ArrayList<MakeInsuranceTemplateBean>) intent.getSerializableExtra("additionOutList");
 		ArrayList<MakeInsuranceTemplateInnerBean> additionInnerList = (ArrayList<MakeInsuranceTemplateInnerBean>) intent.getSerializableExtra("additionInnerList");
 		insuranceTemplateLists=(ArrayList<InsuranceTemplateBean>) intent.getSerializableExtra("insuranceTemplateLists");
-		Log.i("--insuranceTemplateLists的长度--------------",insuranceTemplateLists.size()+"-------");
-		
+
 		jsonStr=intent.getStringExtra("jsonStr");
 		mainIds=intent.getStringExtra("mainIds");
 		//是否是编辑
@@ -306,38 +305,37 @@ public class AddAdditionalInsuranceActivity extends BaseActivity implements OnCl
 			.execute(new StringCallback() {
 
 				@Override
-				public void onError(Call call, Exception e) {
-				
+				public void onError(Call call, Exception e, int id) {
+
 					Log.i("联网失败了------------", "获取主险费率");
 					AdditionalInsuranceHandler.sendEmptyMessage(4);
-					
 				}
 
 				@Override
-				public void onResponse(String response) {
-				
-					// TODO Auto-generated method stub
+				public void onResponse(String response, int id) {
+
+
 					String jsonString= response;
 					Log.i("返回的数据---------------", jsonString);
 					try {
 						JSONObject objResult=new JSONObject(jsonString);
 						String status=objResult.getString("status");
 						if(status.equals("true")){
-//							holder2.tv_insurance_warn.setText("");
-//							holder2.tv_insurance_warn.setVisibility(View.GONE);
+							//							holder2.tv_insurance_warn.setText("");
+							//							holder2.tv_insurance_warn.setVisibility(View.GONE);
 							JSONObject dataObj=objResult.getJSONObject("data");
 							JSONObject planObj=dataObj.getJSONObject("plan");
 							JSONArray productsArray=planObj.getJSONArray("products");
 							sum_premium=planObj.getDouble("sum_premium");
-							
-							
+
+
 							for(int y=1;y<productsArray.length();y++){
 								JSONObject productObject=productsArray.getJSONObject(y);
 								JSONArray rulesArray=productObject.getJSONArray("rules");
-								
+
 								JSONObject tableObject=productObject.getJSONObject("table");
 								JSONArray rowArray=tableObject.getJSONArray("row");
-								
+
 								JSONArray inputfieldsArray=productObject.getJSONArray("inputfields");
 								ArrayList<String> factorsName=new ArrayList<String>();
 								ArrayList<String> factorsValue=new ArrayList<String>();
@@ -349,7 +347,7 @@ public class AddAdditionalInsuranceActivity extends BaseActivity implements OnCl
 								String product_id=productObject.getString("product_id");
 								Log.i("返回的附加险product_id", product_id+"------------------");
 								for(int a=1;a<insuranceTemplateLists.size();a++){
-									
+
 									Log.i("传过来的product_id", insuranceTemplateLists.get(a).getProduct_id()+"------------------");
 									if(product_id.equals(insuranceTemplateLists.get(a).getProduct_id())){
 										insuranceTemplateLists.get(a).setFactorsName(factorsName);
@@ -360,44 +358,44 @@ public class AddAdditionalInsuranceActivity extends BaseActivity implements OnCl
 										Log.i("添加了一个backBean", "------------------");
 									}
 								}
-								
+
 								TableRowBean bean=new TableRowBean();
 								bean.setInsuranceName(rowArray.get(0).toString());
 								bean.setPayTime(rowArray.get(1).toString());
 								bean.setBaoe(rowArray.get(2).toString());
 								bean.setBaofei(rowArray.get(3).toString());
 								bean.setId(product_id);
-								
+
 								additionalTabList.add(bean);
 							}
-							 Message msg=new Message();
-							 msg.what=0;
-							 AdditionalInsuranceHandler.sendMessage(msg);
-						}else{
-							
-							 String errmsg=objResult.getString("errmsg");
-							 String errcode=objResult.getString("errcode");
-							 if("1".equals(errcode)){
-									JSONObject dataObj=objResult.getJSONObject("data");
-									JSONObject planObj=dataObj.getJSONObject("plan");
-									JSONArray productsArray=planObj.getJSONArray("products");
-									Log.i(productsArray.length()+"------------------", "------------------");
-									for(int y=1;y<productsArray.length();y++){
-										JSONObject productObject=productsArray.getJSONObject(y);
-										JSONArray rulesArray=productObject.getJSONArray("rules");
-										String product_id=productObject.getString("product_id");
-										if(rulesArray.length()>0){
-											String rule=(String) rulesArray.get(0);
-											Map<String,String> map=new HashMap<String,String>();
-											map.put(product_id, rule);
-											errorList.add(map);
-										}
-										
-									}
-							 }
 							Message msg=new Message();
-							 msg.what=2;
-							 AdditionalInsuranceHandler.sendMessage(msg);
+							msg.what=0;
+							AdditionalInsuranceHandler.sendMessage(msg);
+						}else{
+
+							String errmsg=objResult.getString("errmsg");
+							String errcode=objResult.getString("errcode");
+							if("1".equals(errcode)){
+								JSONObject dataObj=objResult.getJSONObject("data");
+								JSONObject planObj=dataObj.getJSONObject("plan");
+								JSONArray productsArray=planObj.getJSONArray("products");
+								Log.i(productsArray.length()+"------------------", "------------------");
+								for(int y=1;y<productsArray.length();y++){
+									JSONObject productObject=productsArray.getJSONObject(y);
+									JSONArray rulesArray=productObject.getJSONArray("rules");
+									String product_id=productObject.getString("product_id");
+									if(rulesArray.length()>0){
+										String rule=(String) rulesArray.get(0);
+										Map<String,String> map=new HashMap<String,String>();
+										map.put(product_id, rule);
+										errorList.add(map);
+									}
+
+								}
+							}
+							Message msg=new Message();
+							msg.what=2;
+							AdditionalInsuranceHandler.sendMessage(msg);
 						}
 					} catch (JSONException e) {
 						e.printStackTrace();
@@ -406,15 +404,13 @@ public class AddAdditionalInsuranceActivity extends BaseActivity implements OnCl
 
 				}
 			});
-			
-		    
-		
-	
+
+
+
+
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	
 	}
 	
 	

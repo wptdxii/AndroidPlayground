@@ -23,8 +23,6 @@ import com.cloudhome.view.customview.PublicLoadPage;
 
 import java.util.ArrayList;
 
-import static u.aly.av.R;
-
 public class IncomeExpendDetailActivity2 extends BaseActivity implements NetResultListener, OnClickListener {
 
     private final int GET_INCOME_EXPEND_LIST = 0;

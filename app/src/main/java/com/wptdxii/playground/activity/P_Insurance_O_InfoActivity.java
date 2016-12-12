@@ -373,7 +373,7 @@ public class P_Insurance_O_InfoActivity extends BaseActivity {
 		.execute(new StringCallback() {
 
 			@Override
-			public void onError(Call call, Exception e) {
+			public void onError(Call call, Exception e, int id) {
 				Log.e("error", "获取数据异常 ", e);
 				String status = "false";
 				Message message = Message.obtain();
@@ -381,24 +381,21 @@ public class P_Insurance_O_InfoActivity extends BaseActivity {
 				message.obj = status;
 
 				errcode_handler.sendMessage(message);
-			
-				
 			}
 
 			@Override
-			public void onResponse(String response) {
-			
+			public void onResponse(String response, int id) {
 				String jsonString = response;
 				Log.d("onSuccess", "onSuccess json = " + jsonString);
 
 				Map<String, Object> map_all = new HashMap<String, Object>();
 				Map<String, String> errcode_map = new HashMap<String, String>();
-				
+
 				List<Map<String, String>> price_list = new ArrayList<Map<String, String>>();
 				List<Map<String, String>> holder_list = new ArrayList<Map<String, String>>();
 				List<Map<String, String>> insured_list = new ArrayList<Map<String, String>>();
 				List<Map<String, String>> other_list = new ArrayList<Map<String, String>>();
-				
+
 				List<Map<String, String>> benefit_list = new ArrayList<Map<String, String>>();
 				try {
 
@@ -558,7 +555,6 @@ public class P_Insurance_O_InfoActivity extends BaseActivity {
 					e.printStackTrace();
 				}
 
-
 			}
 		});
 		
@@ -578,8 +574,7 @@ public class P_Insurance_O_InfoActivity extends BaseActivity {
 		.execute(new StringCallback() {
 
 			@Override
-			public void onError(Call call, Exception e) {
-			
+			public void onError(Call call, Exception e, int id) {
 				Log.e("error", "获取数据异常 ", e);
 				String status = "false";
 				Message message = Message.obtain();
@@ -587,12 +582,10 @@ public class P_Insurance_O_InfoActivity extends BaseActivity {
 				message.obj = status;
 
 				errcode_handler.sendMessage(message);
-				
 			}
 
 			@Override
-			public void onResponse(String response) {
-			
+			public void onResponse(String response, int id) {
 				String jsonString = response;
 				Log.d("onSuccess", "onSuccess json = " + jsonString);
 				Map<String, String> errcode_map = new HashMap<String, String>();
@@ -624,35 +617,34 @@ public class P_Insurance_O_InfoActivity extends BaseActivity {
 							null_handler.sendMessage(message2);
 
 						} else {
-							
-						JSONObject data = json.getJSONObject("data");
 
-						PayReq req = new PayReq();
-						req.appId =  data.getString("appid");
-						req.partnerId = data.getString("partnerid");
+							JSONObject data = json.getJSONObject("data");
 
-						req.packageValue = data.getString("package");
+							PayReq req = new PayReq();
+							req.appId =  data.getString("appid");
+							req.partnerId = data.getString("partnerid");
 
-						req.nonceStr = data.getString("noncestr");
-						req.prepayId = data.getString("prepayid");
+							req.packageValue = data.getString("package");
 
-						req.timeStamp = data.getString("timestamp");
+							req.nonceStr = data.getString("noncestr");
+							req.prepayId = data.getString("prepayid");
 
-						Log.d("44444", req.timeStamp);
+							req.timeStamp = data.getString("timestamp");
 
-						req.sign = data.getString("sign");
-						req.extData = "app data"; // optional
+							Log.d("44444", req.timeStamp);
 
-						Message message = Message.obtain();
+							req.sign = data.getString("sign");
+							req.extData = "app data"; // optional
 
-						message.obj = req;
-						payhandler.sendMessage(message);
+							Message message = Message.obtain();
+
+							message.obj = req;
+							payhandler.sendMessage(message);
 						}
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-
 			}
 		});
 		

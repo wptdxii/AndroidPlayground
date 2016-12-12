@@ -135,7 +135,6 @@ public class SubmitOrdersActivity extends BaseActivity {
 			dialog.dismiss();
 			Intent intent = new Intent(SubmitOrdersActivity.this,
 					RightPayActivity.class);
-			Log.d("跳向支付页面传的id----------------", orderId);
 			intent.putExtra("id", orderId);
 			intent.putExtra("prevoius_page", "SubmitOrders");
 			startActivity(intent);
@@ -319,7 +318,6 @@ public class SubmitOrdersActivity extends BaseActivity {
 						FillInInsuredActivity.class);
 
 				intent.putExtra("beibaorenInfo", beibaorenInfo);
-				Log.i("BEIBAOREN________----------", beibaorenInfo);
 
 				startActivityForResult(intent, 0);
 
@@ -547,18 +545,16 @@ public class SubmitOrdersActivity extends BaseActivity {
 		.execute(new StringCallback() {
 
 			@Override
-			public void onError(Call call, Exception e) {
-			
+			public void onError(Call call, Exception e, int id) {
 				Log.e("error", "获取数据异常 ", e);
 
 				dialog.dismiss();
 				Toast.makeText(SubmitOrdersActivity.this,
 						"网络连接失败，请确认网络连接后重试", Toast.LENGTH_SHORT).show();
-				
 			}
 
 			@Override
-			public void onResponse(String response) {
+			public void onResponse(String response, int id) {
 
 				String jsonString = response;
 				Log.d("onSuccess", "onSuccess json = " + jsonString);
@@ -592,8 +588,6 @@ public class SubmitOrdersActivity extends BaseActivity {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-			
-
 			}
 		});
 		

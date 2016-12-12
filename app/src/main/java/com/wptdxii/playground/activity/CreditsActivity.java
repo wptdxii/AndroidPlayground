@@ -161,7 +161,7 @@ public class CreditsActivity extends BaseActivity {
                 .execute(new StringCallback() {
 
                     @Override
-                    public void onError(Call call, Exception e) {
+                    public void onError(Call call, Exception e, int id) {
 
                         Log.e("error", "获取数据异常 ", e);
                         Toast.makeText(CreditsActivity.this, "网络连接失败，请确认网络连接后重试",
@@ -169,8 +169,7 @@ public class CreditsActivity extends BaseActivity {
                     }
 
                     @Override
-                    public void onResponse(String response) {
-
+                    public void onResponse(String response, int id) {
                         Map<String, String> map = new HashMap<String, String>();
                         String jsonString = response;
                         Log.d("onSuccess", "onSuccess json = " + jsonString);

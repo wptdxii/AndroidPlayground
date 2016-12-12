@@ -69,6 +69,7 @@ public class MainProductListActivity extends BaseActivity implements View.OnClic
     private boolean isGroup=false;
 
     private boolean isCommissionShown;
+    private boolean isMostProfitable=false;
 
     private Handler handler = new Handler() {
 
@@ -155,6 +156,9 @@ public class MainProductListActivity extends BaseActivity implements View.OnClic
         isCommissionShown = sp5.getBoolean(user_id, false);
         Intent intent = getIntent();
         title=intent.getStringExtra("title");
+        if("最赚钱".equals(title)){
+            isMostProfitable=true;//最赚钱产品的话后面加上+10%
+        }
         if(!"黄金组合".equals(title)){
             key_value.put("tags",intent.getStringExtra("tags"));
             key_value.put("search",intent.getStringExtra("search"));
@@ -384,14 +388,14 @@ public class MainProductListActivity extends BaseActivity implements View.OnClic
                 .build()
                 .execute(new StringCallback() {
                     @Override
-                    public void onError(Call call, Exception e) {
+                    public void onError(Call call, Exception e, int id) {
                         Message msg = new Message();
                         msg.what = 1;
                         handler.sendMessage(msg);
                     }
 
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse(String response, int id) {
                         String jsonString = response;
                         Log.d("onSucces_search_result", "onSuccess json = " + jsonString);
                         try {
@@ -422,7 +426,12 @@ public class MainProductListActivity extends BaseActivity implements View.OnClic
                                         bean.setCode(obj1.getString("code"));
                                         bean.setCompany(obj1.getString("company"));
                                         bean.setFeaturedesc(obj1.getString("featureDesc"));
-                                        bean.setRate(obj1.getString("rate"));
+                                        if(isMostProfitable){
+                                            bean.setRate(obj1.getString("rate")+"%+10");
+                                        }else{
+                                            bean.setRate(obj1.getString("rate"));
+                                        }
+
                                         bean.setRatepostfix(obj1.getString("ratePostfix"));
                                         bean.setPrice(obj1.getString("price"));
                                         bean.setPricepostfix(obj1.getString("pricePostfix"));
@@ -471,14 +480,14 @@ public class MainProductListActivity extends BaseActivity implements View.OnClic
                 .build()
                 .execute(new StringCallback() {
                     @Override
-                    public void onError(Call call, Exception e) {
+                    public void onError(Call call, Exception e, int id) {
                         Message msg = new Message();
                         msg.what = 1;
                         handler.sendMessage(msg);
                     }
 
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse(String response, int id) {
                         String jsonString = response;
                         Log.d("onSuccess", "onSuccess json = " + jsonString);
                         try {

@@ -100,7 +100,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                 .build()
                 .execute(new StringCallback() {
                     @Override
-                    public void onError(Call call, Exception e) {
+                    public void onError(Call call, Exception e, int id) {
                         if (dialog.isShowing()) {
                             dialog.dismiss();
                         }
@@ -108,7 +108,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                     }
 
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse(String response, int id) {
                         try {
                             if (dialog.isShowing()) {
                                 dialog.dismiss();
@@ -357,13 +357,13 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                         .build()
                         .execute(new StringCallback() {
                             @Override
-                            public void onError(Call call, Exception e) {
+                            public void onError(Call call, Exception e, int id) {
                                 Toast.makeText(OrderDetailActivity.this, "网络连接失败，请确认网络连接后重试",
                                         Toast.LENGTH_SHORT).show();
                             }
 
                             @Override
-                            public void onResponse(String response) {
+                            public void onResponse(String response, int id) {
                                 String jsonString = response;
                                 try {
                                     if (jsonString == null || jsonString.equals("") || jsonString.equals("null")) {

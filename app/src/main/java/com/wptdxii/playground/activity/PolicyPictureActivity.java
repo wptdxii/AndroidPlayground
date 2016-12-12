@@ -662,19 +662,15 @@ public class PolicyPictureActivity extends BaseActivity {
 	public class MyStringCallback extends StringCallback {
 
 		@Override
-		public void onError(Call call, Exception e) {
-			// TODO Auto-generated method stub
-
+		public void onError(Call call, Exception e, int id) {
 			dialog1.dismiss();
 			Toast.makeText(PolicyPictureActivity.this, "保单上传失败！",
 					Toast.LENGTH_SHORT).show();
 			e.printStackTrace();
-
 		}
 
 		@Override
-		public void onResponse(String response) {
-			// TODO Auto-generated method stub
+		public void onResponse(String response, int id) {
 			try {
 				String jsonString = response;
 				if (jsonString == null || jsonString.equals("")
@@ -705,11 +701,9 @@ public class PolicyPictureActivity extends BaseActivity {
 					handler.sendMessage(message);
 				}
 			} catch (JSONException e) {
-				// TODO 自动生成的 catch 块
-
+				e.printStackTrace();
 			}
 		}
-
 	}
 
 

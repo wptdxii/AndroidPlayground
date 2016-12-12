@@ -5,12 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.webkit.CookieManager;
-import android.webkit.CookieSyncManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
@@ -21,11 +18,6 @@ import android.widget.TextView;
 
 import com.cloudhome.R;
 import com.cloudhome.utils.InterceptingWebViewClient;
-import com.zhy.http.okhttp.cookie.SimpleCookieJar;
-
-import java.util.List;
-
-import okhttp3.Cookie;
 
 public class FeedbackWebActivity extends BaseActivity {
 
@@ -76,7 +68,7 @@ public class FeedbackWebActivity extends BaseActivity {
 			}
 		});
 
-		synCookies(FeedbackWebActivity.this, url);
+//		synCookies(FeedbackWebActivity.this, url);
 
 
 
@@ -140,46 +132,46 @@ public class FeedbackWebActivity extends BaseActivity {
 
 	
 
-	  public void synCookies(Context context, String url) {
-	        CookieSyncManager.createInstance(context);
-	        CookieManager cookieManager = CookieManager.getInstance();
-	        cookieManager.setAcceptCookie(true);  
-//	      cookieManager.removeSessionCookie();// 移除  
-	          
-	        cookieManager.removeAllCookie();  
-	     //   String[] cookie = mCookieStr.split(";");  
-	        
-	   //     Cookie[] cookie  = CookieUtil.getCookies().toArray(
-		//			new Cookie[CookieUtil.getCookies().size()]);
-	      
-   List<Cookie> cookies=SimpleCookieJar.getCookies();
-
-
-	        
-	        StringBuffer sb = new StringBuffer();
-	        
-	        
-	        for ( Cookie cookie : cookies)
-	        {
-	        	 
-				String cookieName = cookie.name();
-				String cookieValue = cookie.value();
-				if (!TextUtils.isEmpty(cookieName)
-						&& !TextUtils.isEmpty(cookieValue)) {
-					sb.append(cookieName).append("=");
-					sb.append(cookieValue).append(";");
-				}
-	        }
-			
-			String[] cookie = sb.toString().split(";");
-	        for (int i = 0; i < cookie.length; i++) {  
-	        	  Log.d("cookie[i]",cookie[i]);
-	            cookieManager.setCookie(url, cookie[i]);// cookies是在HttpClient中获得的cookie  
-	        }  
-	  
-	  
-	        CookieSyncManager.getInstance().sync();
-	    } 
+//	  public void synCookies(Context context, String url) {
+//	        CookieSyncManager.createInstance(context);
+//	        CookieManager cookieManager = CookieManager.getInstance();
+//	        cookieManager.setAcceptCookie(true);
+////	      cookieManager.removeSessionCookie();// 移除
+//
+//	        cookieManager.removeAllCookie();
+//	     //   String[] cookie = mCookieStr.split(";");
+//
+//	   //     Cookie[] cookie  = CookieUtil.getCookies().toArray(
+//		//			new Cookie[CookieUtil.getCookies().size()]);
+//
+//   List<Cookie>   cookies=SimpleCookieJar.getCookies();
+//
+//
+//
+//	        StringBuffer sb = new StringBuffer();
+//
+//
+//	        for ( Cookie cookie : cookies)
+//	        {
+//
+//				String cookieName = cookie.name();
+//				String cookieValue = cookie.value();
+//				if (!TextUtils.isEmpty(cookieName)
+//						&& !TextUtils.isEmpty(cookieValue)) {
+//					sb.append(cookieName).append("=");
+//					sb.append(cookieValue).append(";");
+//				}
+//	        }
+//
+//			String[] cookie = sb.toString().split(";");
+//	        for (int i = 0; i < cookie.length; i++) {
+//	        	  Log.d("cookie[i]",cookie[i]);
+//	            cookieManager.setCookie(url, cookie[i]);// cookies是在HttpClient中获得的cookie
+//	        }
+//
+//
+//	        CookieSyncManager.getInstance().sync();
+//	    }
 
 
 }

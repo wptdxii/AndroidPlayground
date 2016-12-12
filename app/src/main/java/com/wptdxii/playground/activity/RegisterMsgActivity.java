@@ -364,7 +364,7 @@ public class RegisterMsgActivity extends BaseActivity {
 							.execute(new StringCallback() {
 
 								@Override
-								public void onError(Call call, Exception e) {
+								public void onError(Call call, Exception e, int id) {
 									Log.e("error", "获取数据异常 ", e);
 
 									String status = "false";
@@ -373,12 +373,10 @@ public class RegisterMsgActivity extends BaseActivity {
 									message.obj = status;
 
 									errcode_handler.sendMessage(message);
-
 								}
 
 								@Override
-								public void onResponse(String response) {
-
+								public void onResponse(String response, int id) {
 									Map<String, String> map = new HashMap<String, String>();
 
 									String jsonString = response;
@@ -443,7 +441,6 @@ public class RegisterMsgActivity extends BaseActivity {
 										// TODO 自动生成的 catch 块
 										e.printStackTrace();
 									}
-
 								}
 							});
 
@@ -470,7 +467,7 @@ public class RegisterMsgActivity extends BaseActivity {
 				.execute(new StringCallback() {
 
 					@Override
-					public void onError(Call call, Exception e) {
+					public void onError(Call call, Exception e, int id) {
 						Log.e("error", "获取数据异常 ", e);
 
 						String status = "false";
@@ -479,12 +476,10 @@ public class RegisterMsgActivity extends BaseActivity {
 						message.obj = status;
 
 						errcode_handler.sendMessage(message);
-
 					}
 
 					@Override
-					public void onResponse(String response) {
-
+					public void onResponse(String response, int id) {
 						Map<String, String> map = new HashMap<String, String>();
 
 						String jsonString = response;
@@ -545,15 +540,13 @@ public class RegisterMsgActivity extends BaseActivity {
 				.execute(new StringCallback() {
 
 					@Override
-					public void onError(Call call, Exception e) {
+					public void onError(Call call, Exception e, int id) {
 
 						Log.e("error", "获取数据异常 ", e);
-
 					}
 
 					@Override
-					public void onResponse(String response) {
-
+					public void onResponse(String response, int id) {
 						String jsonString = response;
 						Log.d("onSuccess", "onSuccess json = " + jsonString);
 
@@ -579,8 +572,8 @@ public class RegisterMsgActivity extends BaseActivity {
 								String cert_b = dataObject.getString("cert_b");
 								String cert_a = dataObject.getString("cert_a");
 								String licence = dataObject.getString("licence");
-		                        String assessment = dataObject.getString("assessment");
-		                        
+								String assessment = dataObject.getString("assessment");
+
 								String type = dataObject.getString("type");
 								String nickname = dataObject
 										.getString("nickname");
@@ -652,7 +645,7 @@ public class RegisterMsgActivity extends BaseActivity {
 								map.put("avatar", avatar);
 								map.put("cert_a", cert_a);
 								map.put("cert_b", cert_b);
-								
+
 								map.put("licence", licence);
 								map.put("assessment", assessment);
 								map.put("nickname", nickname);
@@ -684,7 +677,6 @@ public class RegisterMsgActivity extends BaseActivity {
 							// TODO 自动生成的 catch 块
 							e.printStackTrace();
 						}
-
 					}
 				});
 
@@ -783,13 +775,13 @@ public class RegisterMsgActivity extends BaseActivity {
 				.execute(new StringCallback() {
 
 					@Override
-					public void onError(Call call, Exception e) {
-						Log.e("error", "获取数据异常 ", e);
+					public void onError(Call call, Exception e, int id) {
 
+						Log.e("error", "获取数据异常 ", e);
 					}
 
 					@Override
-					public void onResponse(String response) {
+					public void onResponse(String response, int id) {
 						Map<String, String> map = new HashMap<String, String>();
 						String jsonString = response;
 						Log.d("onSuccess", "onSuccess json = " + jsonString);
@@ -820,7 +812,6 @@ public class RegisterMsgActivity extends BaseActivity {
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
-
 					}
 				});
 

@@ -229,8 +229,7 @@ public class IncomeDetailActivity extends BaseActivity implements
 		.execute(new StringCallback() {
 
 			@Override
-			public void onError(Call call, Exception e) {
-			
+			public void onError(Call call, Exception e, int id) {
 				Log.e("error", "获取数据异常 ", e);
 
 				String status = "false";
@@ -239,20 +238,18 @@ public class IncomeDetailActivity extends BaseActivity implements
 				message.obj = status;
 
 				errcode_handler.sendMessage(message);
-				
 			}
 
 			@Override
-			public void onResponse(String response) {
-			
+			public void onResponse(String response, int id) {
 				String jsonString = response;
 				Log.d("onSuccess", "onSuccess json = " + jsonString);
 
-			
+
 				List<Map<String, String>> title_list = new ArrayList<Map<String, String>>();
 				List<Map<String, String>> detail_list = new ArrayList<Map<String, String>>();
-				
-				
+
+
 				Map<String, Object> total_map = new HashMap<String, Object>();
 				Map<String, String> errcode_map = new HashMap<String, String>();
 				try {
@@ -287,23 +284,23 @@ public class IncomeDetailActivity extends BaseActivity implements
 							JSONObject dataObject = jsonObject
 									.getJSONObject("data");
 
-					
+
 							JSONArray titlelist = dataObject
 									.getJSONArray("title");
 
-						
 
-								String titlevalue1 = titlelist.getString(0);
-								String titlevalue2 = titlelist.getString(1);
-								String titlevalue3 = titlelist.getString(2);
 
-								Map<String, String> map2 = new HashMap<String, String>();
+							String titlevalue1 = titlelist.getString(0);
+							String titlevalue2 = titlelist.getString(1);
+							String titlevalue3 = titlelist.getString(2);
 
-								map2.put("title", titlevalue1);
-								map2.put("name", titlevalue2);
-								map2.put("price", titlevalue3);
-								title_list.add(map2);
-						
+							Map<String, String> map2 = new HashMap<String, String>();
+
+							map2.put("title", titlevalue1);
+							map2.put("name", titlevalue2);
+							map2.put("price", titlevalue3);
+							title_list.add(map2);
+
 							JSONArray detailList = dataObject.getJSONArray("detail");
 
 							for (int i = 0; i < detailList.length(); i++) {
@@ -312,18 +309,18 @@ public class IncomeDetailActivity extends BaseActivity implements
 
 								String value1 = dataList2.getString(0);
 								String value2 = dataList2.getString(1);
-							
+
 								Map<String, String> map = new HashMap<String, String>();
 
 								map.put("date", value1);
 								map.put("price", value2);
-							
+
 								detail_list.add(map);
 							}
 
 							total_map.put("title_list", title_list);
 							total_map.put("detail_list", detail_list);
-							
+
 
 							Message message = Message.obtain();
 
@@ -336,8 +333,6 @@ public class IncomeDetailActivity extends BaseActivity implements
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-
-
 			}
 		});
 		
@@ -356,7 +351,6 @@ public class IncomeDetailActivity extends BaseActivity implements
 			jsonObj.put("page", page);
 
 			jsonresult = jsonObj.toString();
-			Log.i("SUBMIT_ORDER_______________", jsonresult);
 
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block

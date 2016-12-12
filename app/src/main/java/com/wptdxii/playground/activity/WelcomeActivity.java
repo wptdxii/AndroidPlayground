@@ -25,6 +25,7 @@ import android.view.WindowManager;
 import com.alibaba.fastjson.JSON;
 import com.cloudhome.application.MyApplication;
 import com.cloudhome.bean.SplashAdBean;
+import com.cloudhome.network.interceptor.MyInterceptor;
 import com.cloudhome.utils.AdFileUtils;
 import com.cloudhome.utils.AdPreference;
 import com.cloudhome.utils.Common;
@@ -32,7 +33,6 @@ import com.cloudhome.utils.IpConfig;
 import com.umeng.analytics.MobclickAgent;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
-import com.zhy.http.okhttp.utils.MyInterceptor;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -205,7 +205,6 @@ public class WelcomeActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        setContentView(R.layout.welcome);
 
         ifShowGuide();
         ifShowAd();
@@ -241,7 +240,7 @@ public class WelcomeActivity extends BaseActivity {
     }
 
     private void ifShowGuide() {
-        SharedPreferences preferences = getSharedPreferences("isFirstUse", 1);
+        SharedPreferences preferences = getSharedPreferences("isFirstUse", MODE_PRIVATE);
         // 读取SharedPreferences中需要的数据
         isFirstUse = preferences.getBoolean("isFirstUse", true);
         // Common.getVerCode 中包名一定要与本应用包名一致
@@ -258,12 +257,12 @@ public class WelcomeActivity extends BaseActivity {
                 .build()
                 .execute(new StringCallback() {
                     @Override
-                    public void onError(Call call, Exception e) {
+                    public void onError(Call call, Exception e, int id) {
 
                     }
 
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse(String response, int id) {
                         if (response != null && !response.equals("") && !response.equals("null")) {
 
                             SplashAdBean adBean = JSON.parseObject(response, SplashAdBean.class);
@@ -354,7 +353,7 @@ public class WelcomeActivity extends BaseActivity {
                 .execute(new StringCallback() {
 
                     @Override
-                    public void onError(Call call, Exception e) {
+                    public void onError(Call call, Exception e, int id) {
                         Log.e("error", "获取数据异常 ", e);
                         Editor edit;
                         edit = sp.edit();
@@ -379,8 +378,7 @@ public class WelcomeActivity extends BaseActivity {
                     }
 
                     @Override
-                    public void onResponse(String response) {
-
+                    public void onResponse(String response, int id) {
                         Map<String, String> map = new HashMap<String, String>();
                         String jsonString = response;
                         Log.d("onSuccess", "onSuccess json = " + jsonString);
@@ -432,6 +430,7 @@ public class WelcomeActivity extends BaseActivity {
                         }
 
                     }
+
                 });
 
     }
@@ -446,14 +445,13 @@ public class WelcomeActivity extends BaseActivity {
                 .execute(new StringCallback() {
 
                     @Override
-                    public void onError(Call call, Exception e) {
+                    public void onError(Call call, Exception e, int id) {
 
                         handler.sendEmptyMessageDelayed(NET_ERROR, 500);
                     }
 
                     @Override
-                    public void onResponse(String response) {
-
+                    public void onResponse(String response, int id) {
                         Map<String, String> map = new HashMap<String, String>();
                         String jsonString = response;
                         Log.d("onmsg", "onmsg json = " + jsonString);
@@ -497,8 +495,8 @@ public class WelcomeActivity extends BaseActivity {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-
                     }
+
                 });
 
     }
@@ -535,7 +533,7 @@ public class WelcomeActivity extends BaseActivity {
                 .url(url).build().execute(new StringCallback() {
 
             @Override
-            public void onError(Call call, Exception e) {
+            public void onError(Call call, Exception e, int id) {
                 Log.e("error", "获取数据异常 ", e);
 
                 Editor edit;
@@ -556,12 +554,10 @@ public class WelcomeActivity extends BaseActivity {
                 MyInterceptor.sessionToken = "";
 
                 handler.sendEmptyMessageDelayed(NET_ERROR, 500);
-
             }
 
             @Override
-            public void onResponse(String response) {
-
+            public void onResponse(String response, int id) {
                 Map<String, String> map = new HashMap<String, String>();
 
                 String jsonString = response;
@@ -638,8 +634,8 @@ public class WelcomeActivity extends BaseActivity {
                     // TODO 自动生成的 catch 块
                     e.printStackTrace();
                 }
-
             }
+
         });
 
     }
@@ -693,6 +689,7 @@ public class WelcomeActivity extends BaseActivity {
                 }
             }
         }.start();
+
     }
 
     protected void haveDownLoad() {
@@ -738,6 +735,7 @@ public class WelcomeActivity extends BaseActivity {
                 "application/vnd.android.package-archive");
         startActivity(intent);
     }
+
     public void startNextActivity() {
 
         String AD_PATH
@@ -746,6 +744,7 @@ public class WelcomeActivity extends BaseActivity {
         Bitmap bm = BitmapFactory.decodeFile(AD_PATH);
 
         boolean isAdShow = AdPreference.getInstance().getIfShowAd();
+        Log.e(TAG, "startNextActivity: " + isAdShow );
 
         if (isFirstUse || old_install_Code == 0
                 || current_versionCode > old_install_Code) {
