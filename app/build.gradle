@@ -181,7 +181,7 @@ android {
 //                output.outputFile = new File(outputFile.parent, releaseApkName)
 //            }
 //            if (variant.buildType.name.equals('debug')) {
-//                // Do nothing
+//                // do nothing
 //            }
 
 //            if (outputFile != null && outputFile.name.endsWith('.apk')) {
