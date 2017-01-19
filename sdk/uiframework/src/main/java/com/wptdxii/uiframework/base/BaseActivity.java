@@ -1,10 +1,14 @@
 package com.wptdxii.uiframework.base;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.MenuRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -15,16 +19,22 @@ import com.umeng.analytics.MobclickAgent;
 import com.wptdxii.ext.util.ActivityStack;
 import com.wptdxii.ext.util.AppStatusTracker;
 import com.wptdxii.uiframework.R;
+import com.wptdxii.uiframework.callback.PermissionListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
  * Created by wptdxii on 2016/7/7 0007.
  */
 public abstract class BaseActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener {
+    public static final int RC_PERMISSIONS = 0x100;
     protected static final int MODE_NONE = -1;
     protected static final int MODE_BACK = 0;
     protected Toolbar toolbar;
     protected TextView toolbarTitle;
+    private PermissionListener mListener;
 
     @Override
     protected void onStart() {
@@ -162,5 +172,82 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
     public <T extends View> T findView(@IdRes int resId) {
         return (T) super.findViewById(resId);
     }
+
+    /**
+     * call this method when need to requesst runtime permissions in Activity
+     * @param permissions
+     * @param listener
+     */
+    public void requestPermissions(String[] permissions, PermissionListener listener) {
+        if (permissions == null || permissions.length == 0)
+            return;
+        this.mListener = listener;
+        List<String> permissionList = new ArrayList<>();
+        for (String permission : permissions) {
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+                permissionList.add(permission);
+            }
+        }
+
+        if (!permissionList.isEmpty()) {
+            ActivityCompat.requestPermissions(this, permissionList.toArray(
+                    new String[permissionList.size()]), RC_PERMISSIONS);
+        } else {
+            mListener.onGranted();
+        }
+    }
+
+    private boolean shouldShowRequestPermissionRationale(String[] permisions) {
+        for (String permission : permisions) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case RC_PERMISSIONS:
+                if (grantResults.length > 0) {
+
+                    List<String> deniedPermissions = new ArrayList<>();
+                    for (String permission : permissions) {
+                        if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+                            deniedPermissions.add(permission);
+                        }
+                    }
+                    if (!deniedPermissions.isEmpty()) {
+                        checkForceRequiredPermissionDenied(deniedPermissions.toArray(new String[deniedPermissions.size()]));
+                    } else {
+                        mListener.onGranted();
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void checkForceRequiredPermissionDenied(String[] deniedPermissions) {
+        if (shouldShowRequestPermissionRationale(deniedPermissions)) {
+            List<String> impermanentDeniedPermissions = new ArrayList<>();
+            List<String> permanentDeniedPermissions = new ArrayList<>();
+            for (String permission : deniedPermissions) {
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
+                    impermanentDeniedPermissions.add(permission);
+                } else {
+                    permanentDeniedPermissions.add(permission);
+                }
+            }
+            mListener.onDenied(impermanentDeniedPermissions.toArray(new String[impermanentDeniedPermissions.size()]),
+                    permanentDeniedPermissions.toArray(new String[permanentDeniedPermissions.size()]));
+        } else {
+            mListener.onPermanentDenied(deniedPermissions);
+        }
+    }
+
 
 }

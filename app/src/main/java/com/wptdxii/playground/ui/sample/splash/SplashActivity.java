@@ -1,14 +1,18 @@
 package com.wptdxii.playground.ui.sample.splash;
 
+import android.Manifest;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.WindowManager;
 
+import com.wptdxii.ext.util.DeviceUtils;
 import com.wptdxii.playground.R;
 import com.wptdxii.playground.ui.sample.home.ContentActivity;
 import com.wptdxii.uiframework.base.BaseActivity;
 import com.wptdxii.ext.util.AppStatusTracker;
+import com.wptdxii.uiframework.callback.PermissionListener;
 
 public class SplashActivity extends BaseActivity {
     private static final int MSG_TO_HOME_ACTIVITY = 0;
@@ -28,13 +32,33 @@ public class SplashActivity extends BaseActivity {
 
         }
     };
-
+    private static final String TAG = "SplashActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AppStatusTracker.getInstance().setAppStatus(AppStatusTracker.STATUS_OFFLINE);
         super.onCreate(savedInstanceState);
         //在主题中设定，可以定制 背景
        // setFullScreen();
+
+        String[] permisions = new String[]{Manifest.permission.READ_PHONE_STATE};
+        requestPermissions(permisions, new PermissionListener() {
+            @Override
+            public void onGranted() {
+                String deviceInfo = DeviceUtils.getDeviceInfo(SplashActivity.this);
+                Log.e(TAG, "onCreate: " + deviceInfo);
+            }
+
+            @Override
+            public void onDenied(String[] impermanentDeniedPermissions, String[] permanentDeniedPermissions) {
+
+            }
+
+            @Override
+            public void onPermanentDenied(String[] permanentDeniedPermissions) {
+
+            }
+        });
+
     }
 
     @Override

@@ -43,15 +43,15 @@ public class App extends Application {
         super.onCreate();
         instance = this;
         AppStatusTracker.init(this);
-//        LeakCanary.install(this);
+        //        LeakCanary.install(this);
 
-//        if (BuildConfig.DEBUG) {
-//            Stetho.initializeWithDefaults(this);
-//        }
+        //        if (BuildConfig.DEBUG) {
+        //            Stetho.initializeWithDefaults(this);
+        //        }
 
         initInjector();
         initExtension();
-//        initUmengChannel();
+        //        initUmengChannel();
         String deviceInfo = DeviceUtils.getDeviceInfo(this);
         Log.e(TAG, "onCreate: " + deviceInfo);
 
@@ -59,7 +59,8 @@ public class App extends Application {
 
     private void initUmengChannel() {
         String channel = ChannelUtils.getChannel(this);
-        MobclickAgent.UMAnalyticsConfig config = new MobclickAgent.UMAnalyticsConfig(this, BuildConfig.UMENG_APPKEY, channel);
+        MobclickAgent.UMAnalyticsConfig config = new MobclickAgent.UMAnalyticsConfig(this,
+                BuildConfig.UMENG_APPKEY, channel);
         MobclickAgent.startWithConfigure(config);
     }
 
@@ -68,6 +69,7 @@ public class App extends Application {
                 .appModule(new AppModule(this))
                 .build();
     }
+
     private void initExtension() {
         Ext.init(this, new ExtImpl());
     }
