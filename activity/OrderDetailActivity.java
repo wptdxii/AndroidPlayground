@@ -97,8 +97,8 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
         mParams.put("order_no", mOrderNum);
         mParams.put("source", mSource);
         mUrl = IpConfig.getUri2("getOrderDetail");
-        //        mUrl = "http://10.10.10.127:8080/gateway/order/getOrderDetail?" + "user_id=" + mUserId + "&order_no=" + mOrderNum
-        //                + "&source=" + mSource;
+//                mUrl = "http://10.10.10.155:8080/gateway/order/getOrderDetail?" + "user_id=" + mUserId + "&order_no=" + mOrderNum
+//                        + "&source=" + mSource;
         OkHttpUtils.get()
                 .url(mUrl)
                 .params(mParams)

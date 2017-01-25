@@ -8,9 +8,11 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.FileProvider;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.cloudhome.BuildConfig;
 import com.cloudhome.R;
 import com.cloudhome.utils.Common;
 import com.cloudhome.utils.IpConfig;
@@ -456,10 +459,20 @@ public class AboutActivity extends BaseActivity implements OnClickListener {
     // 安装新的应用
     private void installNewApk() {
         // TODO Auto-generated method stub
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setDataAndType(Uri.fromFile(new File(getExternalFilesDir(null).getAbsolutePath(), appName)),
-                "application/vnd.android.package-archive");
-        startActivity(intent);
+        File apkfile = new File(getExternalFilesDir(null).getAbsolutePath(), appName);
+        if ((apkfile.exists() && apkfile.isFile())) {
+            Uri apkUri;
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                apkUri = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".provider", apkfile);
+                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            } else {
+                apkUri = Uri.fromFile(apkfile);
+            }
+            intent.setDataAndType(apkUri,
+                    "application/vnd.android.package-archive");
+            startActivity(intent);
+        }
     }
 
 

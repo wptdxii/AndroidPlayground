@@ -55,10 +55,10 @@ import okhttp3.Call;
 
 
 @SuppressLint("SetJavaScriptEnabled")
-public class HomeWebShareActivity extends BaseActivity implements NetResultListener{
+public class HomeWebShareActivity extends BaseActivity implements NetResultListener {
 
     private WebView webView;
-    private String url="", title="", imgstr="", img_url="", share_title="", brief="";
+    private String url = "", title = "", imgstr = "", img_url = "", share_title = "", brief = "";
 
     private RelativeLayout jsback;
     private TextView jstext;
@@ -67,7 +67,7 @@ public class HomeWebShareActivity extends BaseActivity implements NetResultListe
     private String token;
     private String loginString;
     private String user_id_encode = "";
-    private String suid="";
+    private String suid = "";
 
     private String is_share;
     private String share_url = "";
@@ -75,15 +75,15 @@ public class HomeWebShareActivity extends BaseActivity implements NetResultListe
     private IWXAPI api;
     private String Event_WXPay = "OrderPayActivity_WX";
     private Map<String, String> key_value = new HashMap<String, String>();
-    private  String clientip;
+    private String clientip;
     private String user_state;
     private String Event_WebShare = "HomeWebShareActivity_Share";
     private PosterGenerate posterGenerate;
-    public static final int POSTER=1;
-    private String redPrizeId="";
-    public static final int RED_RAIN=2;
+    public static final int POSTER = 1;
+    private String redPrizeId = "";
+    public static final int RED_RAIN = 2;
     //上一页是否传了shareUrl
-    private boolean isHasShareUrl=false;
+    private boolean isHasShareUrl = false;
 
     private Boolean RefreshBoolean = false;
     private Handler RedHandler = new Handler() {
@@ -109,7 +109,7 @@ public class HomeWebShareActivity extends BaseActivity implements NetResultListe
             String status = data;
             android.util.Log.d("455454", "455445" + status);
             if (status.equals("false")) {
-                Toast.makeText(HomeWebShareActivity.this,"网络连接失败，请确认网络连接后重试", Toast.LENGTH_SHORT).show();
+                Toast.makeText(HomeWebShareActivity.this, "网络连接失败，请确认网络连接后重试", Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -121,7 +121,7 @@ public class HomeWebShareActivity extends BaseActivity implements NetResultListe
         public void handleMessage(android.os.Message msg) {
             Map<String, String> data = (Map<String, String>) msg.obj;
             String errmsg = data.get("errmsg");
-            Toast.makeText(HomeWebShareActivity.this, errmsg,Toast.LENGTH_SHORT).show();
+            Toast.makeText(HomeWebShareActivity.this, errmsg, Toast.LENGTH_SHORT).show();
         }
 
     };
@@ -139,6 +139,7 @@ public class HomeWebShareActivity extends BaseActivity implements NetResultListe
 
     };
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -147,7 +148,7 @@ public class HomeWebShareActivity extends BaseActivity implements NetResultListe
 
         loginString = sp.getString("Login_STATE", "none");
         user_id = sp.getString("Login_UID", "");
-        suid=sp.getString("Encrypt_UID", "");
+        suid = sp.getString("Encrypt_UID", "");
         token = sp.getString("Login_TOKEN", "");
         user_id_encode = sp.getString("Login_UID_ENCODE", "");
         user_state = sp.getString("Login_CERT", "");
@@ -167,23 +168,23 @@ public class HomeWebShareActivity extends BaseActivity implements NetResultListe
         // 是否需要分享
         is_share = intent.getStringExtra("is_share");
         //上一页是否传了shareUrl
-        isHasShareUrl=intent.getBooleanExtra("isHasShareUrl",false);
+        isHasShareUrl = intent.getBooleanExtra("isHasShareUrl", false);
 
-        if(isHasShareUrl){
-            share_url=intent.getStringExtra("shareUrl");
+        if (isHasShareUrl) {
+            share_url = intent.getStringExtra("shareUrl");
             if (!share_url.contains("userId") && !share_url.contains("token")) {
                 if (share_url.contains("?")) {
-                    share_url = share_url + "&user_id="+ user_id_encode + "&token=" + token;
+                    share_url = share_url + "&user_id=" + user_id_encode + "&token=" + token;
                 } else {
-                    share_url = share_url + "?user_id="+ user_id_encode + "&token=" + token;
+                    share_url = share_url + "?user_id=" + user_id_encode + "&token=" + token;
                 }
             }
-        }else{
+        } else {
             if (!url.contains("userId") && !url.contains("token")) {
                 if (url.contains("?")) {
-                    share_url = url + "&user_id="+ user_id_encode + "&token=" + token;
+                    share_url = url + "&user_id=" + user_id_encode + "&token=" + token;
                 } else {
-                    share_url = url + "?user_id="+ user_id_encode + "&token=" + token;
+                    share_url = url + "?user_id=" + user_id_encode + "&token=" + token;
                 }
             } else {
                 share_url = url;
@@ -197,11 +198,11 @@ public class HomeWebShareActivity extends BaseActivity implements NetResultListe
 
         api = WXAPIFactory.createWXAPI(HomeWebShareActivity.this, getString(R.string.weixin_appid));
         api.registerApp(Constants.APP_ID);
-        String nettype= GetIp.getCurrentNetType(HomeWebShareActivity.this);
-        if(nettype.equals("wifi")){
-            clientip=  GetIp.getWifiIp(HomeWebShareActivity.this);
-        }else{
-            clientip=  GetIp.getPhoneIp();
+        String nettype = GetIp.getCurrentNetType(HomeWebShareActivity.this);
+        if (nettype.equals("wifi")) {
+            clientip = GetIp.getWifiIp(HomeWebShareActivity.this);
+        } else {
+            clientip = GetIp.getPhoneIp();
         }
     }
 
@@ -221,8 +222,8 @@ public class HomeWebShareActivity extends BaseActivity implements NetResultListe
         }
 
         if (!loginString.equals("none")) {
-            url = url+ "&token="+ token+ "&user_id="+ user_id_encode+ "&suid=" + suid;
-//            synCookies(HomeWebShareActivity.this, url);
+            url = url + "&token=" + token + "&user_id=" + user_id_encode + "&suid=" + suid;
+            //            synCookies(HomeWebShareActivity.this, url);
         }
 
 
@@ -286,7 +287,6 @@ public class HomeWebShareActivity extends BaseActivity implements NetResultListe
         webView.destroyDrawingCache();
 
 
-
         webView.setWebChromeClient(new WebChromeClient() {
             public boolean onJsAlert(WebView view, String url, String message,
                                      JsResult result) {
@@ -305,13 +305,13 @@ public class HomeWebShareActivity extends BaseActivity implements NetResultListe
             // 这里我定义了一个拨打的方法
 
             public void startPhone(String num) {
-               requestCallPhonePermission(num);
+                requestCallPhonePermission(num);
             }
 
             // 这里我定义了一个拨打的方法
             @SuppressLint("JavascriptInterface")
             public void startPhone2(String num) {
-               requestCallPhonePermission(num);
+                requestCallPhonePermission(num);
             }
 
         }, "demo");
@@ -321,16 +321,17 @@ public class HomeWebShareActivity extends BaseActivity implements NetResultListe
         webView.addJavascriptInterface(new JumpToOtherInterface(HomeWebShareActivity.this), "mall");
         webView.addJavascriptInterface(new BackInterface(HomeWebShareActivity.this), "back");
         webView.addJavascriptInterface(new CardOrderPayInterface(HomeWebShareActivity.this), "cardOrder");
-        webView.addJavascriptInterface(new DirectPayInterface(HomeWebShareActivity.this),"directpay");
+        webView.addJavascriptInterface(new DirectPayInterface(HomeWebShareActivity.this), "directpay");
         //海报
-        webView.addJavascriptInterface(new PosterInterface(HomeWebShareActivity.this),"poster");
+        webView.addJavascriptInterface(new PosterInterface(HomeWebShareActivity.this), "poster");
         //鸡年福袋
-        webView.addJavascriptInterface(new CheckAuthInterface(HomeWebShareActivity.this),"checkauth");
-        webView.addJavascriptInterface(new ShareImageInterface(HomeWebShareActivity.this),"shareImage");
-        webView.addJavascriptInterface(new RedPacketInterface(HomeWebShareActivity.this),"redPacketRain");
+        webView.addJavascriptInterface(new CheckAuthInterface(HomeWebShareActivity.this), "checkauth");
+        webView.addJavascriptInterface(new ShareImageInterface(HomeWebShareActivity.this), "shareImage");
+        webView.addJavascriptInterface(new RedPacketInterface(HomeWebShareActivity.this), "redPacketRain");
         webView.addJavascriptInterface(this, "android");
 
     }
+
     private void requestCallPhonePermission(final String mobile) {
         String[] permissions = new String[]{android.Manifest.permission.CALL_PHONE};
         requestPermissions(permissions, new PermissionListener() {
@@ -346,30 +347,31 @@ public class HomeWebShareActivity extends BaseActivity implements NetResultListe
             @Override
             public void onDenied(String[] impermanentDeniedPermissions, String[] permanentDeniedPermissions) {
                 showRequestPermissionRationale(
-                                getString(R.string.msg_callphone_denied));
+                        getString(R.string.msg_callphone_denied));
             }
 
             @Override
             public void onPermanentDenied(String[] permanentDeniedPermissions) {
-               showPermissionSettingDialog(
-                                getString(R.string.msg_callphone_permanent_denied));
+                showPermissionSettingDialog(
+                        getString(R.string.msg_callphone_permanent_denied));
             }
         });
     }
+
     @Override
     public void ReceiveData(int action, int flag, Object dataObj) {
-        switch(action){
+        switch (action) {
             case POSTER:
                 if (flag == MyApplication.DATA_OK) {
-                    String imageUrl=dataObj.toString();
-                    Intent intent=new Intent(HomeWebShareActivity.this,PosterActivity.class);
-                    intent.putExtra("imageUrl",imageUrl);
+                    String imageUrl = dataObj.toString();
+                    Intent intent = new Intent(HomeWebShareActivity.this, PosterActivity.class);
+                    intent.putExtra("imageUrl", imageUrl);
                     startActivity(intent);
                 } else if (flag == MyApplication.NET_ERROR) {
                 } else if (flag == MyApplication.DATA_EMPTY) {
                 } else if (flag == MyApplication.JSON_ERROR) {
                 } else if (flag == MyApplication.DATA_ERROR) {
-                    String errmsg=dataObj.toString();
+                    String errmsg = dataObj.toString();
                     Toast.makeText(HomeWebShareActivity.this, errmsg, Toast.LENGTH_SHORT).show();
                 }
                 break;
@@ -380,42 +382,42 @@ public class HomeWebShareActivity extends BaseActivity implements NetResultListe
     }
 
 
-//    public void synCookies(Context context, String url) {
-//        CookieSyncManager.createInstance(context);
-//        CookieManager cookieManager = CookieManager.getInstance();
-//        cookieManager.setAcceptCookie(true);
-//        // cookieManager.removeSessionCookie();// 移除
-//
-//        cookieManager.removeAllCookie();
-//        // String[] cookie = mCookieStr.split(";");
-//
-//        // Cookie[] cookie = CookieUtil.getCookies().toArray(
-//        // new Cookie[CookieUtil.getCookies().size()]);
-//
-//        List<Cookie> cookies = SimpleCookieJar.getCookies();
-//
-//
-//        StringBuffer sb = new StringBuffer();
-//
-//
-//        for (Cookie cookie : cookies) {
-//
-//            String cookieName = cookie.name();
-//            String cookieValue = cookie.value();
-//            if (!TextUtils.isEmpty(cookieName)
-//                    && !TextUtils.isEmpty(cookieValue)) {
-//                sb.append(cookieName).append("=");
-//                sb.append(cookieValue).append(";");
-//            }
-//        }
-//
-//        String[] cookie = sb.toString().split(";");
-//        for (int i = 0; i < cookie.length; i++) {
-//            Log.d("cookie[i]", cookie[i]);
-//            cookieManager.setCookie(url, cookie[i]);// cookies是在HttpClient中获得的cookie
-//        }
-//        CookieSyncManager.getInstance().sync();
-//    }
+    //    public void synCookies(Context context, String url) {
+    //        CookieSyncManager.createInstance(context);
+    //        CookieManager cookieManager = CookieManager.getInstance();
+    //        cookieManager.setAcceptCookie(true);
+    //        // cookieManager.removeSessionCookie();// 移除
+    //
+    //        cookieManager.removeAllCookie();
+    //        // String[] cookie = mCookieStr.split(";");
+    //
+    //        // Cookie[] cookie = CookieUtil.getCookies().toArray(
+    //        // new Cookie[CookieUtil.getCookies().size()]);
+    //
+    //        List<Cookie> cookies = SimpleCookieJar.getCookies();
+    //
+    //
+    //        StringBuffer sb = new StringBuffer();
+    //
+    //
+    //        for (Cookie cookie : cookies) {
+    //
+    //            String cookieName = cookie.name();
+    //            String cookieValue = cookie.value();
+    //            if (!TextUtils.isEmpty(cookieName)
+    //                    && !TextUtils.isEmpty(cookieValue)) {
+    //                sb.append(cookieName).append("=");
+    //                sb.append(cookieValue).append(";");
+    //            }
+    //        }
+    //
+    //        String[] cookie = sb.toString().split(";");
+    //        for (int i = 0; i < cookie.length; i++) {
+    //            Log.d("cookie[i]", cookie[i]);
+    //            cookieManager.setCookie(url, cookie[i]);// cookies是在HttpClient中获得的cookie
+    //        }
+    //        CookieSyncManager.getInstance().sync();
+    //    }
 
     public class redPackageInterface {
         Context mContext;
@@ -492,12 +494,14 @@ public class HomeWebShareActivity extends BaseActivity implements NetResultListe
 
     public class CardOrderPayInterface {
         Context mContext;
+
         /**
          * Instantiate the interface and set the context
          */
         CardOrderPayInterface(Context Context) {
             mContext = Context;
         }
+
         @JavascriptInterface
         public void pay(String productname, String ordercreatetime, String moneys, String id, String orderno) {
             Intent intent = new Intent(HomeWebShareActivity.this, OrderPayActivity.class);
@@ -519,7 +523,7 @@ public class HomeWebShareActivity extends BaseActivity implements NetResultListe
         }
 
         @JavascriptInterface
-        public void directPay( String id, String orderno) {
+        public void directPay(String id, String orderno) {
             boolean isPaySupported = api.getWXAppSupportAPI() >= Build.PAY_SUPPORTED_SDK_INT;
             if (!isPaySupported) {
                 Toast.makeText(HomeWebShareActivity.this, String.valueOf(isPaySupported), Toast.LENGTH_SHORT).show();
@@ -536,11 +540,11 @@ public class HomeWebShareActivity extends BaseActivity implements NetResultListe
         }
     }
 
-    public void checkAuthStatus(String codeUrl,String imgUrl){
+    public void checkAuthStatus(String codeUrl, String imgUrl) {
         //用户状态 00表示已认证   02表示认证中    01表示未认证
         if (user_state.equals("00")) {
-            posterGenerate=new PosterGenerate(HomeWebShareActivity.this);
-            posterGenerate.execute(codeUrl,imgUrl,user_id,token,POSTER);
+            posterGenerate = new PosterGenerate(HomeWebShareActivity.this);
+            posterGenerate.execute(codeUrl, imgUrl, user_id, token, POSTER);
         } else if (user_state.equals("01")) {
             Intent intent = new Intent();
             intent.setClass(this, VerifyMemberActivity.class);
@@ -555,24 +559,29 @@ public class HomeWebShareActivity extends BaseActivity implements NetResultListe
             startActivity(intent);
         }
     }
+
     public class PosterInterface {
         Context mContext;
+
         PosterInterface(Context Context) {
             mContext = Context;
         }
+
         @JavascriptInterface
-        public void createPoster(String codeUrl,String imgUrl) {
-            checkAuthStatus(codeUrl,imgUrl);
-            Log.i("invite",codeUrl);
-            Log.i("invite",imgUrl);
+        public void createPoster(String codeUrl, String imgUrl) {
+            checkAuthStatus(codeUrl, imgUrl);
+            Log.i("invite", codeUrl);
+            Log.i("invite", imgUrl);
         }
     }
 
     public class CheckAuthInterface {
         Context mContext;
+
         CheckAuthInterface(Context Context) {
             mContext = Context;
         }
+
         @JavascriptInterface
         public void checkAuthStatus() {
             if (user_state.equals("01")) {
@@ -593,38 +602,45 @@ public class HomeWebShareActivity extends BaseActivity implements NetResultListe
 
     public class ShareImageInterface {
         Context mContext;
+
         ShareImageInterface(Context Context) {
             mContext = Context;
         }
+
         @JavascriptInterface
         public void shareImg(String ImgUrl) {
-            Log.i("shareImag",ImgUrl);
-            if(!TextUtils.isEmpty(ImgUrl)){
-                BaseUMShare.sharePlatformsPicture(HomeWebShareActivity.this,ImgUrl);
+            Log.i("shareImag", ImgUrl);
+            if (!TextUtils.isEmpty(ImgUrl)) {
+                BaseUMShare.sharePlatformsPicture(HomeWebShareActivity.this, ImgUrl);
             }
         }
     }
 
     public class RedPacketInterface {
         Context mContext;
+
         RedPacketInterface(Context Context) {
             mContext = Context;
         }
+
         @JavascriptInterface
-        public void andriodShareCardToOnePlatForm(String prizeId,String cardShareBtnImgSrc) {
-            redPrizeId=prizeId;
-            BaseUMShare.sharePictureWithListener(2,HomeWebShareActivity.this,cardShareBtnImgSrc,redRainShareListener);
+        public void andriodShareCardToOnePlatForm(String prizeId, String cardShareBtnImgSrc) {
+            redPrizeId = prizeId;
+            BaseUMShare.sharePictureWithListener(2, HomeWebShareActivity.this, cardShareBtnImgSrc, redRainShareListener);
 
         }
+
         @JavascriptInterface
-        public void andriodShareRedPacketToOnePlatForm(String prizeId,String redPacketShareBtnImgSrc) {
-            redPrizeId=prizeId;
-            BaseUMShare.sharePictureWithListener(2,HomeWebShareActivity.this,redPacketShareBtnImgSrc,redRainShareListener);
+        public void andriodShareRedPacketToOnePlatForm(String prizeId, String redPacketShareBtnImgSrc) {
+            redPrizeId = prizeId;
+            BaseUMShare.sharePictureWithListener(2, HomeWebShareActivity.this, redPacketShareBtnImgSrc, redRainShareListener);
         }
+
         @JavascriptInterface
-        public void andriodShareCardToThreePlatForms(String prizeId,String cardShareBtnImgSrc) {
-            BaseUMShare.sharePlatformsPicture(HomeWebShareActivity.this,cardShareBtnImgSrc);
+        public void andriodShareCardToThreePlatForms(String prizeId, String cardShareBtnImgSrc) {
+            BaseUMShare.sharePlatformsPicture(HomeWebShareActivity.this, cardShareBtnImgSrc);
         }
+
         @JavascriptInterface
         public void goToPosterPage(String pic) {
             Intent intent = new Intent(HomeWebShareActivity.this, PosterActivity.class);
@@ -636,13 +652,15 @@ public class HomeWebShareActivity extends BaseActivity implements NetResultListe
     private UMShareListener redRainShareListener = new UMShareListener() {
         @Override
         public void onResult(SHARE_MEDIA platform) {
-                //调用分享成功接口
-            RedRainBack redRainBack=new RedRainBack(HomeWebShareActivity.this);
-            redRainBack.execute(user_id,redPrizeId,RED_RAIN,token);
+            //调用分享成功接口
+            RedRainBack redRainBack = new RedRainBack(HomeWebShareActivity.this);
+            redRainBack.execute(user_id, redPrizeId, RED_RAIN, token);
         }
+
         @Override
         public void onError(SHARE_MEDIA platform, Throwable t) {
         }
+
         @Override
         public void onCancel(SHARE_MEDIA platform) {
         }
@@ -684,7 +702,7 @@ public class HomeWebShareActivity extends BaseActivity implements NetResultListe
                         android.util.Log.d("onSuccess", "onSuccess json = " + jsonString);
                         Map<String, String> errcode_map = new HashMap<String, String>();
                         try {
-                            if (jsonString == null || jsonString.equals("")|| jsonString.equals("null")) {
+                            if (jsonString == null || jsonString.equals("") || jsonString.equals("null")) {
                                 String status = "false";
                                 Message message = Message.obtain();
                                 message.obj = status;

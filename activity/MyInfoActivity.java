@@ -1164,7 +1164,7 @@ public class MyInfoActivity extends BaseActivity implements NetResultListener {
             intent.putExtra(MediaStore.EXTRA_OUTPUT, cameraUri);
             startActivityForResult(intent, PHOTO_REQUEST_CAMERA);
         } else {
-            Toast.makeText(this, "没有SD卡，请检查", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "请检查SD卡是否存在", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -1244,8 +1244,6 @@ public class MyInfoActivity extends BaseActivity implements NetResultListener {
                     authAvatar = new AuthAvatar(this);
                     authAvatar.execute(user_id, token, tempFile.toString(), "", AUTH_AVATAR);
                 }
-
-
             } catch (Exception e) {
                 e.printStackTrace();
             }

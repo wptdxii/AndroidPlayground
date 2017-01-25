@@ -69,7 +69,7 @@ public class CarInsuranceInsuredAdapter extends BaseAdapter {
         }
 
         viewHolder.tvIntroduction.setText(bean.getContent());
-        String logoUrl = IpConfig.getIp3()+"/"+bean.getImg();
+        String logoUrl = IpConfig.getIp3()+"/"+bean.getImage();
         Glide.with(mContext)
                 .load(logoUrl)
                 .crossFade()

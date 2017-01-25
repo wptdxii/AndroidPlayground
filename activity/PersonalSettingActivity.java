@@ -1,5 +1,6 @@
 package com.cloudhome.activity;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -7,11 +8,13 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -21,10 +24,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cloudhome.BuildConfig;
 import com.cloudhome.R;
 import com.cloudhome.application.MyApplication;
 import com.cloudhome.event.ModifyUserInfoEvent;
 import com.cloudhome.listener.NetResultListener;
+import com.cloudhome.listener.PermissionListener;
 import com.cloudhome.network.AuthAvatar;
 import com.cloudhome.utils.CircleImage;
 import com.cloudhome.utils.Common;
@@ -39,7 +44,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class PersonalSettingActivity extends BaseActivity implements View.OnClickListener,NetResultListener{
+
+public class PersonalSettingActivity extends BaseActivity implements View.OnClickListener, NetResultListener {
     private RelativeLayout iv_back;
     private TextView top_title;
     private ImageView iv_right;
@@ -52,43 +58,45 @@ public class PersonalSettingActivity extends BaseActivity implements View.OnClic
     private static final int PHOTO_REQUEST_GALLERY = 2;
     private static final int PHOTO_REQUEST_CUT = 3;
     private static final String PHOTO_FILE_NAME = "temp_photo.jpg";
+    private static final String PHONT_FILE_CROP = "crop.jpg";
     private Uri uritempFile;
     private File tempFile;
     private Bitmap bitmap;
     private AuthAvatar authAvatar;
-    public static final int AUTH_AVATAR=1;
+    public static final int AUTH_AVATAR = 1;
     private Dialog dialog;
     private String user_id;
     private String token;
-    private String userName="";
-    private String fileUrl="";
-    private String avatar="";
-    private String user_id_encode="";
-    private boolean isUseDefault=false;
+    private String userName = "";
+    private String fileUrl = "";
+    private String avatar = "";
+    private String user_id_encode = "";
+    private boolean isUseDefault = false;
+    private File cropFile;
 
-    private Handler handler=new Handler(){
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            int msgWhat=msg.what;
+            int msgWhat = msg.what;
             btn_done.setEnabled(true);
-            switch (msgWhat){
+            switch (msgWhat) {
                 case 0:
                     dialog.dismiss();
-                    String avatar= (String) msg.obj;
+                    String avatar = (String) msg.obj;
                     SharedPreferences.Editor editor1 = sp.edit();
                     editor1.putString("avatar", avatar);
                     editor1.putString("truename", userName);
-                    Log.i(TAG, "ReceiveData: "+avatar);
-                    Log.i(TAG, "ReceiveData: "+userName);
+                    Log.i(TAG, "ReceiveData: " + avatar);
+                    Log.i(TAG, "ReceiveData: " + userName);
                     editor1.commit();
                     //改变用户信息数据
                     EventBus.getDefault().post(new ModifyUserInfoEvent());
-                    Intent intent=new Intent(PersonalSettingActivity.this,SpecialVerifyActivity.class);
+                    Intent intent = new Intent(PersonalSettingActivity.this, SpecialVerifyActivity.class);
                     startActivity(intent);
                     break;
                 case 1:
                     dialog.dismiss();
-                    Toast.makeText(PersonalSettingActivity.this, "网络连接失败，请确认网络连接后重试",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PersonalSettingActivity.this, "网络连接失败，请确认网络连接后重试", Toast.LENGTH_SHORT).show();
                     break;
                 case 2:
                     dialog.dismiss();
@@ -98,7 +106,7 @@ public class PersonalSettingActivity extends BaseActivity implements View.OnClic
                     break;
                 case 4:
                     dialog.dismiss();
-                    String codeMsg= (String) msg.obj;
+                    String codeMsg = (String) msg.obj;
                     Toast.makeText(PersonalSettingActivity.this, codeMsg, Toast.LENGTH_SHORT).show();
                     break;
             }
@@ -116,17 +124,16 @@ public class PersonalSettingActivity extends BaseActivity implements View.OnClic
     }
 
 
-
     private void initView() {
         iv_back = (RelativeLayout) findViewById(R.id.iv_back);
         top_title = (TextView) findViewById(R.id.tv_text);
         iv_right = (ImageView) findViewById(R.id.iv_right);
         top_title.setText("个人设定");
-        iv_upload= (ImageView) findViewById(R.id.iv_upload);
-        iv_head_circle= (CircleImage) findViewById(R.id.iv_head_circle);
-        et_user_name= (ClearEditText) findViewById(R.id.et_user_name);
-        btn_done= (Button) findViewById(R.id.btn_done);
-        btn_skip= (Button) findViewById(R.id.btn_skip);
+        iv_upload = (ImageView) findViewById(R.id.iv_upload);
+        iv_head_circle = (CircleImage) findViewById(R.id.iv_head_circle);
+        et_user_name = (ClearEditText) findViewById(R.id.et_user_name);
+        btn_done = (Button) findViewById(R.id.btn_done);
+        btn_skip = (Button) findViewById(R.id.btn_skip);
         iv_right.setVisibility(View.INVISIBLE);
         iv_back.setOnClickListener(this);
         iv_upload.setOnClickListener(this);
@@ -136,7 +143,7 @@ public class PersonalSettingActivity extends BaseActivity implements View.OnClic
     }
 
     private void initEvent() {
-        user_id_encode=sp.getString("Login_UID_ENCODE", "");
+        user_id_encode = sp.getString("Login_UID_ENCODE", "");
         user_id = sp.getString("Login_UID", "");
         token = sp.getString("Login_TOKEN", "");
         dialog = new Dialog(this, R.style.progress_dialog);
@@ -149,7 +156,7 @@ public class PersonalSettingActivity extends BaseActivity implements View.OnClic
 
     @Override
     public void onClick(View view) {
-        switch(view.getId()){
+        switch (view.getId()) {
             case R.id.iv_back:
                 showSkipDialog();
                 break;
@@ -158,25 +165,25 @@ public class PersonalSettingActivity extends BaseActivity implements View.OnClic
                 break;
             case R.id.iv_head_circle:
                 showSelectPicture();
-            break;
+                break;
             case R.id.btn_done:
-                if(iv_head_circle.getVisibility()==View.INVISIBLE||iv_head_circle.getVisibility()==View.GONE){
+                if (iv_head_circle.getVisibility() == View.INVISIBLE || iv_head_circle.getVisibility() == View.GONE) {
                     Toast.makeText(this, "您还没有上传头像", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                userName=et_user_name.getText().toString().trim();
-                if(tempFile!=null){
-                    fileUrl=tempFile.toString();
+                userName = et_user_name.getText().toString().trim();
+                if (tempFile != null) {
+                    fileUrl = tempFile.toString();
                 }
-                if(TextUtils.isEmpty(fileUrl)){
+                if (TextUtils.isEmpty(fileUrl)) {
                     Toast.makeText(this, "您还没有上传头像", Toast.LENGTH_SHORT).show();
-                }else if(TextUtils.isEmpty(userName)){
+                } else if (TextUtils.isEmpty(userName)) {
                     Toast.makeText(this, "您还没有设置姓名", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     dialog.show();
                     btn_done.setEnabled(false);
-                    authAvatar=new AuthAvatar(this);
-                    authAvatar.execute(user_id,token,fileUrl,userName,AUTH_AVATAR);
+                    authAvatar = new AuthAvatar(this);
+                    authAvatar.execute(user_id, token, fileUrl, userName, AUTH_AVATAR);
                 }
                 break;
             case R.id.btn_skip:
@@ -205,24 +212,62 @@ public class PersonalSettingActivity extends BaseActivity implements View.OnClic
                         new ActionSheetDialog.OnSheetItemClickListener() {
                             @Override
                             public void onClick(int which) {
-                                openPhotos();
+                                String[] permissions = new String[]{
+                                        Manifest.permission.READ_EXTERNAL_STORAGE};
+                                PersonalSettingActivity.this
+                                        .requestPermissions(permissions,
+                                                new PermissionListener() {
+                                                    @Override
+                                                    public void onGranted() {
+                                                        openPhotos();
+                                                    }
+
+                                                    @Override
+                                                    public void onDenied(String[] impermanentDeniedPermissions,
+                                                                         String[] permanentDeniedPermissions) {
+                                                        PersonalSettingActivity.this
+                                                                .showRequestPermissionRationale(
+                                                                        getString(R.string.msg_photopicker_denied));
+                                                    }
+
+                                                    @Override
+                                                    public void onPermanentDenied(String[] permanentDeniedPermissions) {
+                                                        PersonalSettingActivity.this
+                                                                .showPermissionSettingDialog(
+                                                                        getString(R.string.msg_photopicker_permanent_denied));
+                                                    }
+                                                });
                             }
                         }).show();
     }
+
     private boolean hasSdcard() {
         return Environment.getExternalStorageState().equals(
                 Environment.MEDIA_MOUNTED);
     }
+
     /**
      * 打开照相机拍照
      */
     private void openCamera() {
-        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
         if (hasSdcard()) {
-            intent.putExtra(MediaStore.EXTRA_OUTPUT,
-                    Uri.fromFile(new File(getExternalFilesDir(null).getAbsolutePath(), PHOTO_FILE_NAME)));
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            File imagePath = new File(getExternalFilesDir(null).getAbsolutePath(), PHOTO_FILE_NAME);
+            if (imagePath.exists() && imagePath.isFile()) {
+                imagePath.delete();
+            }
+            Uri cameraUri;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                cameraUri = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".provider", imagePath);
+            } else {
+
+                cameraUri = Uri.fromFile(imagePath);
+            }
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, cameraUri);
+            startActivityForResult(intent, PHOTO_REQUEST_CAMERA);
+        } else {
+            Toast.makeText(this, "请检查SD卡是否存在", Toast.LENGTH_SHORT).show();
         }
-        startActivityForResult(intent, PHOTO_REQUEST_CAMERA);
     }
 
     /**
@@ -242,12 +287,12 @@ public class PersonalSettingActivity extends BaseActivity implements View.OnClic
      * 是否使用默认头像
      */
     private void showSkipDialog() {
-        View contentView = View.inflate(this,R.layout.dialog_skip_upload_head,null);
-        TextView tv_use_default= (TextView) contentView.findViewById(R.id.tv_use_default);
-        TextView tv_use_new= (TextView) contentView.findViewById(R.id.tv_use_new);
+        View contentView = View.inflate(this, R.layout.dialog_skip_upload_head, null);
+        TextView tv_use_default = (TextView) contentView.findViewById(R.id.tv_use_default);
+        TextView tv_use_new = (TextView) contentView.findViewById(R.id.tv_use_new);
 
-        final QianDaoDialog builder = new QianDaoDialog(this,contentView, Common.dip2px(this,320),
-                Common.dip2px(this,150),R.style.qiandao_dialog);
+        final QianDaoDialog builder = new QianDaoDialog(this, contentView, Common.dip2px(this, 320),
+                Common.dip2px(this, 150), R.style.qiandao_dialog);
         builder.setCanceledOnTouchOutside(false);
         builder.show();
         tv_use_default.setOnClickListener(new View.OnClickListener() {
@@ -259,14 +304,14 @@ public class PersonalSettingActivity extends BaseActivity implements View.OnClic
                 Resources res = getResources();
                 Bitmap defaultBmp = BitmapFactory.decodeResource(res, R.drawable.expert_head);
                 savePic(defaultBmp);
-                userName="保险人";
-                if(tempFile!=null){
-                    fileUrl=tempFile.toString();
+                userName = "保险人";
+                if (tempFile != null) {
+                    fileUrl = tempFile.toString();
                 }
                 dialog.show();
                 btn_done.setEnabled(false);
-                authAvatar=new AuthAvatar(PersonalSettingActivity.this);
-                authAvatar.execute(user_id,token,fileUrl,userName,AUTH_AVATAR);
+                authAvatar = new AuthAvatar(PersonalSettingActivity.this);
+                authAvatar.execute(user_id, token, fileUrl, userName, AUTH_AVATAR);
                 builder.dismiss();
             }
         });
@@ -279,30 +324,39 @@ public class PersonalSettingActivity extends BaseActivity implements View.OnClic
     }
 
     private void crop(Uri uri) {
-
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setDataAndType(uri, "image/*");
+        this.grantUriPermission("com.android.camera", uri,
+                Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+
         intent.putExtra("crop", "true");
         intent.putExtra("aspectX", 1);
         intent.putExtra("aspectY", 1);
         // 保存图片的宽和高
         intent.putExtra("outputX", 250);
         intent.putExtra("outputY", 250);
+        //intent.putExtra("outputFormat", "JPEG");
         intent.putExtra("noFaceDetection", true);
-        /**
-         * 此方法返回的图片只能是小图片（sumsang测试为高宽160px的图片）
-         * 故将图片保存在Uri中，调用时将Uri转换为Bitmap，此方法还可解决miui系统不能return data的问题
-         */
-        uritempFile = Uri.parse("file://" + "/" + getExternalFilesDir(null).getAbsolutePath() + "/" + "small.jpg");
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, uritempFile);
+        intent.putExtra("return-data", false);
+
+        cropFile = new File(getExternalFilesDir(null).getAbsolutePath(), PHONT_FILE_CROP);
+        if (!cropFile.getParentFile().exists()) {
+            cropFile.getParentFile().mkdir();
+        }
+        if (cropFile.exists() && cropFile.isFile()) {
+            cropFile.delete();
+        }
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(cropFile));
         intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+
         startActivityForResult(intent, PHOTO_REQUEST_CUT);
     }
 
     private void savePic(Bitmap b) {
         FileOutputStream fos = null;
         try {
-            Log.i("PersonalSettingActivity", "start savePic");
             // String sdpath ="/storage/sdcard1/";
             // File f = new File(sdpath ,"11.bmp");
             tempFile = new File(getExternalFilesDir(null).getAbsolutePath()
@@ -320,16 +374,12 @@ public class PersonalSettingActivity extends BaseActivity implements View.OnClic
                 tempFile.delete();
             }
             fos = new FileOutputStream(tempFile);
-            Log.i("PersonalSettingActivity", "strFileName 1= " + tempFile.getPath());
             b.compress(Bitmap.CompressFormat.JPEG, 100, fos);
             fos.flush();
             fos.close();
-            Log.i("PersonalSettingActivity", "save pic OK!");
         } catch (FileNotFoundException e) {
-            Log.i("PersonalSettingActivity", "FileNotFoundException");
             e.printStackTrace();
         } catch (IOException e) {
-            Log.i("PersonalSettingActivity", "IOException");
             e.printStackTrace();
         }
     }
@@ -345,7 +395,11 @@ public class PersonalSettingActivity extends BaseActivity implements View.OnClic
             if (hasSdcard()) {
                 tempFile = new File(getExternalFilesDir(null).getAbsolutePath(),
                         PHOTO_FILE_NAME);
-                crop(Uri.fromFile(tempFile));
+                if (tempFile.exists() && tempFile.isFile()) {
+
+                    Uri uri = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".provider", tempFile);
+                    crop(uri);
+                }
             } else {
                 Toast.makeText(PersonalSettingActivity.this, "相机打开失败",
                         Toast.LENGTH_SHORT).show();
@@ -353,13 +407,14 @@ public class PersonalSettingActivity extends BaseActivity implements View.OnClic
 
         } else if (requestCode == PHOTO_REQUEST_CUT) {
             try {
-                if (data == null) {
+                if (cropFile.exists() && cropFile.isFile()) {
+                    bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(Uri.fromFile(cropFile)));
+                    savePic(bitmap);
+                    iv_head_circle.setImageBitmap(bitmap);
+                    iv_head_circle.setVisibility(View.VISIBLE);
+                    iv_upload.setVisibility(View.INVISIBLE);
                 }
-                bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uritempFile));
-                savePic(bitmap);
-                iv_head_circle.setImageBitmap(bitmap);
-                iv_head_circle.setVisibility(View.VISIBLE);
-                iv_upload.setVisibility(View.INVISIBLE);
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -369,26 +424,26 @@ public class PersonalSettingActivity extends BaseActivity implements View.OnClic
 
     @Override
     public void ReceiveData(int action, int flag, Object dataObj) {
-        switch(action){
+        switch (action) {
             case AUTH_AVATAR:
                 Message message = Message.obtain();
                 if (flag == MyApplication.DATA_OK) {
-                    String avatar=dataObj.toString();
-                    message.what=0;
+                    String avatar = dataObj.toString();
+                    message.what = 0;
                     message.obj = avatar;
                     handler.sendMessage(message);
                 } else if (flag == MyApplication.NET_ERROR) {
-                    message.what=1;
+                    message.what = 1;
                     handler.sendMessage(message);
                 } else if (flag == MyApplication.DATA_EMPTY) {
-                    message.what=2;
+                    message.what = 2;
                     handler.sendMessage(message);
                 } else if (flag == MyApplication.JSON_ERROR) {
-                    message.what=3;
+                    message.what = 3;
                     handler.sendMessage(message);
                 } else if (flag == MyApplication.DATA_ERROR) {
-                    String errMsg=dataObj.toString();
-                    message.what=4;
+                    String errMsg = dataObj.toString();
+                    message.what = 4;
                     message.obj = errMsg;
                     handler.sendMessage(message);
                 }

@@ -70,6 +70,7 @@ public class CarInsuranceInsuredBean {
         private String alert_msg;
         private String region;
         private String content;
+        private String image;
 
         public String getName() {
             return name;
@@ -125,6 +126,14 @@ public class CarInsuranceInsuredBean {
 
         public void setContent(String content) {
             this.content = content;
+        }
+
+        public String getImage() {
+            return image;
+        }
+
+        public void setImage(String image) {
+            this.image = image;
         }
     }
 }
