@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import com.cloudhome.R;
 import com.cloudhome.listener.PermissionListener;
-import com.cloudhome.network.interceptor.MyInterceptor;
+import com.cloudhome.network.okhttp.interceptor.MyInterceptor;
 import com.cloudhome.utils.IpConfig;
 
 public class PolicyInfoWebActivity extends BaseActivity {

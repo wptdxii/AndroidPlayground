@@ -29,7 +29,7 @@ import com.cloudhome.BuildConfig;
 import com.cloudhome.application.MyApplication;
 import com.cloudhome.bean.SplashAdBean;
 import com.cloudhome.listener.PermissionListener;
-import com.cloudhome.network.interceptor.MyInterceptor;
+import com.cloudhome.network.okhttp.interceptor.MyInterceptor;
 import com.cloudhome.utils.AdFileUtils;
 import com.cloudhome.utils.AdPreference;
 import com.cloudhome.utils.Common;
@@ -91,10 +91,7 @@ public class WelcomeActivity extends BaseActivity {
         @Override
         public void handleMessage(android.os.Message msg) {
             Map<String, String> data = (Map<String, String>) msg.obj;
-
-
             MyApplication.only_key = data.get("only_key");
-
             startNextActivity();
 
         }
@@ -106,15 +103,10 @@ public class WelcomeActivity extends BaseActivity {
         @Override
         public void handleMessage(android.os.Message msg) {
             Map<String, String> data = (Map<String, String>) msg.obj;
-
             String errcode = data.get("errcode");
-
-
             if (errcode.equals("0")) {
-
                 final String Device_URL = IpConfig.getUri("saveDeviceMsg");
                 setDevice_data(Device_URL);
-
             } else {
                 Editor edit;
                 edit = sp.edit();
@@ -130,10 +122,8 @@ public class WelcomeActivity extends BaseActivity {
                 edit3.clear();
                 edit3.commit();
 
-
                 MyInterceptor.sessionToken = "";
                 startNextActivity();
-
             }
         }
 
@@ -144,7 +134,6 @@ public class WelcomeActivity extends BaseActivity {
             @SuppressWarnings("unchecked")
             Map<String, String> data = (Map<String, String>) msg.obj;
 
-
             newVerName = data.get("VersionName");
             String VersionCode = data.get("VersionCode");
 
@@ -154,7 +143,6 @@ public class WelcomeActivity extends BaseActivity {
 
             int verCode = Common.getVerCode(getApplicationContext());
             //			String verName = Common.getVerName(getApplicationContext());
-
 
             int newVerCode = Integer.valueOf(VersionCode);
             // int currentCode = Integer.valueOf(verName);
@@ -189,13 +177,9 @@ public class WelcomeActivity extends BaseActivity {
                     // new MyTask().execute(PRODUCT_URL);
 
                     username = sp.getString("USER_NAME", "none");
-
                     pwMd5 = sp.getString("pwMd5", "none");
-
                     key_value.put("mobile", username);
-
                     key_value.put("password", pwMd5);
-
                     setdata(PRODUCT_URL);
                 }
 
@@ -226,7 +210,6 @@ public class WelcomeActivity extends BaseActivity {
         editor4.commit();
         os_version = android.os.Build.VERSION.RELEASE;
         requestPhoneStatePermission();
-
     }
 
     private void requestPhoneStatePermission() {
@@ -664,6 +647,7 @@ public class WelcomeActivity extends BaseActivity {
 
     }
 
+
     private static final String TAG = "WelcomeActivity";
 
     protected void downAppFile(final String url) {
@@ -772,7 +756,8 @@ public class WelcomeActivity extends BaseActivity {
     public void startNextActivity() {
 
         String AD_PATH
-                = getExternalFilesDir(null).getAbsolutePath() + "/MFAd/" + AdFileUtils.getImgName(AdPreference.getInstance().getSplashAdPage().getImg());
+                = getExternalFilesDir(null).getAbsolutePath() + "/MFAd/" +
+                AdFileUtils.getImgName(AdPreference.getInstance().getSplashAdPage().getImg());
         File file = new File(AD_PATH);
         Bitmap bm = BitmapFactory.decodeFile(AD_PATH);
 
@@ -782,7 +767,6 @@ public class WelcomeActivity extends BaseActivity {
                 || current_versionCode > old_install_Code) {
             Intent intent = new Intent(this, GuideActivity.class);
             startActivity(intent);
-
         } else {
 
             if (file.exists() && bm != null && isAdShow) {

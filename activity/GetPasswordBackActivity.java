@@ -26,7 +26,7 @@ import com.cloudhome.listener.PermissionListener;
 import com.cloudhome.network.AuthLogin;
 import com.cloudhome.network.ForgetPassword;
 import com.cloudhome.network.SaveDeviceMsg;
-import com.cloudhome.network.interceptor.MyInterceptor;
+import com.cloudhome.network.okhttp.interceptor.MyInterceptor;
 import com.cloudhome.utils.HttpMd5;
 import com.cloudhome.view.iosalertview.CustomDialog;
 import com.cloudhome.view.sortlistview.ClearEditText;

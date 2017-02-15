@@ -21,7 +21,6 @@ import okhttp3.logging.HttpLoggingInterceptor;
 public class OkClient {
     private static final long TIMEOUT_READ = 15L;
     private static final long TIMEOUT_CONNECTION = 15L;
-    private OkClient mInstance;
     private  final OkHttpClient mOkHttpClient;
     
     private OkClient() {

@@ -19,7 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cloudhome.R;
-import com.cloudhome.network.interceptor.MyInterceptor;
+import com.cloudhome.network.okhttp.interceptor.MyInterceptor;
 import com.cloudhome.utils.IpConfig;
 /**
  * Created by yangguangbaoxian on 2016/6/6.

@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import com.cloudhome.R;
 import com.cloudhome.event.DisorderJumpEvent;
-import com.cloudhome.network.interceptor.MyInterceptor;
+import com.cloudhome.network.okhttp.interceptor.MyInterceptor;
 import com.cloudhome.utils.IpConfig;
 import com.cloudhome.wxapi.WXPayEntryActivity;
 

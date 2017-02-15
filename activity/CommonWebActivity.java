@@ -27,7 +27,7 @@ import com.cloudhome.event.DisorderJumpEvent;
 import com.cloudhome.event.RefreshEvent;
 import com.cloudhome.listener.NetResultListener;
 import com.cloudhome.network.PosterGenerate;
-import com.cloudhome.network.interceptor.MyInterceptor;
+import com.cloudhome.network.okhttp.interceptor.MyInterceptor;
 import com.cloudhome.utils.GetIp;
 import com.cloudhome.utils.IpConfig;
 import com.tencent.mm.sdk.constants.Build;
@@ -474,8 +474,6 @@ public class CommonWebActivity extends BaseActivity implements NetResultListener
         @JavascriptInterface
         public void createPoster(String codeUrl, String imgUrl) {
             checkAuthStatus(codeUrl, imgUrl);
-            android.util.Log.i("invite", codeUrl);
-            android.util.Log.i("invite", imgUrl);
         }
     }
 

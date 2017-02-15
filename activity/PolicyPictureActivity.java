@@ -62,7 +62,6 @@ import java.util.Map;
 import okhttp3.Call;
 
 public class PolicyPictureActivity extends BaseActivity {
-    private static final String TAG = "PolicyPictureActivity";
     public String Event_Service = "PolicyPictureActivity_Service";
     private GridView mGridView;
     private ImagePublishAdapter mAdapter;
@@ -617,10 +616,8 @@ public class PolicyPictureActivity extends BaseActivity {
     }
 
     public void post(String url, List<NameValuePair> nameValuePairs, int num) {
-
         switch (num) {
             case 1:
-                Log.e(TAG, "post: 11111111111111");
                 File file = new File(nameValuePairs.get(0).getValue());
 
                 OkHttpUtils.post()
@@ -631,7 +628,6 @@ public class PolicyPictureActivity extends BaseActivity {
 
                 break;
             case 2:
-                Log.e(TAG, "post: 2222222222222222222");
                 File file21 = new File(nameValuePairs.get(0).getValue());
                 File file22 = new File(nameValuePairs.get(1).getValue());
 
@@ -645,7 +641,6 @@ public class PolicyPictureActivity extends BaseActivity {
                 break;
 
             case 3:
-                Log.e(TAG, "post: 33333333333333");
                 File file31 = new File(nameValuePairs.get(0).getValue());
                 File file32 = new File(nameValuePairs.get(1).getValue());
                 File file33 = new File(nameValuePairs.get(2).getValue());
@@ -664,7 +659,6 @@ public class PolicyPictureActivity extends BaseActivity {
                 break;
 
             case 4:
-                Log.e(TAG, "post: 4444444444444");
                 File file41 = new File(nameValuePairs.get(0).getValue());
                 File file42 = new File(nameValuePairs.get(1).getValue());
                 File file43 = new File(nameValuePairs.get(2).getValue());
@@ -685,7 +679,6 @@ public class PolicyPictureActivity extends BaseActivity {
                 break;
 
             case 5:
-                Log.e(TAG, "post: 55555555555555555");
                 File file51 = new File(nameValuePairs.get(0).getValue());
                 File file52 = new File(nameValuePairs.get(1).getValue());
                 File file53 = new File(nameValuePairs.get(2).getValue());
@@ -694,14 +687,12 @@ public class PolicyPictureActivity extends BaseActivity {
 
                 OkHttpUtils
                         .post()
-                        //
                         .addFile("policy_1", file51.getName(), file51)
                         .addFile("policy_2", file52.getName(), file52)
                         .addFile("policy_3", file53.getName(), file53)
                         .addFile("policy_4", file54.getName(), file54)
                         .addFile("policy_5", file55.getName(), file55).url(url)
                         .addParams("file_count", num + "").build()
-                        //
                         .connTimeOut(50000).readTimeOut(20000).writeTimeOut(20000)
                         .execute(new MyStringCallback());
 
@@ -719,7 +710,6 @@ public class PolicyPictureActivity extends BaseActivity {
             Toast.makeText(PolicyPictureActivity.this, "保单上传失败！",
                     Toast.LENGTH_SHORT).show();
             e.printStackTrace();
-            Log.e(TAG, "onError:eeeeeeeeeeeeeeeeeeeee " + e.getMessage());
         }
 
         @Override
@@ -742,11 +732,9 @@ public class PolicyPictureActivity extends BaseActivity {
                     // jsonObject.getString("info");
                     String data = jsonObject.getString("data");
 
-                    Log.d("post", jsonObject + "");
                     String errcode = jsonObject.getString("errcode");
 
                     map.put("errcode", errcode);
-                    Log.d("errcode", errcode);
                     Message message = Message.obtain();
 
                     message.obj = map;

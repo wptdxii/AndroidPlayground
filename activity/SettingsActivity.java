@@ -32,7 +32,7 @@ import com.cloudhome.application.MyApplication;
 import com.cloudhome.event.LoginEvent;
 import com.cloudhome.event.UnreadArticleEvent;
 import com.cloudhome.listener.PermissionListener;
-import com.cloudhome.network.interceptor.MyInterceptor;
+import com.cloudhome.network.okhttp.interceptor.MyInterceptor;
 import com.cloudhome.utils.Common;
 import com.cloudhome.utils.DataCleanManager;
 import com.cloudhome.utils.IpConfig;

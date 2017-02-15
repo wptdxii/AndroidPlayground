@@ -134,8 +134,8 @@ public class FillInApplicantActivity extends BaseActivity {
 			phone_num.setText(obj.getString("tel"));
 			email.setText(obj.getString("email"));
 			String id_type=obj.getString("id_type");
-			Log.i("ID_TYPE---------toubaorenInfo---------------", toubaorenInfo);
-			Log.i("ID_TYPE------------------------", id_type);
+			Log.i("ID_TYPE----", toubaorenInfo);
+			Log.i("ID_TYPE----", id_type);
 			document_code_str=id_type;
 			if(id_type.equals("01")||id_type.equals("身份证")){
 				cert_type = document_type[0];

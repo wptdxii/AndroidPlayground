@@ -23,7 +23,7 @@ import com.cloudhome.R;
 import com.cloudhome.listener.NetResultListener;
 import com.cloudhome.listener.PermissionListener;
 import com.cloudhome.network.Statistics;
-import com.cloudhome.network.interceptor.MyInterceptor;
+import com.cloudhome.network.okhttp.interceptor.MyInterceptor;
 import com.cloudhome.utils.IpConfig;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.UMShareAPI;

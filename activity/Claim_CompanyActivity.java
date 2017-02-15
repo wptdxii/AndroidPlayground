@@ -1,12 +1,15 @@
 package com.cloudhome.activity;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -140,9 +143,9 @@ public class Claim_CompanyActivity extends BaseActivity implements
 
 	private void init() {
 		s_m_back = (RelativeLayout) findViewById(R.id.iv_back);
-		rl_right=(RelativeLayout) findViewById(R.id.rl_right);
+		rl_right = (RelativeLayout) findViewById(R.id.rl_right);
 		rl_right.setVisibility(View.INVISIBLE);
-		tv_text= (TextView) findViewById(R.id.tv_text);
+		tv_text = (TextView) findViewById(R.id.tv_text);
 		tv_text.setText("理赔服务");
 		s_m_xlist = (XListView) findViewById(R.id.s_m_xlist);
 
@@ -165,13 +168,23 @@ public class Claim_CompanyActivity extends BaseActivity implements
 
 		mHandler = new Handler();
 	}
+
 	private void requestCallPhonePermission() {
 		String[] permissions = new String[]{android.Manifest.permission.CALL_PHONE};
 		requestPermissions(permissions, new PermissionListener() {
 			@Override
 			public void onGranted() {
-				Intent intent = new Intent(
-						Intent.ACTION_CALL);
+				if (ActivityCompat.checkSelfPermission(Claim_CompanyActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+					// TODO: Consider calling
+					//    ActivityCompat#requestPermissions
+					// here to request the missing permissions, and then overriding
+					//   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+					//                                          int[] grantResults)
+					// to handle the case where the user grants the permission. See the documentation
+					// for ActivityCompat#requestPermissions for more details.
+					return;
+				}
+				Intent intent = new Intent(Intent.ACTION_CALL);
 				Uri data = Uri.parse("tel:" + mobile);
 				intent.setData(data);
 				startActivity(intent);

@@ -28,7 +28,7 @@ import com.cloudhome.listener.NetResultListener;
 import com.cloudhome.listener.PermissionListener;
 import com.cloudhome.network.PosterGenerate;
 import com.cloudhome.network.RedRainBack;
-import com.cloudhome.network.interceptor.MyInterceptor;
+import com.cloudhome.network.okhttp.interceptor.MyInterceptor;
 import com.cloudhome.utils.GetIp;
 import com.cloudhome.utils.IpConfig;
 import com.tencent.mm.sdk.constants.Build;
@@ -94,8 +94,6 @@ public class HomeWebShareActivity extends BaseActivity implements NetResultListe
             share_title = "保客福利大放送，送钱开抢啦";
             brief = "优惠劵什么的都靠边站吧，保客只送现金哒~手快有，手慢无";
             img_url = IpConfig.getIp3() + "/images/rp_share.png";
-            Log.i("分享红包--------------", url + "---" + share_title + "---"
-                    + brief + "---" + img_url);
             share.reSetShareContent(share_title, brief, share_url, img_url);
             share.openShare();
         }
@@ -107,7 +105,6 @@ public class HomeWebShareActivity extends BaseActivity implements NetResultListe
         public void handleMessage(android.os.Message msg) {
             String data = (String) msg.obj;
             String status = data;
-            android.util.Log.d("455454", "455445" + status);
             if (status.equals("false")) {
                 Toast.makeText(HomeWebShareActivity.this, "网络连接失败，请确认网络连接后重试", Toast.LENGTH_SHORT).show();
             }
@@ -323,7 +320,7 @@ public class HomeWebShareActivity extends BaseActivity implements NetResultListe
         webView.addJavascriptInterface(new CardOrderPayInterface(HomeWebShareActivity.this), "cardOrder");
         webView.addJavascriptInterface(new DirectPayInterface(HomeWebShareActivity.this), "directpay");
         //海报
-        webView.addJavascriptInterface(new PosterInterface(HomeWebShareActivity.this), "poster");
+        webView.addJavascriptInterface(new PosterInterface(HomeWebShareActivity.this), " lposter");
         //鸡年福袋
         webView.addJavascriptInterface(new CheckAuthInterface(HomeWebShareActivity.this), "checkauth");
         webView.addJavascriptInterface(new ShareImageInterface(HomeWebShareActivity.this), "shareImage");

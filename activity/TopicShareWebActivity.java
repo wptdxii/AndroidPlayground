@@ -31,10 +31,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cloudhome.R;
+import com.cloudhome.application.MyApplication;
 import com.cloudhome.listener.NetResultListener;
 import com.cloudhome.listener.PermissionListener;
 import com.cloudhome.network.Statistics;
-import com.cloudhome.network.interceptor.MyInterceptor;
+import com.cloudhome.network.okhttp.interceptor.MyInterceptor;
 import com.cloudhome.utils.IpConfig;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.UMShareAPI;
@@ -49,7 +50,6 @@ import java.util.Map;
 
 import okhttp3.Call;
 
-import static com.cloudhome.application.MyApplication.mContext;
 
 public class TopicShareWebActivity extends BaseActivity implements NetResultListener {
 
@@ -598,7 +598,7 @@ public class TopicShareWebActivity extends BaseActivity implements NetResultList
         if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.ECLAIR_MR1){
             return;
         }
-        audioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
+        audioManager = (AudioManager) MyApplication.getInstance().getSystemService(Context.AUDIO_SERVICE);
         int i =0;
         do {
             int result = audioManager.requestAudioFocus(  listener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
