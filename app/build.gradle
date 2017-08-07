@@ -30,20 +30,20 @@ def getRevision() {
 }
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
 
     compileOptions {
-        sourceCompatibility rootProject.ext.javaVersion
-        targetCompatibility rootProject.ext.javaVersion
+        sourceCompatibility rootProject.ext.android.javaVersion
+        targetCompatibility rootProject.ext.android.javaVersion
     }
 
     defaultConfig {
-        applicationId rootProject.ext.applicationId
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode rootProject.ext.versionCode
-        versionName rootProject.ext.versionName
+        applicationId rootProject.ext.android.applicationId
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
         multiDexEnabled true
 //        manifestPlaceholders = [UMENG_APPKEY_VALUE : UMENG_APPKEY_RELEASE]
     }
@@ -228,11 +228,12 @@ dependencies {
     compile project(':authorize')
     compile project(':share')
     compile project(':lbs')
-    testCompile rootProject.ext.libJunit
-    compile rootProject.ext.libSupportV4
-    compile rootProject.ext.libSupportAppcompatV7
-    compile rootProject.ext.libSupportDesign
-    compile rootProject.ext.libRecyclerViewV7
+    testCompile rootProject.ext.testDependencies.junit
+    compile supportDependencies.v4
+    compile supportDependencies.appCompat
+    compile supportDependencies.design
+    compile supportDependencies.annotations
+
     compile rootProject.ext.libRetrofit
     compile rootProject.ext.libRetrofitConverterGson
     compile rootProject.ext.libRetrofitAdapterRxJava
