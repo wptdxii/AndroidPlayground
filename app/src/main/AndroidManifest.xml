@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.wptdxii.playground">
+    package="com.wptdxii.playground">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:name="com.wptdxii.playground.App"
@@ -17,38 +17,29 @@
 
         <!--umeng-->
         <!--<meta-data-->
-            <!--android:name="UMENG_APPKEY"-->
-            <!--android:value="${UMENG_APPKEY_VALUE}"/>-->
+        <!--android:name="UMENG_APPKEY"-->
+        <!--android:value="${UMENG_APPKEY_VALUE}"/>-->
         <!--<meta-data-->
-            <!--android:name="UMENG_CHANNEL"-->
-            <!--android:value="${UMENG_CHANNEL_VALUE}"/>-->
+        <!--android:name="UMENG_CHANNEL"-->
+        <!--android:value="${UMENG_CHANNEL_VALUE}"/>-->
 
 
         <activity
             android:name=".ui.sample.splash.SplashActivity"
             android:theme="@style/SplashActivityTheme">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.sample.SwipeRecyclerActivity">
-        </activity>
-        <activity android:name=".ui.sample.home.ContentActivity">
-        </activity>
-        <activity android:name=".ui.sample.WidgetActivity">
-        </activity>
-        <activity android:name=".ui.sample.TabViewPagerActivity">
-        </activity>
-        <activity android:name=".ui.sample.ViewPagerActivity">
-        </activity>
-        <activity android:name=".ui.sample.SwipeRecyclerFragmentActivity">
-        </activity>
-        <activity android:name=".ui.sample.recyclerview.SampleRecyclerViewActivity">
-        </activity>
-        <activity android:name=".ui.sample.SampleUmengActivity">
-        </activity>
+        <activity android:name=".ui.sample.SwipeRecyclerActivity"></activity>
+        <activity android:name=".ui.sample.home.ContentActivity"></activity>
+        <activity android:name=".ui.sample.WidgetActivity"></activity>
+        <activity android:name=".ui.sample.TabViewPagerActivity"></activity>
+        <activity android:name=".ui.sample.ViewPagerActivity"></activity>
+        <activity android:name=".ui.sample.SwipeRecyclerFragmentActivity"></activity>
+        <activity android:name=".ui.sample.recyclerview.SampleRecyclerViewActivity"></activity>
+        <activity android:name=".ui.sample.SampleUmengActivity"></activity>
     </application>
-
 </manifest>

@@ -6,11 +6,11 @@ def keyStorePath
 if (System.properties['os.name'].toLowerCase().contains('windows')) {
     keyStorePath = System.getenv('USERPROFILE') + File.separator + ".ssh"
 } else {
-    keyStorePath = System.getenv('HOME') + File.separator + ".ssh"
+    keyStorePath = System.getenv('HOME') + File.separator + '.ssh'
 }
 
-def keyStoreFile = keyStorePath + File.separator + "AndroidKeyStore.jks"
-def keyStoreConfig = keyStorePath + File.separator + "AndroidKeyStore.properties"
+def keyStoreFile = keyStorePath + File.separator + 'playground.jks'
+def keyStoreConfig = keyStorePath + File.separator + 'playground.properties'
 
 Properties props = new Properties()
 if (new File(keyStoreConfig).exists()) {
@@ -50,22 +50,27 @@ android {
 
     signingConfigs {
 
-        def KEYSTORE = file('../buildsystem/AndroidKeyStore.jks')
+//        def KEYSTORE = file('../buildsystem/AndroidKeyStore.jks')
         debug {
             // metod1
-            storeFile KEYSTORE
-            storePassword KEYSTORE_PASSWORD
-            keyAlias KEY_ALIAS
-            keyPassword KEY_PASSWORD
+            storeFile file(keyStoreFile)
+            storePassword props.getProperty('KEYSTORE_PWD')
+            keyAlias props.getProperty('KEY_ALIAS')
+            keyPassword props.getProperty('KEY_PWD')
 
         }
 
         release {
             // method2  keystore placed in holder →  ../.ssh/
+//            storeFile file(keyStoreFile)
+//            storePassword props['KEYSTORE_PASSWORD']
+//            keyAlias props['KEY_ALIAS']
+//            keyPassword props['KEY_PASSWORD']
+
             storeFile file(keyStoreFile)
-            storePassword props['KEYSTORE_PASSWORD']
-            keyAlias props['KEY_ALIAS']
-            keyPassword props['KEY_PASSWORD']
+            storePassword props.getProperty('KEYSTORE_PWD')
+            keyAlias props.getProperty('KEY_ALIAS')
+            keyPassword props.getProperty('KEY_PWD')
         }
     }
 

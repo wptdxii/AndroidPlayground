@@ -24,7 +24,7 @@ public class SplashActivity extends BaseActivity {
                 case MSG_TO_HOME_ACTIVITY:
                     //解决全屏向非全屏跳转的toolbar闪动问题,在启动Activity前调用
                     cancelFullScreen();
-                    
+
                     ContentActivity.actionStart(SplashActivity.this);
                     finish();
                     break;
@@ -33,12 +33,13 @@ public class SplashActivity extends BaseActivity {
         }
     };
     private static final String TAG = "SplashActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AppStatusTracker.getInstance().setAppStatus(AppStatusTracker.STATUS_OFFLINE);
         super.onCreate(savedInstanceState);
         //在主题中设定，可以定制 背景
-       // setFullScreen();
+        // setFullScreen();
 
         String[] permisions = new String[]{Manifest.permission.READ_PHONE_STATE};
         requestPermissions(permisions, new PermissionListener() {
@@ -63,7 +64,7 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     protected void initContentView() {
-        setContentView(R.layout.activity_splash,-1,-1,MODE_NONE);
+        setContentView(R.layout.activity_splash, -1, -1, MODE_NONE);
     }
 
     @Override
@@ -87,14 +88,15 @@ public class SplashActivity extends BaseActivity {
      * 设置为全屏显示
      */
     private void setFullScreen() {
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
     /**
      * 退出全屏显示
      */
     private void cancelFullScreen() {
-        SplashActivity.this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN,
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 
     }
