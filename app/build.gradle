@@ -54,7 +54,7 @@ android {
         debug {
             // metod1
             storeFile file(keyStoreFile)
-            storePassword props.getProperty('KEYSTORE_PWD')
+            storePassword props.getProperty('STORE_PWD')
             keyAlias props.getProperty('KEY_ALIAS')
             keyPassword props.getProperty('KEY_PWD')
 
@@ -68,7 +68,7 @@ android {
 //            keyPassword props['KEY_PASSWORD']
 
             storeFile file(keyStoreFile)
-            storePassword props.getProperty('KEYSTORE_PWD')
+            storePassword props.getProperty('STORE_PWD')
             keyAlias props.getProperty('KEY_ALIAS')
             keyPassword props.getProperty('KEY_PWD')
         }
