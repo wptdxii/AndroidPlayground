@@ -234,10 +234,11 @@ dependencies {
     compile supportDependencies.design
     compile supportDependencies.annotations
 
-    compile rootProject.ext.libRetrofit
-    compile rootProject.ext.libRetrofitConverterGson
-    compile rootProject.ext.libRetrofitAdapterRxJava
-    compile rootProject.ext.libOkHttpLoggingInterceptor
+    compile rootProject.ext.httpDependencies.retrofit
+    compile rootProject.ext.httpDependencies.gsonConverter
+    compile rootProject.ext.httpDependencies.rxAdapter
+    compile rootProject.ext.httpDependencies.logInterceptor
+
     compile rootProject.ext.libFastJson
     compile rootProject.ext.libRxJava
     compile rootProject.ext.libRxAndroid
