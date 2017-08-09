@@ -194,13 +194,13 @@ android {
 //                output.outputFile = new File(outputFile.parent,fileName)
 //            }
 
-            if (variant.buildType.name.equals('debug')) {
+            if (variant.buildType.name == 'debug') {
                 def outputPath = output.outputFile
                 def debugApkName = "Playground_v${defaultConfig.versionName}_debug.apk"
                 output.outputFile = new File(outputPath.parent, debugApkName)
             }
 
-            if (variant.buildType.name.equals('release')) {
+            if (variant.buildType.name == 'release') {
                 def outputPath = './buildsystem'
                 def releaseApkName = "Playground_v${defaultConfig.versionName}.apk"
                 output.outputFile = new File(outputPath, releaseApkName)
@@ -238,6 +238,14 @@ dependencies {
     compile rootProject.ext.httpDependencies.gsonConverter
     compile rootProject.ext.httpDependencies.rxAdapter
     compile rootProject.ext.httpDependencies.logInterceptor
+
+    compile rootProject.ext.imageLoaderDependencies.glide
+    compile rootProject.ext.imageLoaderDependencies.compiler
+    compile rootProject.ext.imageLoaderDependencies.okhttpIntegration
+    compile (rootProject.ext.imageLoaderDependencies.recyclerViewIntegration) {
+        // Excludes the support library because it's already included by Glide.
+        transitive = false
+    }
 
     compile rootProject.ext.libFastJson
     compile rootProject.ext.libRxJava
