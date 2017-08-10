@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'me.tatarka.retrolambda'
-apply plugin: 'com.neenbedankt.android-apt'
+//apply plugin: 'com.neenbedankt.android-apt'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -45,7 +45,7 @@ dependencies {
     compile rootProject.ext.libOkHttpLoggingInterceptor
     compile rootProject.ext.libFastJson
 
-    apt rootProject.ext.libDaggerCompiler
+    annotationProcessor  rootProject.ext.libDaggerCompiler
     compile rootProject.ext.libDagger
 
     provided rootProject.ext.libJavaxAnnotation

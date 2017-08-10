@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.neenbedankt.android-apt'
+//apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda'
 
 def keyStorePath
@@ -51,14 +51,14 @@ android {
     signingConfigs {
 
 //        def KEYSTORE = file('../buildsystem/AndroidKeyStore.jks')
-        debug {
-            // metod1
-            storeFile file(keyStoreFile)
-            storePassword props.getProperty('STORE_PWD')
-            keyAlias props.getProperty('KEY_ALIAS')
-            keyPassword props.getProperty('KEY_PWD')
-
-        }
+//        debug {
+//            // metod1
+//            storeFile file(keyStoreFile)
+//            storePassword props.getProperty('STORE_PWD')
+//            keyAlias props.getProperty('KEY_ALIAS')
+//            keyPassword props.getProperty('KEY_PWD')
+//
+//        }
 
         release {
             // method2  keystore placed in holder →  ../.ssh/
@@ -81,7 +81,7 @@ android {
             minifyEnabled false
             shrinkResources false
             zipAlignEnabled false
-            signingConfig signingConfigs.debug
+//            signingConfig signingConfigs.debug
 //            manifestPlaceholders = [UMENG_APPKEY_VALUE : UMENG_APPKEY_DEBUG]
             buildConfigField "String", "UMENG_APPKEY", "\"${UMENG_APPKEY_DEBUG}\""
 //            buildConfigField "String", "ENDPOINT", "\"${endpoint_product}\""
@@ -123,6 +123,7 @@ android {
         exclude('META-INF/NOTICE.txt')
         exclude 'META-INF/NOTICE'
         exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/rxjava.properties'
         // umeng推送的jar包含有的okio库跟okhttp的okio库冲突
 //        exclude 'META-INF/maven/com.squareup.okio/okio/pom.xml'
 //        exclude 'META-INF/maven/com.squareup.okio/okio/pom.properties'
@@ -229,23 +230,23 @@ dependencies {
     compile project(':share')
     compile project(':lbs')
     testCompile rootProject.ext.testDependencies.junit
-    compile supportDependencies.v4
-    compile supportDependencies.appCompat
-    compile supportDependencies.design
-    compile supportDependencies.annotations
+    compile rootProject.ext. supportDependencies.v4
+    compile rootProject.ext. supportDependencies.appCompat
+    compile rootProject.ext. supportDependencies.design
+    compile rootProject.ext. supportDependencies.annotations
 
     compile rootProject.ext.httpDependencies.retrofit
     compile rootProject.ext.httpDependencies.gsonConverter
     compile rootProject.ext.httpDependencies.rxAdapter
     compile rootProject.ext.httpDependencies.logInterceptor
 
-    compile rootProject.ext.imageLoaderDependencies.glide
-    compile rootProject.ext.imageLoaderDependencies.compiler
-    compile rootProject.ext.imageLoaderDependencies.okhttpIntegration
-    compile (rootProject.ext.imageLoaderDependencies.recyclerViewIntegration) {
-        // Excludes the support library because it's already included by Glide.
-        transitive = false
-    }
+//    compile rootProject.ext.imageLoaderDependencies.glide
+//    compile rootProject.ext.imageLoaderDependencies.compiler
+//    compile rootProject.ext.imageLoaderDependencies.okhttpIntegration
+//    compile (rootProject.ext.imageLoaderDependencies.recyclerViewIntegration) {
+//        // Excludes the support library because it's already included by Glide.
+//        transitive = false
+//    }
 
     compile rootProject.ext.libFastJson
     compile rootProject.ext.libRxJava
@@ -253,7 +254,7 @@ dependencies {
     compile rootProject.ext.libEventBus
     compile rootProject.ext.libGlide
     compile rootProject.ext.libDagger
-    apt rootProject.ext.libDaggerCompiler
+    annotationProcessor  rootProject.ext.libDaggerCompiler
     compile rootProject.ext.libJavaxAnnotation
 //    debugCompile rootProject.ext.debugDependencies.leakCanary
 //    releaseCompile rootProject.ext.releaseDependencies.leakCanary
