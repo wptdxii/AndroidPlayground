@@ -22,7 +22,7 @@ task clean(type: Delete) {
 }
 
 def supportVersion = "26.0.0-alpha1"
-def okhttpVersion = "3.8.1"
+def okHttpVersion = "3.8.1"
 def retrofitVersion = "2.3.0"
 def daggerVersion = "2.6.1"
 def glideVersion = "4.0.0"
@@ -73,8 +73,8 @@ ext {
     ]
 
     httpDependencies = [
-            okhttp           : "com.squareup.okhttp3:okhttp:$okhttpVersion",
-            logInterceptor   : "com.squareup.okhttp3:logging-interceptor:$okhttpVersion",
+            okhttp           : "com.squareup.okhttp3:okhttp:$okHttpVersion",
+            logInterceptor   : "com.squareup.okhttp3:logging-interceptor:$okHttpVersion",
             retrofit         : "com.squareup.retrofit2:retrofit:$retrofitVersion",
             gson             : "com.google.code.gson:gson:2.8.1",
             gsonConverter    : "com.squareup.retrofit2:converter-gson:$retrofitVersion",
@@ -91,9 +91,9 @@ ext {
     diDependencies = [
             dagger   : "com.google.dagger:dagger:$diVersion",
             compiler : "com.google.dagger:dagger-compiler:$diVersion",
-            android  : "com.google.dagger:dagger-android:$diVersion",
-            support  : "com.google.dagger:dagger-android-support:$diVersion",
-            processor: "com.google.dagger:dagger-android-processor:$diVersion",
+//            android  : "com.google.dagger:dagger-android:$diVersion",
+//            support  : "com.google.dagger:dagger-android-support:$diVersion",
+//            processor: "com.google.dagger:dagger-android-processor:$diVersion",
     ]
 
     imageLoaderDependencies = [
@@ -114,7 +114,7 @@ ext {
 //    libRetrofitConverterJackson = "com.squareup.retrofit2:converter-jackson:$retrofitVersion"
     libRetrofitAdapterRxJava = "com.squareup.retrofit2:adapter-rxjava:$retrofitVersion"
 
-    libOkHttpLoggingInterceptor = "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
+    libOkHttpLoggingInterceptor = "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
 
     libGson = "com.google.code.gson:gson:2.6.2"
     libFastJson = "com.alibaba:fastjson:1.1.52.android"

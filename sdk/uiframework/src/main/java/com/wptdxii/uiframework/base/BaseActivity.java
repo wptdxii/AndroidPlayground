@@ -120,7 +120,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
             toolbar = (Toolbar) findViewById(R.id.toolbar);
             toolbarTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
             if (mode == MODE_BACK) {
-                toolbar.setNavigationIcon(R.drawable.ic_toolbar_back);
+                toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
             } //else if(){}
 
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {

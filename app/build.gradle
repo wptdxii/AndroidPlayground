@@ -229,16 +229,19 @@ dependencies {
     compile project(':authorize')
     compile project(':share')
     compile project(':lbs')
-    testCompile rootProject.ext.testDependencies.junit
-    compile rootProject.ext. supportDependencies.v4
-    compile rootProject.ext. supportDependencies.appCompat
-    compile rootProject.ext. supportDependencies.design
-    compile rootProject.ext. supportDependencies.annotations
+    testCompile testDependencies.junit
+    compile supportDependencies.v4
+    compile supportDependencies.appCompat
+    compile supportDependencies.design
+    compile supportDependencies.annotations
 
-    compile rootProject.ext.httpDependencies.retrofit
-    compile rootProject.ext.httpDependencies.gsonConverter
-    compile rootProject.ext.httpDependencies.rxAdapter
-    compile rootProject.ext.httpDependencies.logInterceptor
+    compile httpDependencies.retrofit
+    compile httpDependencies.gsonConverter
+    compile httpDependencies.rxAdapter
+    compile httpDependencies.logInterceptor
+
+    compile diDependencies.dagger
+    annotationProcessor diDependencies.compiler
 
 //    compile rootProject.ext.imageLoaderDependencies.glide
 //    compile rootProject.ext.imageLoaderDependencies.compiler
@@ -253,8 +256,8 @@ dependencies {
     compile rootProject.ext.libRxAndroid
     compile rootProject.ext.libEventBus
     compile rootProject.ext.libGlide
-    compile rootProject.ext.libDagger
-    annotationProcessor  rootProject.ext.libDaggerCompiler
+//    compile rootProject.ext.libDagger
+//    annotationProcessor rootProject.ext.libDaggerCompiler
     compile rootProject.ext.libJavaxAnnotation
 //    debugCompile rootProject.ext.debugDependencies.leakCanary
 //    releaseCompile rootProject.ext.releaseDependencies.leakCanary
