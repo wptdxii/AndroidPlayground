@@ -8,18 +8,18 @@ import com.wptdxii.uiframework.base.BaseActivity;
 public class SampleUmengActivity extends BaseActivity {
 
     @Override
-    protected void initContentView() {
+    protected void setupContentView() {
         setContentView(R.layout.activity_sample_umeng,
                 R.string.activity_sample_umeng_title, -1, MODE_BACK);
     }
 
     @Override
-    protected void initView() {
+    protected void setupViews() {
 
     }
 
     @Override
-    protected void initData(Bundle savedInstanceState) {
+    protected void setupData(Bundle savedInstanceState) {
 
     }
 }

@@ -20,6 +20,7 @@ import com.wptdxii.ext.util.ActivityStack;
 import com.wptdxii.ext.util.AppStatusTracker;
 import com.wptdxii.uiframework.R;
 import com.wptdxii.uiframework.callback.PermissionListener;
+import com.wptdxii.uiframework.widget.toolbarhelper.ToolbarHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,9 +60,13 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
             case AppStatusTracker.STATUS_LOGOUT:
             case AppStatusTracker.STATUS_OFFLINE:
             case AppStatusTracker.STATUS_ONLINE:
-                initContentView();
-                initView();
-                initData(savedInstanceState);
+                setContentView(setupContentView());
+                Toolbar toolbar = findView(R.id.toolbar);
+                if (toolbar != null) {
+                    setupToolbar(new ToolbarHelper(this, toolbar));
+                }
+                setupData(savedInstanceState);
+                setupViews();
                 break;
         }
     }
@@ -84,11 +89,14 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
         super.onDestroy();
     }
 
-    protected abstract void initContentView();
+    @LayoutRes
+    protected abstract int setupContentView();
 
-    protected abstract void initView();
+    protected abstract void setupData(Bundle savedInstanceState);
 
-    protected abstract void initData(Bundle savedInstanceState);
+    protected abstract void setupToolbar(ToolbarHelper toolbarHelper);
+
+    protected abstract void setupViews();
 
     /**
      * Token失效或者被挤下线执行的操作
@@ -150,6 +158,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
             toolbarTitle.setText(titleResId);
         }
     }
+
     protected void onNavigationBtnClick(int mode) {
         switch (mode) {
             case MODE_BACK:
@@ -165,6 +174,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
 
     /**
      * findViewById without force transform
+     *
      * @param resId
      * @param <T>
      * @return
@@ -175,6 +185,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
 
     /**
      * call this method when need to requesst runtime permissions in Activity
+     *
      * @param permissions
      * @param listener
      */

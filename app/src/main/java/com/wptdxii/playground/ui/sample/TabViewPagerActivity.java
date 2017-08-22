@@ -33,12 +33,12 @@ public class TabViewPagerActivity extends BaseActivity implements TabLayout.OnTa
     }
 
     @Override
-    protected void initContentView() {
+    protected void setupContentView() {
         setContentView(R.layout.activity_tab_view_pager, -1, -1, MODE_BACK);
     }
 
     @Override
-    protected void initView() {
+    protected void setupViews() {
         mTabLayout = (TabLayout) findViewById(R.id.tabLayout);
         mTabLayout.setOnTabClickListener(this);
 
@@ -47,7 +47,7 @@ public class TabViewPagerActivity extends BaseActivity implements TabLayout.OnTa
     }
 
     @Override
-    protected void initData(Bundle savedInstanceState) {
+    protected void setupData(Bundle savedInstanceState) {
         tabs = new ArrayList<>();
         tabs.add(new TabLayout.Tab(R.drawable.selector_tab_msg, R.string.bottom_tab_msg, LazyLoadFragment.class));
         tabs.add(new TabLayout.Tab(R.drawable.selector_tab_contact, R.string.bottom_tab_contact, LazyLoadFragment.class));

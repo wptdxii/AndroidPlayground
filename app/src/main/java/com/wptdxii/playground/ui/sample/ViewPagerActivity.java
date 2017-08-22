@@ -16,12 +16,12 @@ public class ViewPagerActivity extends BaseActivity {
     private ViewPager viewPager;
     private CusPagerAdapter mPagerAdapter;
     @Override
-    protected void initContentView() {
+    protected void setupContentView() {
         setContentView(R.layout.activity_view_pager, -1, -1,MODE_BACK);
     }
 
     @Override
-    protected void initView() {
+    protected void setupViews() {
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         FragmentManager fm = getSupportFragmentManager();
         mPagerAdapter = new CusPagerAdapter(fm);
@@ -29,7 +29,7 @@ public class ViewPagerActivity extends BaseActivity {
     }
 
     @Override
-    protected void initData(Bundle savedInstanceState) {
+    protected void setupData(Bundle savedInstanceState) {
         
     }
 

@@ -63,17 +63,17 @@ public class SplashActivity extends BaseActivity {
     }
 
     @Override
-    protected void initContentView() {
+    protected void setupContentView() {
         setContentView(R.layout.activity_splash, -1, -1, MODE_NONE);
     }
 
     @Override
-    protected void initView() {
+    protected void setupViews() {
 
     }
 
     @Override
-    protected void initData(Bundle savedInstanceState) {
+    protected void setupData(Bundle savedInstanceState) {
         handler.sendEmptyMessageDelayed(MSG_TO_HOME_ACTIVITY, 1000);
     }
 
