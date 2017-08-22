@@ -1,6 +1,7 @@
 package com.wptdxii.playground.ui.sample;
 
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -10,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import com.wptdxii.playground.R;
 import com.wptdxii.playground.ui.base.BaseSwipeRecyclerFragment;
 import com.wptdxii.uiframework.base.BaseActivity;
+import com.wptdxii.uiframework.widget.toolbarhelper.ToolbarHelper;
 import com.wptdxii.uikit.widget.bottomnavigation.TabLayout;
 
 import java.util.ArrayList;
@@ -27,14 +29,11 @@ public class TabViewPagerActivity extends BaseActivity implements TabLayout.OnTa
     private ViewPager mViewPager;
     private PagerAdapter mPagerAdapter;
 
+    @LayoutRes
     @Override
-    protected void initToolbarTitle(int titleResId) {
-        super.initToolbarTitle(R.string.tabviewpager_activity_toolbar_title);
-    }
-
-    @Override
-    protected void setupContentView() {
-        setContentView(R.layout.activity_tab_view_pager, -1, -1, MODE_BACK);
+    protected int setupContentView() {
+//        setContentView(R.layout.activity_tab_view_pager, -1, -1, MODE_BACK);
+        return R.layout.activity_tab_view_pager;
     }
 
     @Override
@@ -64,6 +63,11 @@ public class TabViewPagerActivity extends BaseActivity implements TabLayout.OnTa
     }
 
     @Override
+    protected void setupToolbar(ToolbarHelper toolbarHelper) {
+
+    }
+
+    @Override
     public void onTabClick(TabLayout.Tab tab, boolean isSelected) {
         if (isSelected) {
             //TODO refresh
@@ -73,7 +77,7 @@ public class TabViewPagerActivity extends BaseActivity implements TabLayout.OnTa
         } else {
             // TODO switch
             mViewPager.setCurrentItem(tabs.indexOf(tab));
-            initToolbarTitle(tab.labelResId);
+//            initToolbarTitle(tab.labelResId);
             //不同的fragment对应不同的menu
             //            initToolbarMenu();
         }

@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.wptdxii.playground.R;
 import com.wptdxii.playground.imageloader.ImageLoader;
 import com.wptdxii.playground.ui.base.BaseSwipeRecyclerActivity;
+import com.wptdxii.uiframework.widget.toolbarhelper.ToolbarHelper;
 import com.wptdxii.uikit.widget.swiperecycler.BaseSwipeViewHolder;
 import com.wptdxii.uikit.widget.swiperecycler.SwipeRecycler;
 import com.wptdxii.data.net.retrofit.api.ApiFactory;
@@ -29,7 +30,7 @@ public class SwipeRecyclerActivity extends BaseSwipeRecyclerActivity<GankModel> 
     protected void initListData(Bundle savedInstanceState) {
         //首次进入不显示刷新进度条,默认显示
         //mSwipeRecycler.isInitWithRefreshBar(false);
-        mSwipeRecycler.setRefreshing();
+//        mSwipeRecycler.setRefreshing();
     }
     
     
@@ -74,6 +75,11 @@ public class SwipeRecyclerActivity extends BaseSwipeRecyclerActivity<GankModel> 
                         mSwipeRecycler.onRefreshCompleted();
                    }
                });
+    }
+
+    @Override
+    protected void setupToolbar(ToolbarHelper toolbarHelper) {
+
     }
 
     private class SwipeRecyclerViewHolder extends BaseSwipeViewHolder {

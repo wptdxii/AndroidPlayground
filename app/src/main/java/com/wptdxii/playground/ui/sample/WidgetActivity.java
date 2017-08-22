@@ -1,8 +1,8 @@
 package com.wptdxii.playground.ui.sample;
 
-import com.wptdxii.playground.R;
 import com.wptdxii.playground.model.Module;
 import com.wptdxii.playground.ui.base.BaseContentActivity;
+import com.wptdxii.uiframework.widget.toolbarhelper.ToolbarHelper;
 
 import java.util.ArrayList;
 
@@ -11,12 +11,12 @@ import java.util.ArrayList;
  */
 public class WidgetActivity extends BaseContentActivity {
     @Override
-    protected void initToolbarTitle(int titleResId) {
-        super.initToolbarTitle(R.string.widget_activity_toolbar_title);
+    protected void addItem(ArrayList<Module> mDataList) {
+        
     }
 
     @Override
-    protected void addItem(ArrayList<Module> mDataList) {
-        
+    protected void setupToolbar(ToolbarHelper toolbarHelper) {
+
     }
 }

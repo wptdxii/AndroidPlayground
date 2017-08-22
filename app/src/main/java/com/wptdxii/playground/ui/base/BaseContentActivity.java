@@ -21,10 +21,10 @@ public abstract class BaseContentActivity extends BaseSwipeRecyclerActivity<Modu
     @Override
     protected void initListData(Bundle savedInstanceState) {
         //不显示刷新进度条
-        mSwipeRecycler.isInitWithRefreshBar(false);
-        //不可刷新
-        mSwipeRecycler.enablePullToRefresh(false);
-        mSwipeRecycler.setRefreshing();
+//        mSwipeRecycler.isInitWithRefreshBar(false);
+//        不可刷新
+//        mSwipeRecycler.enablePullToRefresh(false);
+//        mSwipeRecycler.setRefreshing();
     }
 
     @Override

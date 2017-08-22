@@ -1,17 +1,18 @@
 package com.wptdxii.playground.ui.base;
 
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
 import com.wptdxii.playground.R;
+import com.wptdxii.uiframework.base.BaseActivity;
 import com.wptdxii.uikit.widget.swiperecycler.BaseSwipeRecyclerAdapter;
 import com.wptdxii.uikit.widget.swiperecycler.BaseSwipeViewHolder;
 import com.wptdxii.uikit.widget.swiperecycler.LinearDividerItemDecoration;
 import com.wptdxii.uikit.widget.swiperecycler.SwipeRecycler;
 import com.wptdxii.uikit.widget.swiperecycler.layoutmanager.CusLinearLayoutManager;
 import com.wptdxii.uikit.widget.swiperecycler.layoutmanager.ILayoutManager;
-import com.wptdxii.uiframework.base.BaseActivity;
 
 import java.util.ArrayList;
 
@@ -23,25 +24,28 @@ public abstract class BaseSwipeRecyclerActivity<T> extends BaseActivity implemen
     protected BaseSwipeRecyclerAdapter mAdapter;
     protected ArrayList<T> mDataList;
 
+    @LayoutRes
     @Override
-    protected void setupContentView() {
-        setContentView(R.layout.activity_base_swipe_recycler, -1, -1, MODE_BACK);
+    protected int setupContentView() {
+        //        setContentView(R.layout.activity_base_swipe_recycler, -1, -1, MODE_BACK);
+        return R.layout.activity_base_swipe_recycler;
     }
 
-    @Override
-    protected void setupViews() {
-        mSwipeRecycler = (SwipeRecycler) findViewById(R.id.swipeRecycler);
-    }
 
     @Override
     protected void setupData(Bundle savedInstanceState) {
         mAdapter = new SwipeRecyclerAdapter();
         mDataList = new ArrayList<>();
+        initListData(savedInstanceState);
+    }
+
+    @Override
+    protected void setupViews() {
+        mSwipeRecycler = (SwipeRecycler) findViewById(R.id.swipeRecycler);
         mSwipeRecycler.setOnSwipeRefreshListener(this);
         mSwipeRecycler.setLayoutManager(getLayoutManager());
         mSwipeRecycler.addItemDecoration(getItemDecoration());
         mSwipeRecycler.setAdapter(mAdapter);
-        initListData(savedInstanceState);
     }
 
     protected abstract void initListData(Bundle savedInstanceState);

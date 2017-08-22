@@ -4,15 +4,17 @@ import android.Manifest;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.LayoutRes;
 import android.util.Log;
 import android.view.WindowManager;
 
+import com.wptdxii.ext.util.AppStatusTracker;
 import com.wptdxii.ext.util.DeviceUtils;
 import com.wptdxii.playground.R;
-import com.wptdxii.playground.ui.sample.home.ContentActivity;
+import com.wptdxii.playground.ui.sample.MainActivity;
 import com.wptdxii.uiframework.base.BaseActivity;
-import com.wptdxii.ext.util.AppStatusTracker;
 import com.wptdxii.uiframework.callback.PermissionListener;
+import com.wptdxii.uiframework.widget.toolbarhelper.ToolbarHelper;
 
 public class SplashActivity extends BaseActivity {
     private static final int MSG_TO_HOME_ACTIVITY = 0;
@@ -24,8 +26,7 @@ public class SplashActivity extends BaseActivity {
                 case MSG_TO_HOME_ACTIVITY:
                     //解决全屏向非全屏跳转的toolbar闪动问题,在启动Activity前调用
                     cancelFullScreen();
-
-                    ContentActivity.actionStart(SplashActivity.this);
+                    MainActivity.startActivity(SplashActivity.this);
                     finish();
                     break;
             }
@@ -62,9 +63,10 @@ public class SplashActivity extends BaseActivity {
 
     }
 
+    @LayoutRes
     @Override
-    protected void setupContentView() {
-        setContentView(R.layout.activity_splash, -1, -1, MODE_NONE);
+    protected int setupContentView() {
+        return R.layout.activity_splash;
     }
 
     @Override
@@ -75,6 +77,11 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void setupData(Bundle savedInstanceState) {
         handler.sendEmptyMessageDelayed(MSG_TO_HOME_ACTIVITY, 1000);
+    }
+
+    @Override
+    protected void setupToolbar(ToolbarHelper toolbarHelper) {
+
     }
 
     @Override

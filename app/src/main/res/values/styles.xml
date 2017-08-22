@@ -1,24 +1,41 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorPrimary">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textColorPrimary">@color/white</item>
-        <item name="android:textSize">16sp</item>
+    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Actionbar background -->
+        <item name="colorPrimary">@color/color_black_000000</item>
+        <item name="colorPrimaryDark">@color/color_black_000000</item>
+        <item name="actionBarSize">?attr/actionBarSize</item>
+        <!-- Actionbar text color-->
+        <item name="android:textColorPrimary">@color/color_white_ffffff</item>
     </style>
 
-    <style name="ToolbarStyle">
+    <!--<style name="AppTheme" parent="AppTheme.Base"/>-->
+
+
+    <!--<style name="AppTheme" parent="AppTheme.Base">-->
+    <!--</style>-->
+
+    <style name="ToolbarTheme.Base">
         <item name="android:layout_width">match_parent</item>
-        <!--<item name="android:layout_height">?attr/actionBarSize</item>-->
-        <!--<item name="android:minHeight">?attr/actionBarSize</item>-->
-        <item name="android:layout_height">45dp</item>
-        <item name="android:minHeight">45dp</item>
+        <item name="android:layout_height">?attr/actionBarSize</item>
+        <item name="android:minHeight">?attr/actionBarSize</item>
         <item name="android:background">@color/colorPrimary</item>
-        <item name="android:theme">@style/PopWindowStyle</item>
+        <item name="android:actionOverflowButtonStyle">@style/OverflowButtonStyle</item>
+        <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item>
     </style>
+
+    <style name="OverflowButtonStyle" parent="android:style/Widget.Holo.Light.ActionButton.Overflow">
+        <item name="android:src">@drawable/ic_add_white_24dp</item>
+    </style>
+
+    <style name="OverflowMenuStyle" parent="Widget.AppCompat.PopupMenu.Overflow">
+        <item name="overlapAnchor">false</item>
+    </style>
+
+    <style name="ToolbarTheme" parent="ToolbarTheme.Base">
+
+    </style>
+
 
     <style name="PopWindowStyle" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="android:colorBackground">@color/white</item>

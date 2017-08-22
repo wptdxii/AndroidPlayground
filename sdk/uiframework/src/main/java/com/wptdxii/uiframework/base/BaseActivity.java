@@ -4,16 +4,12 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
-import android.support.annotation.MenuRes;
 import android.support.annotation.NonNull;
-import android.support.annotation.StringRes;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
 import com.wptdxii.ext.util.ActivityStack;
@@ -29,12 +25,8 @@ import java.util.List;
 /**
  * Created by wptdxii on 2016/7/7 0007.
  */
-public abstract class BaseActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener {
+public abstract class BaseActivity extends AppCompatActivity {
     public static final int RC_PERMISSIONS = 0x100;
-    protected static final int MODE_NONE = -1;
-    protected static final int MODE_BACK = 0;
-    protected Toolbar toolbar;
-    protected TextView toolbarTitle;
     private PermissionListener mListener;
 
     @Override
@@ -63,6 +55,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
                 setContentView(setupContentView());
                 Toolbar toolbar = findView(R.id.toolbar);
                 if (toolbar != null) {
+                    setSupportActionBar(toolbar);
                     setupToolbar(new ToolbarHelper(this, toolbar));
                 }
                 setupData(savedInstanceState);
@@ -112,65 +105,50 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
         // TODO startActivity to ContentActivity
     }
 
-    /**
-     * @param layoutResID
-     * @param titleResId  -1 没有标题
-     * @param menuId      -1 没有menu
-     * @param mode        MODE_NONE 没有Toolbar
-     */
-    protected void setContentView(@LayoutRes int layoutResID, @StringRes int titleResId, @MenuRes int menuId, int mode) {
-        super.setContentView(layoutResID);
-        initToolbar(titleResId, menuId, mode);
-    }
 
-    protected void initToolbar(@StringRes int titleResId, @MenuRes int menuId, final int mode) {
-        if (mode != MODE_NONE) {
-            toolbar = (Toolbar) findViewById(R.id.toolbar);
-            toolbarTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
-            if (mode == MODE_BACK) {
-                toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
-            } //else if(){}
+    //    protected void initToolbar(@StringRes int titleResId, @MenuRes int menuId, final int mode) {
+    //        if (mode != MODE_NONE) {
+    //            toolbar = (Toolbar) findViewById(R.id.toolbar);
+    //            toolbarTitle = toolbar.findViewById(R.id.toolbar_title);
+    //            if (mode == MODE_BACK) {
+    //                toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+    //            } //else if(){}
+    //
+    //            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+    //                @Override
+    //                public void onClick(View view) {
+    //                    onNavigationBtnClick(mode);
+    //                }
+    //            });
+    //
+    //            initToolbarTitle(titleResId);
+    //            initToolbarMenu(menuId);
+    //        }
+    //    }
 
-            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    onNavigationBtnClick(mode);
-                }
-            });
+    //    protected void initToolbarMenu(@MenuRes int menuId) {
+    //        if (toolbar != null) {
+    //            toolbar.getMenu().clear();
+    //            if (menuId > 0) {
+    //                toolbar.inflateMenu(menuId);
+    //                toolbar.setOnMenuItemClickListener(this);
+    //            }
+    //        }
+    //    }
 
-            initToolbarTitle(titleResId);
-            initToolbarMenu(menuId);
-        }
-    }
+    //    protected void initToolbarTitle(@StringRes int titleResId) {
+    //        if (titleResId > 0 && toolbarTitle != null) {
+    //            toolbarTitle.setText(titleResId);
+    //        }
+    //    }
 
-    protected void initToolbarMenu(@MenuRes int menuId) {
-        if (toolbar != null) {
-            toolbar.getMenu().clear();
-            if (menuId > 0) {
-                toolbar.inflateMenu(menuId);
-                toolbar.setOnMenuItemClickListener(this);
-            }
-        }
-    }
-
-    protected void initToolbarTitle(@StringRes int titleResId) {
-        if (titleResId > 0 && toolbarTitle != null) {
-            toolbarTitle.setText(titleResId);
-        }
-    }
-
-    protected void onNavigationBtnClick(int mode) {
-        switch (mode) {
-            case MODE_BACK:
-                finish();
-                break;
-        }
-    }
-
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        return false;
-    }
+    //    protected void onNavigationBtnClick(int mode) {
+    //        switch (mode) {
+    //            case MODE_BACK:
+    //                finish();
+    //                break;
+    //        }
+    //    }
 
     /**
      * findViewById without force transform
@@ -180,7 +158,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
      * @return
      */
     public <T extends View> T findView(@IdRes int resId) {
-        return (T) super.findViewById(resId);
+        return (T) findViewById(resId);
     }
 
     /**
@@ -259,6 +237,4 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
             mListener.onPermanentDenied(deniedPermissions);
         }
     }
-
-
 }
