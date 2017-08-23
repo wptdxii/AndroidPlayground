@@ -1,12 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AppTheme" parent="Base.AppTheme" />
+    <style name="AppTheme" parent="AppTheme.Base"/>
 
-    <style name="Base.AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimaryDark">@color/color_black_000000</item>
-        <item name="colorPrimary">@color/color_black_000000</item>
-        <item name="colorAccent">@color/color_pink_ff4081</item>
-        <item name="android:textColorPrimary">@color/color_white_ffffff</item>
+    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Statusbar background -->
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <!-- Actionbar background -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="ToolbarTheme" parent="ToolbarTheme.Base"/>
+
+    <style name="ToolbarTheme.Base">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:actionOverflowButtonStyle">@style/ToolbarTheme.OverflowButton</item>
+    </style>
+
+    <style name="ToolbarTheme.OverflowButton">
+        <item name="android:color">@color/colorWhite_FFFFFF</item>
+    </style>
+
+    <style name="ToolbarTheme.Popup">
+        <item name="overlapAnchor">false</item>
     </style>
 </resources>

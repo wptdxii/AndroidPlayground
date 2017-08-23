@@ -1,28 +1,18 @@
 <resources>
-
-    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Actionbar background -->
-        <item name="colorPrimary">@color/color_black_000000</item>
-        <item name="colorPrimaryDark">@color/color_black_000000</item>
-        <item name="actionBarSize">?attr/actionBarSize</item>
-        <!-- Actionbar text color-->
-        <item name="android:textColorPrimary">@color/color_white_ffffff</item>
-    </style>
-
-    <!--<style name="AppTheme" parent="AppTheme.Base"/>-->
-
-
-    <!--<style name="AppTheme" parent="AppTheme.Base">-->
-    <!--</style>-->
-
-    <style name="ToolbarTheme.Base">
+    <style name="ToolbarStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">?attr/actionBarSize</item>
-        <item name="android:minHeight">?attr/actionBarSize</item>
-        <item name="android:background">@color/colorPrimary</item>
-        <item name="android:actionOverflowButtonStyle">@style/OverflowButtonStyle</item>
-        <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item>
+        <item name="android:textAllCaps">false</item>
     </style>
+
+    <!--<style name="ToolbarTheme.Base">-->
+        <!--<item name="android:layout_width">match_parent</item>-->
+        <!--<item name="android:layout_height">?attr/actionBarSize</item>-->
+        <!--<item name="android:minHeight">?attr/actionBarSize</item>-->
+        <!--<item name="android:background">@color/colorPrimary</item>-->
+        <!--<item name="android:actionOverflowButtonStyle">@style/OverflowButtonStyle</item>-->
+        <!--<item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item>-->
+    <!--</style>-->
 
     <style name="OverflowButtonStyle" parent="android:style/Widget.Holo.Light.ActionButton.Overflow">
         <item name="android:src">@drawable/ic_add_white_24dp</item>

@@ -3,7 +3,10 @@ package com.wptdxii.playground.ui.sample;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.wptdxii.playground.R;
 import com.wptdxii.uiframework.base.BaseActivity;
@@ -38,6 +41,32 @@ public class MainActivity extends BaseActivity {
                 onBackPressed();
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+
+        if (itemId == R.id.menu_share) {
+            Toast.makeText(this, "分享", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+
+        if (itemId == R.id.menu_search) {
+            Toast.makeText(this, "搜索", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        if (itemId == R.id.menu_near_me) {
+            Toast.makeText(this, "附近", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

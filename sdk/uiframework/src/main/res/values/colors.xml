@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="color_black_000000">#000000</color>
-    <color name="color_white_ffffff">#FFFFFF</color>
-    <color name="color_pink_ff4081">#FF4081</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorPrimary">#000000</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="textColorPrimary">#FFFFFF</color>
+    <color name="colorBlack_000000">#000000</color>
+    <color name="colorWhite_FFFFFF">#FFFFFF</color>
+    <color name="splashActivityBackground">#FFFFFF</color>
 </resources>

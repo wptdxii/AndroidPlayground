@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AppTheme" parent="Base.AppTheme" />
+    <style name="AppTheme" parent="AppTheme.Base">
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+    </style>
+
+    <style name="ToolbarTheme" parent="ToolbarTheme.Base">
+    </style>
 </resources>
