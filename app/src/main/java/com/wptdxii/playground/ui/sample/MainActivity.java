@@ -3,6 +3,7 @@ package com.wptdxii.playground.ui.sample;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.wptdxii.playground.R;
 import com.wptdxii.uiframework.base.BaseActivity;
@@ -31,12 +32,12 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void setupToolbar(ToolbarHelper toolbarHelper) {
-//        toolbarHelper.setNavigation(R.drawable.ic_arrow_back_white_24dp, new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                onBackPressed();
-//            }
-//        });
+        toolbarHelper.setNavigation(R.drawable.ic_arrow_back_white_24dp, new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
     }
 
     @Override

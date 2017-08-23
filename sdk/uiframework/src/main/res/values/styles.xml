@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AppTheme" parent="AppTheme.Base"/>
+    <style name="AppTheme" parent="Base.AppTheme" />
 
-    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Base.AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimaryDark">@color/color_black_000000</item>
         <item name="colorPrimary">@color/color_black_000000</item>
         <item name="colorAccent">@color/color_pink_ff4081</item>
+        <item name="android:textColorPrimary">@color/color_white_ffffff</item>
     </style>
 </resources>
