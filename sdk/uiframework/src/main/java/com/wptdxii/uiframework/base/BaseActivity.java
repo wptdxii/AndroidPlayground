@@ -55,8 +55,8 @@ public abstract class BaseActivity extends AppCompatActivity {
                 setContentView(setupContentView());
                 Toolbar toolbar = findView(R.id.toolbar);
                 if (toolbar != null) {
-                    setSupportActionBar(toolbar);
                     setupToolbar(new ToolbarHelper(this, toolbar));
+                    setSupportActionBar(toolbar);
                 }
                 setupData(savedInstanceState);
                 setupViews();

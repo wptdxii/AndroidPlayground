@@ -3,6 +3,7 @@ package com.wptdxii.playground.ui.sample;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,6 +42,8 @@ public class MainActivity extends BaseActivity {
                 onBackPressed();
             }
         });
+        Toolbar toolbar = toolbarHelper.getToolbar();
+        toolbar.inflateMenu(R.menu.activity_main);
     }
 
     @Override

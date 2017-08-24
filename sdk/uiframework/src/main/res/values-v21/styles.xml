@@ -7,4 +7,11 @@
 
     <style name="ToolbarTheme" parent="ToolbarTheme.Base">
     </style>
+
+    <style name="ToolbarTheme.OverflowMenu" parent="ToolbarTheme.OverflowMenu.Base">
+        <item name="android:dropDownVerticalOffset">4dp</item>
+    </style>
+
+    <style name="ToolbarTheme.Popup" parent="ToolbarTheme.Popup.Base">
+    </style>
 </resources>
