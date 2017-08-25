@@ -19,21 +19,16 @@ public class ViewPagerActivity extends BaseActivity {
 
     @LayoutRes
     @Override
-    protected int setupContentView() {
+    protected int getContentViewId() {
         return R.layout.activity_view_pager;
     }
 
     @Override
-    protected void setupViews() {
+    protected void setContent(Bundle savedInstanceState) {
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         FragmentManager fm = getSupportFragmentManager();
         mPagerAdapter = new CusPagerAdapter(fm);
         viewPager.setAdapter(mPagerAdapter);
-    }
-
-    @Override
-    protected void setupData(Bundle savedInstanceState) {
-        
     }
 
     private class CusPagerAdapter extends FragmentStatePagerAdapter {

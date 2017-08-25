@@ -23,19 +23,13 @@ public class SampleRecyclerViewActivity extends BaseActivity {
 
     @LayoutRes
     @Override
-    protected int setupContentView() {
-        //        setContentView(R.layout.activity_sample_recyclerview,
-        //                R.string.activity_recyclerview_practice_title, -1, MODE_BACK);
+    protected int getContentViewId() {
         return R.layout.activity_sample_recyclerview;
     }
 
     @Override
-    protected void setupViews() {
+    protected void setContent(Bundle savedInstanceState) {
         mRecyclerView = findView(R.id.mRecyclerView);
-    }
-
-    @Override
-    protected void setupData(Bundle savedInstanceState) {
         ApiFactory.getGankApi()
                 .getGankListWithRx(100, 1)
                 .compose(new DefaultTransformer<BaseGankResponse<ArrayList<GankModel>>, BaseGankResponse<ArrayList<GankModel>>>())
@@ -48,8 +42,6 @@ public class SampleRecyclerViewActivity extends BaseActivity {
                         mRecyclerView.setLayoutManager(new LinearLayoutManager(SampleRecyclerViewActivity.this));
                         //                        mRecyclerView.setLayoutManager(new GridLayoutManager(SampleRecyclerViewActivity.this, 3));
                         mRecyclerView.setAdapter(mAdapter);
-
-
                     }
 
                     @Override

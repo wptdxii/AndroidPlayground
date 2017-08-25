@@ -10,7 +10,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.umeng.analytics.MobclickAgent;
 import com.wptdxii.ext.util.ActivityStack;
 import com.wptdxii.ext.util.AppStatusTracker;
 import com.wptdxii.uiframework.callback.PermissionListener;
@@ -49,23 +48,16 @@ public abstract class BaseActivity extends AppCompatActivity {
             case AppStatusTracker.STATUS_LOGOUT:
             case AppStatusTracker.STATUS_OFFLINE:
             case AppStatusTracker.STATUS_ONLINE:
-                setContentView(setupContentView());
-                setupData(savedInstanceState);
-                setupViews();
+                setContentView(getContentViewId());
+                setContent(savedInstanceState);
                 break;
         }
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        MobclickAgent.onResume(this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
+    public void setContentView(@LayoutRes int layoutResID) {
+        super.setContentView(layoutResID);
+        // butterknife
     }
 
     @Override
@@ -75,11 +67,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     @LayoutRes
-    protected abstract int setupContentView();
+    protected abstract int getContentViewId();
 
-    protected abstract void setupData(Bundle savedInstanceState);
-
-    protected abstract void setupViews();
+    protected abstract void setContent(Bundle savedInstanceState);
 
     /**
      * Token失效或者被挤下线执行的操作

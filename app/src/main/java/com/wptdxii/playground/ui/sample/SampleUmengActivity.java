@@ -10,17 +10,11 @@ public class SampleUmengActivity extends BaseActivity {
 
     @LayoutRes
     @Override
-    protected int setupContentView() {
+    protected int getContentViewId() {
         return R.layout.activity_sample_umeng;
     }
 
     @Override
-    protected void setupData(Bundle savedInstanceState) {
-
-    }
-
-    @Override
-    protected void setupViews() {
-
+    protected void setContent(Bundle savedInstanceState) {
     }
 }

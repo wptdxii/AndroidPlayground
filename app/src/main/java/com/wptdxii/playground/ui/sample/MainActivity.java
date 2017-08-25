@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.wptdxii.playground.R;
@@ -24,23 +25,32 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    protected int setupContentView() {
+    protected int getContentViewId() {
         return R.layout.activity_main;
     }
 
     @Override
-    protected void setupData(Bundle savedInstanceState) {
-
-    }
-
-    @Override
-    protected void setupViews() {
+    protected void setContent(Bundle savedInstanceState) {
         Toolbar toolbar = findView(R.id.toolbar);
+        toolbar.setOverflowIcon(getResources().getDrawable(R.drawable.ic_add_white_24dp));
+        toolbar.setTitle("Title");
+        toolbar.setSubtitle("Hello");
+        toolbar.setNavigationIcon(R.drawable.ic_near_me_white_24dp);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this, "Test", Toast.LENGTH_SHORT).show();
+            }
+        });
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_add_white_24dp);
+            //            actionBar.setDisplayHomeAsUpEnabled(true);
+            //            actionBar.setHomeAsUpIndicator(R.drawable.ic_add_white_24dp);
+            //            actionBar.setTitle("Title");
+            //            actionBar.setSubtitle("subtitle");
+            //            actionBar.setLogo(R.mipmap.ic_launcher);
+            actionBar.setDisplayShowTitleEnabled(false);
         }
     }
 
@@ -53,21 +63,22 @@ public class MainActivity extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-
-        if (itemId == R.id.menu_share) {
-            Toast.makeText(this, "分享", Toast.LENGTH_SHORT).show();
-            return true;
+        switch (itemId) {
+            case android.R.id.home:
+                Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.menu_share:
+                Toast.makeText(this, "分享", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.menu_search:
+                Toast.makeText(this, "搜索", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.menu_near_me:
+                Toast.makeText(this, "附近", Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        if (itemId == R.id.menu_search) {
-            Toast.makeText(this, "搜索", Toast.LENGTH_SHORT).show();
-            return true;
-        }
-        if (itemId == R.id.menu_near_me) {
-            Toast.makeText(this, "附近", Toast.LENGTH_SHORT).show();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        return true;
     }
-
 }

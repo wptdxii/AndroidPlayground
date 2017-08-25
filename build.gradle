@@ -148,6 +148,4 @@ ext {
             leakCanary : "com.squareup.leakcanary:leakcanary-android-no-op:$leakCanaryVersion",
             blockcanary: "com.github.moduth:blockcanary-no-op:$blockCanaryVersion"
     ]
-
-    libUmengAnalytics = "com.umeng.analytics:analytics:latest.integration"
 }

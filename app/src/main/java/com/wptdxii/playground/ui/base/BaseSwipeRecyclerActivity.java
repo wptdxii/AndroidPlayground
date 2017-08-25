@@ -26,26 +26,21 @@ public abstract class BaseSwipeRecyclerActivity<T> extends BaseActivity implemen
 
     @LayoutRes
     @Override
-    protected int setupContentView() {
-        //        setContentView(R.layout.activity_base_swipe_recycler, -1, -1, MODE_BACK);
+    protected int getContentViewId() {
         return R.layout.activity_base_swipe_recycler;
     }
 
 
     @Override
-    protected void setupData(Bundle savedInstanceState) {
-        mAdapter = new SwipeRecyclerAdapter();
-        mDataList = new ArrayList<>();
-        initListData(savedInstanceState);
-    }
-
-    @Override
-    protected void setupViews() {
+    protected void setContent(Bundle savedInstanceState) {
         mSwipeRecycler = (SwipeRecycler) findViewById(R.id.swipeRecycler);
         mSwipeRecycler.setOnSwipeRefreshListener(this);
         mSwipeRecycler.setLayoutManager(getLayoutManager());
         mSwipeRecycler.addItemDecoration(getItemDecoration());
         mSwipeRecycler.setAdapter(mAdapter);
+        mAdapter = new SwipeRecyclerAdapter();
+        mDataList = new ArrayList<>();
+        initListData(savedInstanceState);
     }
 
     protected abstract void initListData(Bundle savedInstanceState);

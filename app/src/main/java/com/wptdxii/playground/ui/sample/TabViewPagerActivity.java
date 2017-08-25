@@ -30,22 +30,17 @@ public class TabViewPagerActivity extends BaseActivity implements TabLayout.OnTa
 
     @LayoutRes
     @Override
-    protected int setupContentView() {
-//        setContentView(R.layout.activity_tab_view_pager, -1, -1, MODE_BACK);
+    protected int getContentViewId() {
         return R.layout.activity_tab_view_pager;
     }
 
     @Override
-    protected void setupViews() {
+    protected void setContent(Bundle savedInstanceState) {
         mTabLayout = (TabLayout) findViewById(R.id.tabLayout);
         mTabLayout.setOnTabClickListener(this);
 
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
         mViewPager.addOnPageChangeListener(new PageChangeListener());
-    }
-
-    @Override
-    protected void setupData(Bundle savedInstanceState) {
         tabs = new ArrayList<>();
         tabs.add(new TabLayout.Tab(R.drawable.selector_tab_msg, R.string.bottom_tab_msg, LazyLoadFragment.class));
         tabs.add(new TabLayout.Tab(R.drawable.selector_tab_contact, R.string.bottom_tab_contact, LazyLoadFragment.class));

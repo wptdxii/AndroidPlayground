@@ -5,13 +5,15 @@
         <item name="android:textColorPrimary">@color/textColorPrimary</item>
     </style>
 
-    <style name="ToolbarTheme" parent="ToolbarTheme.Base"></style>
+    <style name="ToolbarTheme" parent="ToolbarTheme.Base"/>
 
     <style name="ToolbarTheme.OverflowMenu" parent="ToolbarTheme.OverflowMenu.Base">
         <item name="android:dropDownVerticalOffset">4dp</item>
     </style>
 
-    <style name="ToolbarTheme.Popup" parent="ToolbarTheme.Popup.Base"></style>
+    <style name="ToolbarTheme.Popup" parent="ToolbarTheme.Popup.Base">
+        <item name="android:dropDownVerticalOffset">4dp</item>
+    </style>
 
     <style name="SplashActivityTheme" parent="AppTheme">
         <item name="android:windowDrawsSystemBarBackgrounds">false</item>

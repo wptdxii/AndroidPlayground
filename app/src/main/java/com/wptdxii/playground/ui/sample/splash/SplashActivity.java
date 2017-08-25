@@ -16,6 +16,7 @@ import com.wptdxii.uiframework.base.BaseActivity;
 import com.wptdxii.uiframework.callback.PermissionListener;
 
 public class SplashActivity extends BaseActivity {
+    private static final String TAG = "SplashActivity";
     private static final int MSG_TO_HOME_ACTIVITY = 0;
     private Handler handler = new Handler() {
         @Override
@@ -32,12 +33,22 @@ public class SplashActivity extends BaseActivity {
 
         }
     };
-    private static final String TAG = "SplashActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AppStatusTracker.getInstance().setAppStatus(AppStatusTracker.STATUS_OFFLINE);
         super.onCreate(savedInstanceState);
+
+    }
+
+    @LayoutRes
+    @Override
+    protected int getContentViewId() {
+        return R.layout.activity_splash;
+    }
+
+    @Override
+    protected void setContent(Bundle savedInstanceState) {
         //在主题中设定，可以定制 背景
         // setFullScreen();
 
@@ -59,22 +70,6 @@ public class SplashActivity extends BaseActivity {
 
             }
         });
-
-    }
-
-    @LayoutRes
-    @Override
-    protected int setupContentView() {
-        return R.layout.activity_splash;
-    }
-
-    @Override
-    protected void setupViews() {
-
-    }
-
-    @Override
-    protected void setupData(Bundle savedInstanceState) {
         handler.sendEmptyMessageDelayed(MSG_TO_HOME_ACTIVITY, 1000);
     }
 
