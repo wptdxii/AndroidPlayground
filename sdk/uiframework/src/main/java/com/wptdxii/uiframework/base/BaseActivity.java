@@ -8,15 +8,12 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.umeng.analytics.MobclickAgent;
 import com.wptdxii.ext.util.ActivityStack;
 import com.wptdxii.ext.util.AppStatusTracker;
-import com.wptdxii.uiframework.R;
 import com.wptdxii.uiframework.callback.PermissionListener;
-import com.wptdxii.uiframework.widget.toolbarhelper.ToolbarHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,11 +50,6 @@ public abstract class BaseActivity extends AppCompatActivity {
             case AppStatusTracker.STATUS_OFFLINE:
             case AppStatusTracker.STATUS_ONLINE:
                 setContentView(setupContentView());
-                Toolbar toolbar = findView(R.id.toolbar);
-                if (toolbar != null) {
-                    setupToolbar(new ToolbarHelper(this, toolbar));
-                    setSupportActionBar(toolbar);
-                }
                 setupData(savedInstanceState);
                 setupViews();
                 break;
@@ -86,8 +78,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected abstract int setupContentView();
 
     protected abstract void setupData(Bundle savedInstanceState);
-
-    protected abstract void setupToolbar(ToolbarHelper toolbarHelper);
 
     protected abstract void setupViews();
 

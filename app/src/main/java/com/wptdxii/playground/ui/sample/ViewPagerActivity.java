@@ -9,7 +9,6 @@ import android.support.v4.view.ViewPager;
 
 import com.wptdxii.playground.R;
 import com.wptdxii.uiframework.base.BaseActivity;
-import com.wptdxii.uiframework.widget.toolbarhelper.ToolbarHelper;
 
 /**
  * 实现数据懒加载
@@ -21,7 +20,6 @@ public class ViewPagerActivity extends BaseActivity {
     @LayoutRes
     @Override
     protected int setupContentView() {
-//        setContentView(R.layout.activity_view_pager, -1, -1,MODE_BACK);
         return R.layout.activity_view_pager;
     }
 
@@ -36,11 +34,6 @@ public class ViewPagerActivity extends BaseActivity {
     @Override
     protected void setupData(Bundle savedInstanceState) {
         
-    }
-
-    @Override
-    protected void setupToolbar(ToolbarHelper toolbarHelper) {
-
     }
 
     private class CusPagerAdapter extends FragmentStatePagerAdapter {

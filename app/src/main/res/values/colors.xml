@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources>  <color name="colorPrimaryDark">#000000</color>
+    <color name="colorPrimary">#000000</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="textColorPrimary">#FFFFFF</color>
+    <color name="textColorSecondary">#FFFFFF</color>
+    <color name="overflowMenuTextColor">#000000</color>
+    <color name="overflowMenuBackground">#FFFFFF</color>
+    <color name="colorBlack_000000">#000000</color>
+    <color name="colorWhite_FFFFFF">#FFFFFF</color>
     <color name="splashActivityBackground">#FFFFFF</color>
 </resources>

@@ -11,7 +11,6 @@ import android.support.v4.view.ViewPager;
 import com.wptdxii.playground.R;
 import com.wptdxii.playground.ui.base.BaseSwipeRecyclerFragment;
 import com.wptdxii.uiframework.base.BaseActivity;
-import com.wptdxii.uiframework.widget.toolbarhelper.ToolbarHelper;
 import com.wptdxii.uikit.widget.bottomnavigation.TabLayout;
 
 import java.util.ArrayList;
@@ -60,11 +59,6 @@ public class TabViewPagerActivity extends BaseActivity implements TabLayout.OnTa
         mPagerAdapter = new CusPagerAdapter(fm);
 //        mViewPager.setOffscreenPageLimit(3);
         mViewPager.setAdapter(mPagerAdapter);
-    }
-
-    @Override
-    protected void setupToolbar(ToolbarHelper toolbarHelper) {
-
     }
 
     @Override

@@ -14,7 +14,6 @@ import com.wptdxii.playground.R;
 import com.wptdxii.playground.ui.sample.MainActivity;
 import com.wptdxii.uiframework.base.BaseActivity;
 import com.wptdxii.uiframework.callback.PermissionListener;
-import com.wptdxii.uiframework.widget.toolbarhelper.ToolbarHelper;
 
 public class SplashActivity extends BaseActivity {
     private static final int MSG_TO_HOME_ACTIVITY = 0;
@@ -77,11 +76,6 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void setupData(Bundle savedInstanceState) {
         handler.sendEmptyMessageDelayed(MSG_TO_HOME_ACTIVITY, 1000);
-    }
-
-    @Override
-    protected void setupToolbar(ToolbarHelper toolbarHelper) {
-
     }
 
     @Override

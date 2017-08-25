@@ -5,7 +5,6 @@ import android.support.annotation.LayoutRes;
 
 import com.wptdxii.playground.R;
 import com.wptdxii.uiframework.base.BaseActivity;
-import com.wptdxii.uiframework.widget.toolbarhelper.ToolbarHelper;
 
 public class SwipeRecyclerFragmentActivity extends BaseActivity {
     private SwipeRecyclerFragment fragment;
@@ -32,10 +31,5 @@ public class SwipeRecyclerFragmentActivity extends BaseActivity {
     @Override
     protected void setupData(Bundle savedInstanceState) {
         
-    }
-
-    @Override
-    protected void setupToolbar(ToolbarHelper toolbarHelper) {
-
     }
 }

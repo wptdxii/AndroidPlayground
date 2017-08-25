@@ -5,15 +5,14 @@ import android.support.annotation.LayoutRes;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.wptdxii.playground.R;
 import com.wptdxii.data.net.retrofit.api.ApiFactory;
 import com.wptdxii.data.net.retrofit.rx.func.RetryFunc;
 import com.wptdxii.data.net.retrofit.rx.subscriber.BaseGankResponseSubscriber;
 import com.wptdxii.data.net.retrofit.transformer.DefaultTransformer;
 import com.wptdxii.domain.model.gank.BaseGankResponse;
 import com.wptdxii.domain.model.gank.GankModel;
+import com.wptdxii.playground.R;
 import com.wptdxii.uiframework.base.BaseActivity;
-import com.wptdxii.uiframework.widget.toolbarhelper.ToolbarHelper;
 
 import java.util.ArrayList;
 
@@ -58,11 +57,6 @@ public class SampleRecyclerViewActivity extends BaseActivity {
 
                     }
                 });
-
-    }
-
-    @Override
-    protected void setupToolbar(ToolbarHelper toolbarHelper) {
 
     }
 }

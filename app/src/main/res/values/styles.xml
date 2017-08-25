@@ -1,4 +1,41 @@
-<resources>
+<resources> <style name="AppTheme" parent="AppTheme.Base" />
+
+    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Statusbar background -->
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <!-- Actionbar background -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="actionOverflowMenuStyle">@style/ToolbarTheme.OverflowMenu</item>
+        <item name="actionOverflowButtonStyle">@style/ToolbarTheme.OverflowButton</item>
+    </style>
+
+    <style name="ToolbarTheme.OverflowMenu" parent="ToolbarTheme.OverflowMenu.Base"/>
+
+    <style name="ToolbarTheme.OverflowMenu.Base">
+        <item name="overlapAnchor">false</item>
+    </style>
+
+    <style name="ToolbarTheme" parent="ToolbarTheme.Base" />
+
+    <style name="ToolbarTheme.Base">
+        <item name="android:textAllCaps">false</item>
+        <!-- Actionbar overflow button color -->
+        <item name="android:textColorSecondary">@color/textColorSecondary</item>
+    </style>
+
+    <style name="ToolbarTheme.OverflowButton" parent="Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:src">@drawable/ic_add_white_24dp</item>
+    </style>
+
+    <style name="ToolbarTheme.Popup" parent="ToolbarTheme.Popup">
+        <!--<item name="android:dropDownVerticalOffset">-4dp</item>-->
+    </style>
+
+    <style name="ToolbarTheme.Popup.Base" parent="Widget.AppCompat.PopupMenu.Overflow">
+        <!--<item name="android:colorBackground">@color/overflowMenuBackground</item>-->
+        <item name="android:textColor">@color/overflowMenuTextColor</item>
+    </style>
     <style name="ToolbarStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">?attr/actionBarSize</item>
@@ -21,11 +58,6 @@
     <style name="OverflowMenuStyle" parent="Widget.AppCompat.PopupMenu.Overflow">
         <item name="overlapAnchor">false</item>
     </style>
-
-    <style name="ToolbarTheme" parent="ToolbarTheme.Base">
-
-    </style>
-
 
     <style name="PopWindowStyle" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="android:colorBackground">@color/white</item>

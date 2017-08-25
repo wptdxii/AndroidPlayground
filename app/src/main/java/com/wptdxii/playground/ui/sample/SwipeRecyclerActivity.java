@@ -7,18 +7,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.wptdxii.playground.R;
-import com.wptdxii.playground.imageloader.ImageLoader;
-import com.wptdxii.playground.ui.base.BaseSwipeRecyclerActivity;
-import com.wptdxii.uiframework.widget.toolbarhelper.ToolbarHelper;
-import com.wptdxii.uikit.widget.swiperecycler.BaseSwipeViewHolder;
-import com.wptdxii.uikit.widget.swiperecycler.SwipeRecycler;
 import com.wptdxii.data.net.retrofit.api.ApiFactory;
 import com.wptdxii.data.net.retrofit.rx.func.RetryFunc;
 import com.wptdxii.data.net.retrofit.rx.subscriber.BaseGankResponseSubscriber;
 import com.wptdxii.data.net.retrofit.transformer.DefaultTransformer;
 import com.wptdxii.domain.model.gank.BaseGankResponse;
 import com.wptdxii.domain.model.gank.GankModel;
+import com.wptdxii.playground.R;
+import com.wptdxii.playground.imageloader.ImageLoader;
+import com.wptdxii.playground.ui.base.BaseSwipeRecyclerActivity;
+import com.wptdxii.uikit.widget.swiperecycler.BaseSwipeViewHolder;
+import com.wptdxii.uikit.widget.swiperecycler.SwipeRecycler;
 
 import java.util.ArrayList;
 
@@ -75,11 +74,6 @@ public class SwipeRecyclerActivity extends BaseSwipeRecyclerActivity<GankModel> 
                         mSwipeRecycler.onRefreshCompleted();
                    }
                });
-    }
-
-    @Override
-    protected void setupToolbar(ToolbarHelper toolbarHelper) {
-
     }
 
     private class SwipeRecyclerViewHolder extends BaseSwipeViewHolder {

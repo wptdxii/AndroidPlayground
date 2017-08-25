@@ -3,15 +3,14 @@ package com.wptdxii.playground.ui.sample;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import com.wptdxii.playground.R;
 import com.wptdxii.uiframework.base.BaseActivity;
-import com.wptdxii.uiframework.widget.toolbarhelper.ToolbarHelper;
 
 /**
  * Created by wptdxii on 2017/8/22 0022.
@@ -35,15 +34,14 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    protected void setupToolbar(ToolbarHelper toolbarHelper) {
-        toolbarHelper.setNavigation(R.drawable.ic_arrow_back_white_24dp, new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
-        Toolbar toolbar = toolbarHelper.getToolbar();
-        toolbar.inflateMenu(R.menu.activity_main);
+    protected void setupViews() {
+        Toolbar toolbar = findView(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_add_white_24dp);
+        }
     }
 
     @Override
@@ -72,8 +70,4 @@ public class MainActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void setupViews() {
-
-    }
 }
