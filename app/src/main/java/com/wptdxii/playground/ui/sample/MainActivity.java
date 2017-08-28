@@ -7,7 +7,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import com.wptdxii.playground.R;
@@ -32,25 +31,21 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void setContent(Bundle savedInstanceState) {
         Toolbar toolbar = findView(R.id.toolbar);
-        toolbar.setOverflowIcon(getResources().getDrawable(R.drawable.ic_add_white_24dp));
-        toolbar.setTitle("Title");
-        toolbar.setSubtitle("Hello");
-        toolbar.setNavigationIcon(R.drawable.ic_near_me_white_24dp);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "Test", Toast.LENGTH_SHORT).show();
-            }
-        });
+
+        //        toolbar.setNavigationIcon(R.drawable.ic_near_me_white_24dp);
+        //        toolbar.setLogo(R.mipmap.ic_launcher);
+        //        toolbar.setOverflowIcon(ContextCompat.getDrawable(this, R.drawable.ic_add_white_24dp));
+
+        // 需要在 setSupportActionBar 之前设置 title 和 subtitle
+        toolbar.setTitle("微信");
+        //        toolbar.setSubtitle("Hello");
+
         setSupportActionBar(toolbar);
+        //        toolbar.setNavigationIcon(R.drawable.ic_near_me_white_24dp);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
+            // 当 toolbar 未设置 navigation icon 时，true可以显示默认图标
             //            actionBar.setDisplayHomeAsUpEnabled(true);
-            //            actionBar.setHomeAsUpIndicator(R.drawable.ic_add_white_24dp);
-            //            actionBar.setTitle("Title");
-            //            actionBar.setSubtitle("subtitle");
-            //            actionBar.setLogo(R.mipmap.ic_launcher);
-            actionBar.setDisplayShowTitleEnabled(false);
         }
     }
 
