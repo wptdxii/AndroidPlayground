@@ -8,12 +8,12 @@
         app:showAsAction="always"/>
     <item
         android:id="@+id/menu_search"
-        android:icon="@drawable/ic_search_white_24dp"
+        android:icon="@drawable/ic_search_black_24dp"
         android:title="搜索"
-        app:showAsAction="never"/>
+        app:showAsAction="never|withText"/>
     <item
         android:id="@+id/menu_near_me"
-        android:icon="@drawable/ic_near_me_white_24dp"
+        android:icon="@drawable/ic_near_me_black_24dp"
         android:title="附近"
-        app:showAsAction="never"/>
+        app:showAsAction="withText"/>
 </menu>

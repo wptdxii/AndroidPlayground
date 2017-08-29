@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,17 +41,26 @@ public class MainActivity extends BaseActivity {
         toolbar.setTitle("微信");
         //        toolbar.setSubtitle("Hello");
 
-        setSupportActionBar(toolbar);
+//        setSupportActionBar(toolbar);
         //        toolbar.setNavigationIcon(R.drawable.ic_near_me_white_24dp);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             // 当 toolbar 未设置 navigation icon 时，true可以显示默认图标
             //            actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
+        Menu menu = toolbar.getMenu();
+        if (menu instanceof MenuBuilder) {
+            ((MenuBuilder) menu).setOptionalIconsVisible(true);
+        }
+        toolbar.inflateMenu(R.menu.activity_main);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        if (menu instanceof MenuBuilder) {
+            ((MenuBuilder) menu).setOptionalIconsVisible(true);
+        }
         getMenuInflater().inflate(R.menu.activity_main, menu);
         return true;
     }
