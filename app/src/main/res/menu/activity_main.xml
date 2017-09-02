@@ -3,17 +3,22 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/menu_share"
-        android:icon="@drawable/ic_share_white_24dp"
-        android:title="分享"
-        app:showAsAction="always"/>
-    <item
-        android:id="@+id/menu_search"
-        android:icon="@drawable/ic_search_black_24dp"
+        android:icon="@drawable/ic_search_white_24dp"
         android:title="搜索"
-        app:showAsAction="never|withText"/>
+        app:showAsAction="always"/>
     <item
         android:id="@+id/menu_near_me"
         android:icon="@drawable/ic_near_me_black_24dp"
         android:title="附近"
-        app:showAsAction="withText"/>
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/menu_search"
+        android:icon="@drawable/ic_share_black_24dp"
+        android:title="分享"
+        app:showAsAction="never|withText"/>
+    <item
+        android:id="@+id/menu_setting"
+        android:icon="@drawable/ic_settings_black_24dp"
+        android:title="设置"
+        app:showAsAction="never"/>
 </menu>

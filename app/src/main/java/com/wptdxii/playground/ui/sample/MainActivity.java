@@ -1,5 +1,6 @@
 package com.wptdxii.playground.ui.sample;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -41,7 +42,7 @@ public class MainActivity extends BaseActivity {
         toolbar.setTitle("微信");
         //        toolbar.setSubtitle("Hello");
 
-//        setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);
         //        toolbar.setNavigationIcon(R.drawable.ic_near_me_white_24dp);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -49,16 +50,18 @@ public class MainActivity extends BaseActivity {
             //            actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        Menu menu = toolbar.getMenu();
-        if (menu instanceof MenuBuilder) {
-            ((MenuBuilder) menu).setOptionalIconsVisible(true);
-        }
-        toolbar.inflateMenu(R.menu.activity_main);
+        //        Menu menu = toolbar.getMenu();
+        //        if (menu instanceof MenuBuilder) {
+        //            ((MenuBuilder) menu).setOptionalIconsVisible(true);
+        //        }
+        //        toolbar.inflateMenu(R.menu.activity_main);
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (menu instanceof MenuBuilder) {
+            //noinspection RestrictedApi
             ((MenuBuilder) menu).setOptionalIconsVisible(true);
         }
         getMenuInflater().inflate(R.menu.activity_main, menu);
@@ -80,6 +83,9 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.menu_near_me:
                 Toast.makeText(this, "附近", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.menu_setting:
+                Toast.makeText(this, "设置", Toast.LENGTH_SHORT).show();
                 break;
             default:
                 return super.onOptionsItemSelected(item);

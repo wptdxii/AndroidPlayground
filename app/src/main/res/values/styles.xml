@@ -9,8 +9,6 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <!-- theme UI controls like checkboxes and text fields -->
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="actionOverflowMenuStyle">@style/ToolbarTheme.OverflowMenu</item>
-        <item name="actionOverflowButtonStyle">@style/ToolbarTheme.OverflowButton</item>
     </style>
 
     <style name="ToolbarTheme.OverflowMenu" parent="ToolbarTheme.OverflowMenu.Base">
@@ -29,6 +27,8 @@
         <!--<item name="colorControlNormal">@color/colorAccent</item>-->
         <!-- Actionbar subtitle color-->
         <item name="android:textColorSecondary">@color/colorAccent</item>
+        <item name="actionOverflowMenuStyle">@style/ToolbarTheme.OverflowMenu</item>
+        <item name="actionOverflowButtonStyle">@style/ToolbarTheme.OverflowButton</item>
     </style>
 
     <style name="ToolbarTheme.OverflowButton" parent="Widget.AppCompat.ActionButton.Overflow">
