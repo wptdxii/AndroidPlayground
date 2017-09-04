@@ -4,12 +4,4 @@
                 android:layout_height="match_parent">
 
     <include layout="@layout/toolbar"/>
-
-    <Button
-        android:id="@+id/btn_child"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar"
-        android:text="ChildActivity"
-        android:textColor="@color/colorBlack_000000"/>
 </RelativeLayout>

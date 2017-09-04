@@ -38,6 +38,8 @@ dependencies {
     compile project(':ext')
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile rootProject.ext.libSupportV4
-    compile rootProject.ext.libSupportAppcompatV7
+    compile supportDependencies.v4
+    compile supportDependencies.appCompat
+    compile butterKnifeDependencies.butterknife
+    annotationProcessor butterKnifeDependencies.compiler
 }

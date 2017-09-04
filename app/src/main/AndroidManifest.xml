@@ -35,6 +35,14 @@
         </activity>
 
         <activity android:name=".ui.sample.MainActivity"/>
+
+        <activity
+            android:name=".ui.sample.ChildActivity"
+            android:parentActivityName=".ui.sample.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.sample.MainActivity"/>
+        </activity>
         <activity android:name=".ui.sample.SwipeRecyclerActivity"></activity>
         <activity android:name=".ui.sample.home.ContentActivity"></activity>
         <activity android:name=".ui.sample.WidgetActivity"></activity>

@@ -30,6 +30,7 @@ def leakCanaryVersion = "1.4-beta2"
 def blockCanaryVersion = "1.3.0"
 //def rxBindingVersion = "0.4.0"
 def diVersion = "2.11"
+def butterknife = "8.8.1"
 ext {
     applicationId = "com.wptdxii.playground"
     buildToolsVersion = "26.0.1"
@@ -89,8 +90,8 @@ ext {
 //    ]
 
     diDependencies = [
-            dagger   : "com.google.dagger:dagger:$diVersion",
-            compiler : "com.google.dagger:dagger-compiler:$diVersion",
+            dagger  : "com.google.dagger:dagger:$diVersion",
+            compiler: "com.google.dagger:dagger-compiler:$diVersion",
 //            android  : "com.google.dagger:dagger-android:$diVersion",
 //            support  : "com.google.dagger:dagger-android-support:$diVersion",
 //            processor: "com.google.dagger:dagger-android-processor:$diVersion",
@@ -102,6 +103,12 @@ ext {
             okhttpIntegration      : "com.github.bumptech.glide:okhttp3-integration:$glideVersion",
             recyclerViewIntegration: "com.github.bumptech.glide:recyclerview-integration:$glideVersion"
     ]
+
+    butterKnifeDependencies = [
+            butterknife: "com.jakewharton:butterknife:$butterknife",
+            compiler   : "com.jakewharton:butterknife-compiler:$butterknife"
+    ]
+
 
     libSupportV4 = "com.android.support:support-v4:$supportVersion"
     libSupportAppcompatV7 = "com.android.support:appcompat-v7:$supportVersion"

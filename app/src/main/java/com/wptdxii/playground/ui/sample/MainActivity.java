@@ -9,6 +9,8 @@ import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.wptdxii.playground.R;
@@ -19,6 +21,7 @@ import com.wptdxii.uiframework.base.BaseActivity;
  */
 
 public class MainActivity extends BaseActivity {
+    private Button btnChild;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -33,28 +36,52 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void setContent(Bundle savedInstanceState) {
         Toolbar toolbar = findView(R.id.toolbar);
+        if (toolbar != null) {
+            //        toolbar.setNavigationIcon(R.drawable.ic_near_me_white_24dp);
+            //        toolbar.setLogo(R.mipmap.ic_launcher);
+            //        toolbar.setOverflowIcon(ContextCompat.getDrawable(this, R.drawable.ic_add_white_24dp));
 
-        //        toolbar.setNavigationIcon(R.drawable.ic_near_me_white_24dp);
-        //        toolbar.setLogo(R.mipmap.ic_launcher);
-        //        toolbar.setOverflowIcon(ContextCompat.getDrawable(this, R.drawable.ic_add_white_24dp));
+            // 需要在 setSupportActionBar 之前设置 title 和 subtitle
+            toolbar.setTitle("微信");
+            //        toolbar.setSubtitle("Hello");
 
-        // 需要在 setSupportActionBar 之前设置 title 和 subtitle
-        toolbar.setTitle("微信");
-        //        toolbar.setSubtitle("Hello");
+            setSupportActionBar(toolbar);
+            //        toolbar.setNavigationIcon(R.drawable.ic_near_me_white_24dp);
+            ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null) {
+                // 当 toolbar 未设置 navigation icon 时，true可以显示默认图标
+                actionBar.setDisplayHomeAsUpEnabled(true);
+            }
 
-        setSupportActionBar(toolbar);
-        //        toolbar.setNavigationIcon(R.drawable.ic_near_me_white_24dp);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            // 当 toolbar 未设置 navigation icon 时，true可以显示默认图标
-            //            actionBar.setDisplayHomeAsUpEnabled(true);
+            //        Menu menu = toolbar.getMenu();
+            //        if (menu instanceof MenuBuilder) {
+            //            ((MenuBuilder) menu).setOptionalIconsVisible(true);
+            //        }
+            //        toolbar.inflateMenu(R.menu.activity_main);
+
+            btnChild = findView(R.id.btn_child);
+            btnChild.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(MainActivity.this, ChildActivity.class);
+                    startActivity(intent);
+                }
+            });
         }
 
-        //        Menu menu = toolbar.getMenu();
-        //        if (menu instanceof MenuBuilder) {
-        //            ((MenuBuilder) menu).setOptionalIconsVisible(true);
-        //        }
-        //        toolbar.inflateMenu(R.menu.activity_main);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setDisplayHomeAsUpEnabled(true);
+            }
+        }
     }
 
     @SuppressLint("RestrictedApi")
