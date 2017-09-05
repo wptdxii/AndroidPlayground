@@ -8,21 +8,20 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
     <application
-        android:name="com.wptdxii.playground.App"
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <!--umeng-->
-        <!--<meta-data-->
-        <!--android:name="UMENG_APPKEY"-->
-        <!--android:value="${UMENG_APPKEY_VALUE}"/>-->
-        <!--<meta-data-->
-        <!--android:name="UMENG_CHANNEL"-->
-        <!--android:value="${UMENG_CHANNEL_VALUE}"/>-->
-
+        <!-- umeng -->
+        <!-- <meta-data -->
+        <!-- android:name="UMENG_APPKEY" -->
+        <!-- android:value="${UMENG_APPKEY_VALUE}"/> -->
+        <!-- <meta-data -->
+        <!-- android:name="UMENG_CHANNEL" -->
+        <!-- android:value="${UMENG_CHANNEL_VALUE}"/> -->
 
         <activity
             android:name=".ui.sample.splash.SplashActivity"
@@ -33,9 +32,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
         <activity android:name=".ui.sample.MainActivity"/>
-
         <activity
             android:name=".ui.sample.ChildActivity"
             android:parentActivityName=".ui.sample.MainActivity">
@@ -43,13 +40,22 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.sample.MainActivity"/>
         </activity>
-        <activity android:name=".ui.sample.SwipeRecyclerActivity"></activity>
-        <activity android:name=".ui.sample.home.ContentActivity"></activity>
-        <activity android:name=".ui.sample.WidgetActivity"></activity>
-        <activity android:name=".ui.sample.TabViewPagerActivity"></activity>
-        <activity android:name=".ui.sample.ViewPagerActivity"></activity>
-        <activity android:name=".ui.sample.SwipeRecyclerFragmentActivity"></activity>
-        <activity android:name=".ui.sample.recyclerview.SampleRecyclerViewActivity"></activity>
-        <activity android:name=".ui.sample.SampleUmengActivity"></activity>
+        <activity android:name=".ui.sample.SwipeRecyclerActivity"/>
+        <activity android:name=".ui.sample.home.ContentActivity"/>
+        <activity android:name=".ui.sample.WidgetActivity"/>
+        <activity android:name=".ui.sample.TabViewPagerActivity"/>
+        <activity android:name=".ui.sample.ViewPagerActivity"/>
+        <activity android:name=".ui.sample.SwipeRecyclerFragmentActivity"/>
+        <activity android:name=".ui.sample.recyclerview.SampleRecyclerViewActivity"/>
+        <activity android:name=".ui.sample.SampleUmengActivity"/>
+        <activity
+            android:name=".ui.sample.NextActivity"
+            android:parentActivityName=".ui.sample.MainActivity">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.sample.MainActivity"/>
+        </activity>
     </application>
+
 </manifest>

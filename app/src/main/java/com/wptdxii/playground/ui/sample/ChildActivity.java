@@ -1,9 +1,11 @@
 package com.wptdxii.playground.ui.sample;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.wptdxii.playground.R;
@@ -31,6 +33,14 @@ public class ChildActivity extends BaseActivity {
                 actionBar.setHomeAsUpIndicator(R.drawable.ic_near_me_white_24dp);
             }
         }
+
+        findView(R.id.btn_child).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ChildActivity.this, NextActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
