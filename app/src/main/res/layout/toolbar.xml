@@ -8,5 +8,14 @@
     android:background="?attr/colorPrimary"
     android:minHeight="?attr/actionBarSize"
     android:theme="@style/ToolbarTheme"
+    app:contentInsetStartWithNavigation="0dp"
     app:popupTheme="@style/ToolbarTheme.Popup">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Custom Layout"
+        android:textColor="@color/colorWhite_FFFFFF"/>
+
 </android.support.v7.widget.Toolbar>

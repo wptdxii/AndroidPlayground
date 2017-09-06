@@ -6,7 +6,7 @@
     </style>
 
     <style name="ToolbarTheme" parent="ToolbarTheme.Base">
-            <item name="android:dropDownVerticalOffset">4dp</item>
+        <item name="android:dropDownVerticalOffset">4dp</item>
     </style>
 
     <style name="ToolbarTheme.OverflowMenu" parent="ToolbarTheme.OverflowMenu.Base">

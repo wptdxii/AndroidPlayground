@@ -32,7 +32,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.sample.MainActivity"/>
+        <activity
+            android:name=".ui.sample.MainActivity"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".ui.sample.ChildActivity"
             android:parentActivityName=".ui.sample.MainActivity">

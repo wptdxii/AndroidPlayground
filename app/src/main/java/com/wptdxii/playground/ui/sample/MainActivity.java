@@ -4,13 +4,12 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.wptdxii.playground.R;
@@ -21,7 +20,7 @@ import com.wptdxii.uiframework.base.BaseActivity;
  */
 
 public class MainActivity extends BaseActivity {
-    private Button btnChild;
+    //    private Button btnChild;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -42,8 +41,10 @@ public class MainActivity extends BaseActivity {
             //        toolbar.setOverflowIcon(ContextCompat.getDrawable(this, R.drawable.ic_add_white_24dp));
 
             // 需要在 setSupportActionBar 之前设置 title 和 subtitle
-            toolbar.setTitle("微信");
-            //        toolbar.setSubtitle("Hello");
+            toolbar.setTitle("Title");
+            toolbar.setSubtitle("Subtitle");
+            toolbar.setSubtitleTextColor(ContextCompat.getColor(this, R.color.color_white_ffffffff));
+            toolbar.setLogo(R.drawable.ic_android_round);
 
             setSupportActionBar(toolbar);
             //        toolbar.setNavigationIcon(R.drawable.ic_near_me_white_24dp);
@@ -59,14 +60,14 @@ public class MainActivity extends BaseActivity {
             //        }
             //        toolbar.inflateMenu(R.menu.activity_main);
 
-            btnChild = findView(R.id.btn_child);
-            btnChild.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(MainActivity.this, ChildActivity.class);
-                    startActivity(intent);
-                }
-            });
+            //            btnChild = findView(R.id.btn_child);
+            //            btnChild.setOnClickListener(new View.OnClickListener() {
+            //                @Override
+            //                public void onClick(View view) {
+            //                    Intent intent = new Intent(MainActivity.this, ChildActivity.class);
+            //                    startActivity(intent);
+            //                }
+            //            });
         }
 
     }
