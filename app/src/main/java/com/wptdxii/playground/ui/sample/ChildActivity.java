@@ -25,6 +25,18 @@ public class ChildActivity extends BaseActivity {
     @Override
     protected void setContent(Bundle savedInstanceState) {
         Toolbar toolbar = findView(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
+//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent upIntent = NavUtils.getParentActivityIntent(ChildActivity.this);
+//                if (upIntent == null) {
+//                    finish();
+//                    return;
+//                }
+//                NavUtils.navigateUpTo(ChildActivity.this, upIntent);
+//            }
+//        });
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             ActionBar actionBar = getSupportActionBar();
