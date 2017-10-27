@@ -4,11 +4,12 @@
 //artifacts.add("default", file('uiframework-release.aar'))
 
 apply plugin: 'com.android.library'
-apply plugin: 'me.tatarka.retrolambda'
+//apply plugin: 'com.jakewharton.butterknife'
+//apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+//    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion

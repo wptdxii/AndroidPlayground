@@ -43,12 +43,12 @@ public class SplashActivity extends BaseActivity {
 
     @LayoutRes
     @Override
-    protected int getContentViewId() {
+    protected int onCreateContentView() {
         return R.layout.activity_splash;
     }
 
     @Override
-    protected void setContent(Bundle savedInstanceState) {
+    protected void onCreateContent(Bundle savedInstanceState) {
         //在主题中设定，可以定制 背景
         // setFullScreen();
 

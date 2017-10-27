@@ -16,7 +16,7 @@ import com.wptdxii.uiframework.base.BaseActivity;
 public class ChildActivity extends BaseActivity {
 
     @Override
-    protected void setContent(Bundle savedInstanceState) {
+    protected void onCreateContent(Bundle savedInstanceState) {
         Toolbar toolbar = findView(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -49,7 +49,7 @@ public class ChildActivity extends BaseActivity {
     }
 
     @Override
-    protected int getContentViewId() {
+    protected int onCreateContentView() {
         return R.layout.activity_child;
     }
 

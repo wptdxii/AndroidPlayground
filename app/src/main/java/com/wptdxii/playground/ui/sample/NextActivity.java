@@ -12,12 +12,12 @@ import com.wptdxii.uiframework.base.BaseActivity;
 public class NextActivity extends BaseActivity {
 
     @Override
-    protected int getContentViewId() {
+    protected int onCreateContentView() {
         return R.layout.activity_next;
     }
 
     @Override
-    protected void setContent(Bundle savedInstanceState) {
+    protected void onCreateContent(Bundle savedInstanceState) {
         Toolbar toolbar = findView(R.id.toolbar);
         //        setSupportActionBar(toolbar);
         //        ActionBar actionBar = getSupportActionBar();

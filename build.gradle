@@ -1,11 +1,14 @@
 buildscript {
     repositories {
         jcenter()
+        google()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
-        classpath 'me.tatarka:gradle-retrolambda:3.3.0'
+        classpath 'com.android.tools.build:gradle:3.0.0'
+//        classpath 'com.jakewharton:butterknife-gradle-plugin:8.8.1'
+        classpath 'com.jakewharton:butterknife-gradle-plugin:8.4.0'
+//        classpath 'me.tatarka:gradle-retrolambda:3.3.0'
 //        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
     }
 }
@@ -33,7 +36,7 @@ def diVersion = "2.11"
 def butterknife = "8.8.1"
 ext {
     applicationId = "com.wptdxii.playground"
-    buildToolsVersion = "26.0.1"
+//    buildToolsVersion = "26.0.2"
     compileSdkVersion = 26
     minSdkVersion = 16
     targetSdkVersion = 26
@@ -47,7 +50,7 @@ ext {
 
     android = [
             applicationId    : "com.wptdxii.playground",
-            buildToolsVersion: "26.0.1",
+//            buildToolsVersion: "26.0.2",
             compileSdkVersion: 26,
             minSdkVersion    : 16,
             targetSdkVersion : 26,
@@ -71,6 +74,7 @@ ext {
             design      : "com.android.support:design:$supportVersion",
             annotations : "com.android.support:support-annotations:$supportVersion",
             recyclerView: "com.android.support:recyclerview-v7:$supportVersion",
+            constraint  : "com.android.support.constraint:constraint-layout:1.0.2",
     ]
 
     httpDependencies = [

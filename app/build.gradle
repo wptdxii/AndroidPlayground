@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 //apply plugin: 'com.neenbedankt.android-apt'
-apply plugin: 'me.tatarka.retrolambda'
+//apply plugin: 'me.tatarka.retrolambda'
 
 def keyStorePath
 if (System.properties['os.name'].toLowerCase().contains('windows')) {
@@ -31,7 +31,7 @@ def getRevision() {
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
-    buildToolsVersion rootProject.ext.android.buildToolsVersion
+//    buildToolsVersion rootProject.ext.android.buildToolsVersion
 
     compileOptions {
         sourceCompatibility rootProject.ext.android.javaVersion
@@ -178,7 +178,7 @@ android {
     // 修改打包后APK的文件名
     //variant = flavor + buildType
     applicationVariants.all { variant ->
-        variant.outputs.each { output ->
+        variant.outputs.all { output ->
 //            def outputFile = output.outputFile
 //            if (variant.buildType.name.equals('release')) {
 //                // 输出apk名称为ap_v1.0_2016-04-12_yingyongbao_a23f2e1.apk
@@ -194,18 +194,18 @@ android {
 //                def fileName = "ap_v${defaultConfig.versionName}_channel${variant.name}.apk"
 //                output.outputFile = new File(outputFile.parent,fileName)
 //            }
-
-            if (variant.buildType.name == 'debug') {
-                def outputPath = output.outputFile
-                def debugApkName = "Playground_v${defaultConfig.versionName}_debug.apk"
-                output.outputFile = new File(outputPath.parent, debugApkName)
-            }
-
-            if (variant.buildType.name == 'release') {
-                def outputPath = './buildsystem'
-                def releaseApkName = "Playground_v${defaultConfig.versionName}.apk"
-                output.outputFile = new File(outputPath, releaseApkName)
-            }
+            outputFileName = "Playground-v${variant.versionName}.apk"
+//            if (variant.buildType.name == 'debug') {
+//                def outputPath = outputFileName
+//                def debugApkName = "Playground_v${defaultConfig.versionName}_debug.apk"
+//                outputFileName = new File(outputPath.parent, debugApkName)
+//            }
+//
+//            if (variant.buildType.name == 'release') {
+//                def outputPath = './buildsystem'
+//                def releaseApkName = "Playground_v${defaultConfig.versionName}.apk"
+//                outputFileName = new File(outputPath, releaseApkName)
+//            }
         }
     }
 
@@ -215,6 +215,7 @@ repositories {
     flatDir {
         dirs 'libs' //this way we can find the .aar file in libs folder
     }
+    google()
 }
 
 dependencies {
@@ -234,6 +235,7 @@ dependencies {
     compile supportDependencies.appCompat
     compile supportDependencies.design
     compile supportDependencies.annotations
+    compile supportDependencies.constraint
 
     compile httpDependencies.retrofit
     compile httpDependencies.gsonConverter
@@ -264,5 +266,4 @@ dependencies {
 //    debugCompile rootProject.ext.debugDependencies.blockCanary
 //    releaseCompile rootProject.ext.releaseDependencies.blockCanary
     debugCompile rootProject.ext.debugDependencies.stetho
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }

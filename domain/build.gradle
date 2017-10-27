@@ -1,10 +1,10 @@
 apply plugin: 'java'
-apply plugin: 'me.tatarka.retrolambda'
+//apply plugin: 'me.tatarka.retrolambda'
 
 //noinspection GroovyUnusedAssignment
-sourceCompatibility = 1.8
+sourceCompatibility = rootProject.ext.android.javaVersion
 //noinspection GroovyUnusedAssignment
-targetCompatibility = 1.8
+targetCompatibility = rootProject.ext.android.javaVersion
 
 configurations {
     provided
