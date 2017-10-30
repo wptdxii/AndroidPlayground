@@ -11,12 +11,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.wptdxii.ext.util.NavigateUtil;
 import com.wptdxii.playground.R;
 import com.wptdxii.uiframework.base.BaseActivity;
 
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by wptdxii on 2017/8/22 0022.
@@ -59,11 +57,6 @@ public class MainActivity extends BaseActivity {
         //        }
         //        toolbar.inflateMenu(R.menu.activity_main);
 
-    }
-
-    @OnClick(R.id.btn_child)
-    public void test() {
-        NavigateUtil.startActivity(this,ChildActivity.class);
     }
 
     @SuppressLint("RestrictedApi")
