@@ -11,9 +11,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.wptdxii.ext.util.NavigateUtil;
 import com.wptdxii.playground.R;
 import com.wptdxii.uiframework.base.BaseActivity;
 
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -33,6 +35,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreateContent(Bundle savedInstanceState) {
+        ButterKnife.bind(this);
         Toolbar toolbar = findView(R.id.toolbar);
         //        toolbar.setNavigationIcon(R.drawable.ic_near_me_white_24dp);
         //        toolbar.setLogo(R.mipmap.ic_launcher);
@@ -56,19 +59,11 @@ public class MainActivity extends BaseActivity {
         //        }
         //        toolbar.inflateMenu(R.menu.activity_main);
 
-//        btnChild = findView(R.id.btn_child);
-//        btnChild.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//            }
-//        });
     }
 
     @OnClick(R.id.btn_child)
-    public void child() {
-        Intent intent = new Intent(MainActivity.this, ChildActivity.class);
-        startActivity(intent);
-
+    public void test() {
+        NavigateUtil.startActivity(this,ChildActivity.class);
     }
 
     @SuppressLint("RestrictedApi")

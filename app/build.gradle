@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 //apply plugin: 'com.neenbedankt.android-apt'
-//apply plugin: 'me.tatarka.retrolambda'
 
 def keyStorePath
 if (System.properties['os.name'].toLowerCase().contains('windows')) {
@@ -31,7 +30,6 @@ def getRevision() {
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
-//    buildToolsVersion rootProject.ext.android.buildToolsVersion
 
     compileOptions {
         sourceCompatibility rootProject.ext.android.javaVersion
@@ -244,6 +242,9 @@ dependencies {
 
     compile diDependencies.dagger
     annotationProcessor diDependencies.compiler
+
+    compile butterKnifeDependencies.butterknife
+    annotationProcessor butterKnifeDependencies.compiler
 
 //    compile rootProject.ext.imageLoaderDependencies.glide
 //    compile rootProject.ext.imageLoaderDependencies.compiler

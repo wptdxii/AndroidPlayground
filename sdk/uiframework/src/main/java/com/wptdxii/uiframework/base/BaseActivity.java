@@ -20,8 +20,6 @@ import com.wptdxii.uiframework.callback.PermissionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.ButterKnife;
-
 
 /**
  * Created by wptdxii on 2016/7/7 0007.
@@ -57,12 +55,6 @@ public abstract class BaseActivity extends AppCompatActivity {
                 onCreateContent(savedInstanceState);
                 break;
         }
-    }
-
-    @Override
-    public void setContentView(@LayoutRes int layoutResID) {
-        super.setContentView(layoutResID);
-        ButterKnife.bind(this);
     }
 
     @Override
