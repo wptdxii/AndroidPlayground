@@ -40,10 +40,10 @@ public class MainActivity extends BaseActivity {
         //        toolbar.setOverflowIcon(ContextCompat.getDrawable(this, R.drawable.ic_add_white_24dp));
 
         // 需要在 setSupportActionBar 之前设置 title 和 subtitle
-//            toolbar.setTitle("Title");
-//            toolbar.setSubtitle("Subtitle");
+        toolbar.setTitle("Title");
+        toolbar.setSubtitle("Subtitle");
+        toolbar.setLogo(R.drawable.ic_logo_round_black);
 //            toolbar.setSubtitleTextColor(ContextCompat.getColor(this, R.color.color_white_ffffffff));
-//            toolbar.setLogo(R.drawable.ic_android_round);
 
         setSupportActionBar(toolbar);
         //        toolbar.setNavigationIcon(R.drawable.ic_near_me_white_24dp);

@@ -79,7 +79,7 @@ ext {
             retrofit         : "com.squareup.retrofit2:retrofit:$retrofitVersion",
             gson             : "com.google.code.gson:gson:2.8.1",
             gsonConverter    : "com.squareup.retrofit2:converter-gson:$retrofitVersion",
-            fastJson         : "com.alibaba:fastjson:1.1.60.android",
+            fastJson         : "com.alibaba:fastjson:1.1.64.android",
             fastJsonConverter: "org.ligboy.retrofit2:converter-fastjson-android:2.1.0",
             rxAdapter        : "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion",
     ]
