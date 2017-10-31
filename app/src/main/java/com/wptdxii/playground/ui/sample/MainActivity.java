@@ -4,16 +4,18 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.wptdxii.playground.R;
 import com.wptdxii.uiframework.base.BaseActivity;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -21,6 +23,9 @@ import butterknife.ButterKnife;
  */
 
 public class MainActivity extends BaseActivity {
+    @BindView(R.id.btn_child)
+    Button btnChild;
+
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
         context.startActivity(intent);
@@ -34,22 +39,14 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreateContent(Bundle savedInstanceState) {
         ButterKnife.bind(this);
+        btnChild.setVisibility(View.GONE);
         Toolbar toolbar = findView(R.id.toolbar);
-        //        toolbar.setNavigationIcon(R.drawable.ic_near_me_white_24dp);
-        //        toolbar.setLogo(R.mipmap.ic_launcher);
         //        toolbar.setOverflowIcon(ContextCompat.getDrawable(this, R.drawable.ic_add_white_24dp));
 
-        // 需要在 setSupportActionBar 之前设置 title 和 subtitle
-        toolbar.setTitle("Title");
-        toolbar.setSubtitle("Subtitle");
-        toolbar.setLogo(R.drawable.ic_logo_round_black);
-//            toolbar.setSubtitleTextColor(ContextCompat.getColor(this, R.color.color_white_ffffffff));
-
         setSupportActionBar(toolbar);
-        //        toolbar.setNavigationIcon(R.drawable.ic_near_me_white_24dp);
-        ActionBar actionBar = getSupportActionBar();
+//        ActionBar actionBar = getSupportActionBar();
+//        actionBar.setDisplayShowTitleEnabled(false);
         // 当 toolbar 未设置 navigation icon 时，true可以显示默认图标
-        actionBar.setDisplayHomeAsUpEnabled(true);
 
         //        Menu menu = toolbar.getMenu();
         //        if (menu instanceof MenuBuilder) {
