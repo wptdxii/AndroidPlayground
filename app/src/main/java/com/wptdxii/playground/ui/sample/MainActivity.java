@@ -3,17 +3,17 @@ package com.wptdxii.playground.ui.sample;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.wptdxii.ext.util.NavigateUtil;
 import com.wptdxii.playground.R;
+import com.wptdxii.playground.ui.provider.MessageActionProvider;
 import com.wptdxii.uiframework.base.BaseActivity;
 
 import butterknife.BindView;
@@ -26,6 +26,8 @@ import butterknife.ButterKnife;
 public class MainActivity extends BaseActivity {
     @BindView(R.id.btn_child)
     Button btnChild;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     public static void startActivity(Context context) {
         NavigateUtil.startActivity(context, MainActivity.class);
@@ -39,36 +41,25 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreateContent(Bundle savedInstanceState) {
         ButterKnife.bind(this);
-        btnChild.setVisibility(View.GONE);
-        Toolbar toolbar = findView(R.id.toolbar);
         //        toolbar.setOverflowIcon(ContextCompat.getDrawable(this, R.drawable.ic_add_white_24dp));
-
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-
-        //        Menu menu = toolbar.getMenu();
-        //        if (menu instanceof MenuBuilder) {
-        //            ((MenuBuilder) menu).setOptionalIconsVisible(true);
-        //        }
-        //        toolbar.inflateMenu(R.menu.activity_main);
     }
 
     @SuppressLint("RestrictedApi")
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (menu instanceof MenuBuilder) {
-            //noinspection RestrictedApi
             ((MenuBuilder) menu).setOptionalIconsVisible(true);
         }
         getMenuInflater().inflate(R.menu.activity_main, menu);
-        return true;
+        MenuItem menuItem = menu.findItem(R.id.menu_share);
+        MessageActionProvider actionProvider = (MessageActionProvider) MenuItemCompat.getActionProvider(menuItem);
+        return super.onCreateOptionsMenu(menu);
     }
 
-    private static final String TAG = "MainActivity";
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Log.e(TAG, "onOptionsItemSelected: ");
         int itemId = item.getItemId();
         switch (itemId) {
             case android.R.id.home:
