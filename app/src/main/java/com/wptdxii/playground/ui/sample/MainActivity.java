@@ -3,7 +3,6 @@ package com.wptdxii.playground.ui.sample;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -53,7 +52,10 @@ public class MainActivity extends BaseActivity {
         }
         getMenuInflater().inflate(R.menu.activity_main, menu);
         MenuItem menuItem = menu.findItem(R.id.menu_share);
-        MessageActionProvider actionProvider = (MessageActionProvider) MenuItemCompat.getActionProvider(menuItem);
+        MessageActionProvider messageActionProvider = new MessageActionProvider(this);
+        menuItem.setActionProvider(messageActionProvider);
+        messageActionProvider.setBadgeCount(5);
+
         return super.onCreateOptionsMenu(menu);
     }
 

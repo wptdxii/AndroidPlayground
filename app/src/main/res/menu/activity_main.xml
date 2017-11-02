@@ -10,8 +10,8 @@
     <item
         android:id="@+id/menu_share"
         android:title="分享"
-        app:actionProviderClass="com.wptdxii.playground.ui.provider.MessageActionProvider"
-        app:showAsAction="never"/>
+        app:showAsAction="always"/>
+
     <item
         android:id="@+id/menu_near_me"
         android:icon="@drawable/ic_near_me_black_24dp"

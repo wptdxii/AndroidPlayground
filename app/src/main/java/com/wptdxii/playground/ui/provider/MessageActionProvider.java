@@ -1,11 +1,12 @@
 package com.wptdxii.playground.ui.provider;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.v4.view.ActionProvider;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.SubMenu;
 import android.view.View;
+import android.view.ActionProvider;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.wptdxii.playground.R;
 
@@ -18,6 +19,9 @@ import com.wptdxii.playground.R;
 
 public class MessageActionProvider extends ActionProvider {
     private Context mContext;
+    private View mActionView;
+    private FrameLayout flBadge;
+    private TextView tvBadge;
 
     public MessageActionProvider(Context context) {
         super(context);
@@ -26,21 +30,26 @@ public class MessageActionProvider extends ActionProvider {
 
     @Override
     public View onCreateActionView() {
-        LayoutInflater layoutInflater = LayoutInflater.from(mContext);
-        @SuppressLint("InflateParams") View view = layoutInflater.inflate(R.layout.provider_message_action, null);
-        return view;
+        //        mActionView = View.inflate(mContext, R.layout.provider_message_action, null);
+        mActionView = LayoutInflater.from(mContext).inflate(R.layout.provider_message_action, null);
+        flBadge = mActionView.findViewById(R.id.fl_badge);
+        tvBadge = mActionView.findViewById(R.id.tv_badge);
+        return mActionView;
     }
 
-    @Override
-    public void onPrepareSubMenu(SubMenu subMenu) {
-        super.onPrepareSubMenu(subMenu);
-        subMenu.clear();
-        subMenu.add("Submenu1").setIcon(R.drawable.ic_near_me_black_24dp);
-        subMenu.add("Submenu2").setIcon(R.drawable.ic_search_black_24dp);
+    public void setOnClickListener(View.OnClickListener onClickListener) {
+        mActionView.setOnClickListener(onClickListener);
     }
 
-    @Override
-    public boolean hasSubMenu() {
-        return true;
+    public void setBadgeCount(int count) {
+        flBadge.setVisibility(count >= 0 ? View.VISIBLE : View.GONE);
+        tvBadge.setText(String.valueOf(count));
+    }
+
+    public void setBadgeCount(String count) {
+        if (TextUtils.isDigitsOnly(count)) {
+            setBadgeCount(Integer.parseInt(count));
+        }
     }
 }
+
