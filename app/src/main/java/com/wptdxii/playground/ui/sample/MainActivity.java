@@ -3,6 +3,7 @@ package com.wptdxii.playground.ui.sample;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -27,6 +28,7 @@ public class MainActivity extends BaseActivity {
     Button btnChild;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    private MessageActionProvider actionProvider;
 
     public static void startActivity(Context context) {
         NavigateUtil.startActivity(context, MainActivity.class);
@@ -42,6 +44,14 @@ public class MainActivity extends BaseActivity {
         ButterKnife.bind(this);
         //        toolbar.setOverflowIcon(ContextCompat.getDrawable(this, R.drawable.ic_add_white_24dp));
         setSupportActionBar(toolbar);
+//        toolbar.inflateMenu(R.menu.activity_main);
+//        Menu menu = toolbar.getMenu();
+//        MenuItem menuItem = menu.findItem(R.id.menu_share);
+//        View actionView = menuItem.getActionView();
+//        TextView tvBadge = actionView.findViewById(R.id.tv_badge);
+//        tvBadge.setText("5");
+//        MessageActionProvider actionProvider = (MessageActionProvider) MenuItemCompat.getActionProvider(menuItem);
+//        actionProvider.setBadgeCount(5);
     }
 
     @SuppressLint("RestrictedApi")
@@ -52,9 +62,17 @@ public class MainActivity extends BaseActivity {
         }
         getMenuInflater().inflate(R.menu.activity_main, menu);
         MenuItem menuItem = menu.findItem(R.id.menu_share);
-        MessageActionProvider messageActionProvider = new MessageActionProvider(this);
-        menuItem.setActionProvider(messageActionProvider);
-        messageActionProvider.setBadgeCount(5);
+//        View view = menuItem.getActionView();
+//        TextView tvBadge = view.findViewById(R.id.tv_badge);
+//        tvBadge.setText("5");
+        actionProvider = (MessageActionProvider) MenuItemCompat.getActionProvider(menuItem);
+//        actionProvider.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                onOptionsItemSelected(menuItem);
+//            }
+//        });
+//        actionProvider.setBadgeCount("0");
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -71,6 +89,9 @@ public class MainActivity extends BaseActivity {
                 Toast.makeText(this, "分享", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.menu_search:
+                actionProvider.setBadgeCount(9);
+//                actionProvider.onPrepareSubMenu((item.getSubMenu()));
+//                actionProvider.onPerformDefaultAction();
                 Toast.makeText(this, "搜索", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.menu_near_me:

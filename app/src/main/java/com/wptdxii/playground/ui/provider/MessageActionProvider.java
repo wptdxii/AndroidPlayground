@@ -1,10 +1,10 @@
 package com.wptdxii.playground.ui.provider;
 
 import android.content.Context;
+import android.support.v4.view.ActionProvider;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
+import android.view.SubMenu;
 import android.view.View;
-import android.view.ActionProvider;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -18,31 +18,37 @@ import com.wptdxii.playground.R;
  */
 
 public class MessageActionProvider extends ActionProvider {
-    private Context mContext;
-    private View mActionView;
+    private Context context;
+    private View actionView;
     private FrameLayout flBadge;
     private TextView tvBadge;
 
     public MessageActionProvider(Context context) {
         super(context);
-        this.mContext = context;
+        this.context = context;
     }
 
+    /**
+     * 当 Toolbar 作为应用栏使用时，创建菜单会回调 Activity 中的 onCreateOptionsMenu() 方法，
+     * 在该方法中获去到的 ActionProvider 实例并没有被系统回调 onCreateActionView() 方法，所以在
+     * onCreateActionView() 获取的布局控件都为 null，这时在 Activity 的 onCreateOptionsMenu()
+     * 方法中使用调用 ActionProvider 中获取到的子控件也都为 null
+     * @return
+     */
     @Override
     public View onCreateActionView() {
-        //        mActionView = View.inflate(mContext, R.layout.provider_message_action, null);
-        mActionView = LayoutInflater.from(mContext).inflate(R.layout.provider_message_action, null);
-        flBadge = mActionView.findViewById(R.id.fl_badge);
-        tvBadge = mActionView.findViewById(R.id.tv_badge);
-        return mActionView;
+        actionView = View.inflate(context, R.layout.provider_message_action, null);
+        flBadge = actionView.findViewById(R.id.fl_badge);
+        tvBadge = actionView.findViewById(R.id.tv_badge);
+        return actionView;
     }
 
     public void setOnClickListener(View.OnClickListener onClickListener) {
-        mActionView.setOnClickListener(onClickListener);
+        actionView.setOnClickListener(onClickListener);
     }
 
     public void setBadgeCount(int count) {
-        flBadge.setVisibility(count >= 0 ? View.VISIBLE : View.GONE);
+        flBadge.setVisibility(count > 0 ? View.VISIBLE : View.GONE);
         tvBadge.setText(String.valueOf(count));
     }
 
@@ -50,6 +56,18 @@ public class MessageActionProvider extends ActionProvider {
         if (TextUtils.isDigitsOnly(count)) {
             setBadgeCount(Integer.parseInt(count));
         }
+    }
+
+    @Override
+    public void onPrepareSubMenu(SubMenu subMenu) {
+        super.onPrepareSubMenu(subMenu);
+        subMenu.add("sub1");
+        subMenu.add("sub2");
+    }
+
+    @Override
+    public boolean hasSubMenu() {
+        return true;
     }
 }
 
