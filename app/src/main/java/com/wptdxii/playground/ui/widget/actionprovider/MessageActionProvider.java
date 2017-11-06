@@ -1,4 +1,4 @@
-package com.wptdxii.playground.ui.provider;
+package com.wptdxii.playground.ui.widget.actionprovider;
 
 import android.content.Context;
 import android.support.v4.view.ActionProvider;

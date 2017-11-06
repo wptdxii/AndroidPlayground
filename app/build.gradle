@@ -217,6 +217,7 @@ repositories {
 }
 
 dependencies {
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     compile fileTree(include: ['*.jar'], dir: 'libs')
 //    compile(name:'test', ext:'aar') arr文件放到libs目录下，'test'为arr文件名
     compile project(':ext')

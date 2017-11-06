@@ -13,17 +13,13 @@ import android.widget.Toast;
 
 import com.wptdxii.ext.util.NavigateUtil;
 import com.wptdxii.playground.R;
-import com.wptdxii.playground.ui.provider.MessageActionProvider;
+import com.wptdxii.playground.ui.widget.actionprovider.MessageActionProvider;
 import com.wptdxii.uiframework.base.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * Created by wptdxii on 2017/8/22 0022.
- */
-
-public class MainActivity extends BaseActivity {
+public class ToolbarSampleActivity extends BaseActivity {
     @BindView(R.id.btn_child)
     Button btnChild;
     @BindView(R.id.toolbar)
@@ -31,27 +27,27 @@ public class MainActivity extends BaseActivity {
     private MessageActionProvider actionProvider;
 
     public static void startActivity(Context context) {
-        NavigateUtil.startActivity(context, MainActivity.class);
+        NavigateUtil.startActivity(context, ToolbarSampleActivity.class);
     }
 
     @Override
     protected int onCreateContentView() {
-        return R.layout.activity_main;
+        return R.layout.activity_toolbar_sample;
     }
 
     @Override
     protected void onCreateContent(Bundle savedInstanceState) {
         ButterKnife.bind(this);
-        //        toolbar.setOverflowIcon(ContextCompat.getDrawable(this, R.drawable.ic_add_white_24dp));
+        //        toolbar_center_title.setOverflowIcon(ContextCompat.getDrawable(this, R.drawable.ic_add_white_24dp));
         setSupportActionBar(toolbar);
-//        toolbar.inflateMenu(R.menu.activity_main);
-//        Menu menu = toolbar.getMenu();
-//        MenuItem menuItem = menu.findItem(R.id.menu_share);
-//        View actionView = menuItem.getActionView();
-//        TextView tvBadge = actionView.findViewById(R.id.tv_badge);
-//        tvBadge.setText("5");
-//        MessageActionProvider actionProvider = (MessageActionProvider) MenuItemCompat.getActionProvider(menuItem);
-//        actionProvider.setBadgeCount(5);
+        //        toolbar_center_title.inflateMenu(R.menu.activity_main);
+        //        Menu menu = toolbar_center_title.getMenu();
+        //        MenuItem menuItem = menu.findItem(R.id.menu_share);
+        //        View actionView = menuItem.getActionView();
+        //        TextView tvBadge = actionView.findViewById(R.id.tv_badge);
+        //        tvBadge.setText("5");
+        //        MessageActionProvider actionProvider = (MessageActionProvider) MenuItemCompat.getActionProvider(menuItem);
+        //        actionProvider.setBadgeCount(5);
     }
 
     @SuppressLint("RestrictedApi")
@@ -62,17 +58,17 @@ public class MainActivity extends BaseActivity {
         }
         getMenuInflater().inflate(R.menu.activity_main, menu);
         MenuItem menuItem = menu.findItem(R.id.menu_share);
-//        View view = menuItem.getActionView();
-//        TextView tvBadge = view.findViewById(R.id.tv_badge);
-//        tvBadge.setText("5");
+        //        View view = menuItem.getActionView();
+        //        TextView tvBadge = view.findViewById(R.id.tv_badge);
+        //        tvBadge.setText("5");
         actionProvider = (MessageActionProvider) MenuItemCompat.getActionProvider(menuItem);
-//        actionProvider.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                onOptionsItemSelected(menuItem);
-//            }
-//        });
-//        actionProvider.setBadgeCount("0");
+        //        actionProvider.setOnClickListener(new View.OnClickListener() {
+        //            @Override
+        //            public void onClick(View view) {
+        //                onOptionsItemSelected(menuItem);
+        //            }
+        //        });
+        //        actionProvider.setBadgeCount("0");
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -90,8 +86,8 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.menu_search:
                 actionProvider.setBadgeCount(9);
-//                actionProvider.onPrepareSubMenu((item.getSubMenu()));
-//                actionProvider.onPerformDefaultAction();
+                //                actionProvider.onPrepareSubMenu((item.getSubMenu()));
+                //                actionProvider.onPerformDefaultAction();
                 Toast.makeText(this, "搜索", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.menu_near_me:

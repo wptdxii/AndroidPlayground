@@ -1,4 +1,4 @@
-package com.wptdxii.playground.ui.sample.splash;
+package com.wptdxii.playground.ui.common;
 
 import android.Manifest;
 import android.os.Bundle;
@@ -11,7 +11,6 @@ import android.view.WindowManager;
 import com.wptdxii.ext.util.AppStatusTracker;
 import com.wptdxii.ext.util.DeviceUtils;
 import com.wptdxii.playground.R;
-import com.wptdxii.playground.ui.sample.MainActivity;
 import com.wptdxii.uiframework.base.BaseActivity;
 import com.wptdxii.uiframework.callback.PermissionListener;
 
@@ -38,7 +37,6 @@ public class SplashActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         AppStatusTracker.getInstance().setAppStatus(AppStatusTracker.STATUS_OFFLINE);
         super.onCreate(savedInstanceState);
-
     }
 
     @LayoutRes
@@ -78,6 +76,12 @@ public class SplashActivity extends BaseActivity {
         handler.removeCallbacksAndMessages(null);
         super.onPause();
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handler.removeCallbacksAndMessages(null);
     }
 
     /**

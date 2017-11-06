@@ -6,5 +6,5 @@
     android:layout_height="match_parent"
     tools:context="com.wptdxii.playground.ui.sample.NextActivity">
 
-    <include layout="@layout/toolbar"/>
+    <include layout="@layout/toolbar_center_title"/>
 </android.support.constraint.ConstraintLayout>

@@ -24,7 +24,7 @@
         <!-- android:value="${UMENG_CHANNEL_VALUE}"/> -->
 
         <activity
-            android:name=".ui.sample.splash.SplashActivity"
+            android:name=".ui.common.SplashActivity"
             android:theme="@style/SplashActivityTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -33,14 +33,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.sample.MainActivity"
+            android:name=".ui.common.MainActivity"
             android:launchMode="singleTask"/>
         <activity
             android:name=".ui.sample.ChildActivity"
-            android:parentActivityName=".ui.sample.MainActivity">
+            android:parentActivityName=".ui.common.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.sample.MainActivity"/>
+                android:value=".ui.common.MainActivity"/>
         </activity>
         <activity android:name=".ui.sample.SwipeRecyclerActivity"/>
         <activity android:name=".ui.sample.home.ContentActivity"/>
@@ -52,11 +52,12 @@
         <activity android:name=".ui.sample.SampleUmengActivity"/>
         <activity
             android:name=".ui.sample.NextActivity"
-            android:parentActivityName=".ui.sample.MainActivity">
-
+            android:parentActivityName=".ui.common.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.sample.MainActivity"/>
+                android:value=".ui.common.MainActivity"/>
+        </activity>
+        <activity android:name=".ui.sample.ToolbarSampleActivity">
         </activity>
     </application>
 

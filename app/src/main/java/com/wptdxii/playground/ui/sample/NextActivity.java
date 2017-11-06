@@ -19,7 +19,7 @@ public class NextActivity extends BaseActivity {
     @Override
     protected void onCreateContent(Bundle savedInstanceState) {
         Toolbar toolbar = findView(R.id.toolbar);
-        //        setSupportActionBar(toolbar);
+        //        setSupportActionBar(toolbar_center_title);
         //        ActionBar actionBar = getSupportActionBar();
         //        actionBar.setDisplayHomeAsUpEnabled(true);
 
