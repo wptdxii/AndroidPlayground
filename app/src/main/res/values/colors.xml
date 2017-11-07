@@ -10,10 +10,12 @@
     <color name="colorBlack_000000">#000000</color>
     <color name="colorWhite_FFFFFF">#FFFFFF</color>
     <color name="splashActivityBackground">@color/color_white_ffffffff</color>
+    <color name="colorDivider">@color/color_grey_500</color>
 
     <color name="color_dark_ff000000">#ff000000</color>
     <color name="color_white_ffffffff">#ffffffff</color>
     <color name="color_grey_ff303030">#ff303030</color>
+    <color name="color_grey_500">#FF9E9E9E</color>
     <color name="color_pink_ff4081">#ff4081</color>
     <color name="color_pink_e91e63">#e91e63</color>
 </resources>

@@ -25,11 +25,11 @@ import butterknife.OnClick;
  * Github: https://wptdxii.github.io
  */
 
-public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
-    private List<Component> mComponentList;
+public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
+    private List<Component> mList;
 
-    public MainAdapter(List<Component> list) {
-        this.mComponentList = list;
+    public ListAdapter(List<Component> list) {
+        this.mList = list;
     }
 
     @Override
@@ -41,14 +41,14 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Component component = mComponentList.get(position);
+        Component component = mList.get(position);
         holder.tvComponent.setText(component.getComponent());
         holder.targetActivity = component.getTargetActivity();
     }
 
     @Override
     public int getItemCount() {
-        return mComponentList.size();
+        return mList.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -65,7 +65,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         }
 
         @OnClick(R.id.tv_component)
-        public void checkTargetActivity() {
+        void checkTargetActivity() {
             NavigateUtil.startActivity(context, targetActivity);
         }
     }

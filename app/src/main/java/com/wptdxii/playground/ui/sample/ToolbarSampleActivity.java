@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -39,8 +40,12 @@ public class ToolbarSampleActivity extends BaseActivity {
     protected void onCreateContent(Bundle savedInstanceState) {
         ButterKnife.bind(this);
         //        toolbar_center_title.setOverflowIcon(ContextCompat.getDrawable(this, R.drawable.ic_add_white_24dp));
+        toolbar.setTitle("Title");
+        toolbar.setSubtitle("Subtitle");
         setSupportActionBar(toolbar);
-        //        toolbar_center_title.inflateMenu(R.menu.activity_main);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        //        toolbar_center_title.inflateMenu(R.menu.activity_toolbar_sample);
         //        Menu menu = toolbar_center_title.getMenu();
         //        MenuItem menuItem = menu.findItem(R.id.menu_share);
         //        View actionView = menuItem.getActionView();
@@ -56,7 +61,7 @@ public class ToolbarSampleActivity extends BaseActivity {
         if (menu instanceof MenuBuilder) {
             ((MenuBuilder) menu).setOptionalIconsVisible(true);
         }
-        getMenuInflater().inflate(R.menu.activity_main, menu);
+        getMenuInflater().inflate(R.menu.activity_toolbar_sample, menu);
         MenuItem menuItem = menu.findItem(R.id.menu_share);
         //        View view = menuItem.getActionView();
         //        TextView tvBadge = view.findViewById(R.id.tv_badge);

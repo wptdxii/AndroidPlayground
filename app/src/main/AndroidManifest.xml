@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.wptdxii.playground">
+    package="com.wptdxii.playground">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:name=".App"
@@ -27,38 +27,38 @@
             android:name=".ui.common.SplashActivity"
             android:theme="@style/SplashActivityTheme">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".ui.common.MainActivity"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTask" />
         <activity
             android:name=".ui.sample.ChildActivity"
             android:parentActivityName=".ui.common.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.common.MainActivity"/>
+                android:value=".ui.common.MainActivity" />
         </activity>
-        <activity android:name=".ui.sample.SwipeRecyclerActivity"/>
-        <activity android:name=".ui.sample.home.ContentActivity"/>
-        <activity android:name=".ui.sample.WidgetActivity"/>
-        <activity android:name=".ui.sample.TabViewPagerActivity"/>
-        <activity android:name=".ui.sample.ViewPagerActivity"/>
-        <activity android:name=".ui.sample.SwipeRecyclerFragmentActivity"/>
-        <activity android:name=".ui.sample.recyclerview.SampleRecyclerViewActivity"/>
-        <activity android:name=".ui.sample.SampleUmengActivity"/>
+        <activity android:name=".ui.sample.SwipeRecyclerActivity" />
+        <activity android:name=".ui.sample.home.ContentActivity" />
+        <activity android:name=".ui.sample.WidgetActivity" />
+        <activity android:name=".ui.sample.TabViewPagerActivity" />
+        <activity android:name=".ui.sample.ViewPagerActivity" />
+        <activity android:name=".ui.sample.SwipeRecyclerFragmentActivity" />
+        <activity android:name=".ui.sample.recyclerview.SampleRecyclerViewActivity" />
+        <activity android:name=".ui.sample.SampleUmengActivity" />
         <activity
             android:name=".ui.sample.NextActivity"
             android:parentActivityName=".ui.common.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.common.MainActivity"/>
+                android:value=".ui.common.MainActivity" />
         </activity>
-        <activity android:name=".ui.sample.ToolbarSampleActivity">
-        </activity>
+        <activity android:name=".ui.sample.ToolbarSampleActivity"></activity>
+        <activity android:name=".ui.sample.SampleActivity"></activity>
     </application>
 
 </manifest>
