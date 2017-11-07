@@ -32,7 +32,7 @@ public abstract class BaseSwipeRecyclerActivity<T> extends BaseActivity implemen
 
 
     @Override
-    protected void onCreateContent(Bundle savedInstanceState) {
+    protected void onSetupContent(Bundle savedInstanceState) {
         mSwipeRecycler = (SwipeRecycler) findViewById(R.id.swipeRecycler);
         mSwipeRecycler.setOnSwipeRefreshListener(this);
         mSwipeRecycler.setLayoutManager(getLayoutManager());

@@ -35,7 +35,7 @@ public class TabViewPagerActivity extends BaseActivity implements TabLayout.OnTa
     }
 
     @Override
-    protected void onCreateContent(Bundle savedInstanceState) {
+    protected void onSetupContent(Bundle savedInstanceState) {
         mTabLayout = (TabLayout) findViewById(R.id.tabLayout);
         mTabLayout.setOnTabClickListener(this);
 

@@ -3,10 +3,12 @@ package com.wptdxii.playground.ui.base;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import com.wptdxii.playground.R;
 import com.wptdxii.playground.adapter.ListAdapter;
@@ -38,9 +40,12 @@ public abstract class BaseListActivity extends BaseActivity {
     }
 
     @Override
-    protected void onCreateContent(Bundle savedInstanceState) {
+    protected void onSetupContent(Bundle savedInstanceState) {
         ButterKnife.bind(this);
+        onSetupToolbar(toolbar);
         setSupportActionBar(toolbar);
+        onSetupActionBar(getSupportActionBar());
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         DividerItemDecoration itemDecoration =
                 new DividerItemDecoration(this, linearLayoutManager.getOrientation());
@@ -53,5 +58,23 @@ public abstract class BaseListActivity extends BaseActivity {
         recyclerView.setAdapter(new ListAdapter(componentList));
     }
 
+    protected abstract void onSetupToolbar(Toolbar toolbar);
+
+    protected void onSetupActionBar(ActionBar actionBar) {
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
     protected abstract void onCreateComponentList(List<Component> list);
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return true;
+    }
 }

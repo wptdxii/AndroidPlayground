@@ -17,7 +17,7 @@ public class NextActivity extends BaseActivity {
     }
 
     @Override
-    protected void onCreateContent(Bundle savedInstanceState) {
+    protected void onSetupContent(Bundle savedInstanceState) {
         Toolbar toolbar = findView(R.id.toolbar);
         //        setSupportActionBar(toolbar_center_title);
         //        ActionBar actionBar = getSupportActionBar();

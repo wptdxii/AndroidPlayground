@@ -46,7 +46,7 @@ public class SplashActivity extends BaseActivity {
     }
 
     @Override
-    protected void onCreateContent(Bundle savedInstanceState) {
+    protected void onSetupContent(Bundle savedInstanceState) {
         //在主题中设定，可以定制 背景
         // setFullScreen();
 

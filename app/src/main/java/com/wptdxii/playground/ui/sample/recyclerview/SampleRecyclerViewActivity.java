@@ -28,7 +28,7 @@ public class SampleRecyclerViewActivity extends BaseActivity {
     }
 
     @Override
-    protected void onCreateContent(Bundle savedInstanceState) {
+    protected void onSetupContent(Bundle savedInstanceState) {
         mRecyclerView = findView(R.id.mRecyclerView);
         ApiFactory.getGankApi()
                 .getGankListWithRx(100, 1)

@@ -24,7 +24,7 @@ public class ViewPagerActivity extends BaseActivity {
     }
 
     @Override
-    protected void onCreateContent(Bundle savedInstanceState) {
+    protected void onSetupContent(Bundle savedInstanceState) {
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         FragmentManager fm = getSupportFragmentManager();
         mPagerAdapter = new CusPagerAdapter(fm);

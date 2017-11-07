@@ -52,7 +52,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             case AppStatusTracker.STATUS_OFFLINE:
             case AppStatusTracker.STATUS_ONLINE:
                 setContentView(onCreateContentView());
-                onCreateContent(savedInstanceState);
+                onSetupContent(savedInstanceState);
                 break;
         }
     }
@@ -70,7 +70,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @LayoutRes
     protected abstract int onCreateContentView();
 
-    protected abstract void onCreateContent(Bundle savedInstanceState);
+    protected abstract void onSetupContent(Bundle savedInstanceState);
 
     /**
      * Token失效或者被挤下线执行的操作

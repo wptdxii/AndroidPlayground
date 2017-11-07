@@ -37,7 +37,7 @@ public class ToolbarSampleActivity extends BaseActivity {
     }
 
     @Override
-    protected void onCreateContent(Bundle savedInstanceState) {
+    protected void onSetupContent(Bundle savedInstanceState) {
         ButterKnife.bind(this);
         //        toolbar_center_title.setOverflowIcon(ContextCompat.getDrawable(this, R.drawable.ic_add_white_24dp));
         toolbar.setTitle("Title");

@@ -1,6 +1,8 @@
 package com.wptdxii.playground.ui.common;
 
 import android.content.Context;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 
 import com.wptdxii.ext.util.NavigateUtil;
 import com.wptdxii.playground.model.Component;
@@ -17,6 +19,15 @@ public class MainActivity extends BaseListActivity {
 
     public static void startActivity(Context context) {
         NavigateUtil.startActivity(context, MainActivity.class);
+    }
+
+    @Override
+    protected void onSetupToolbar(Toolbar toolbar) {
+    }
+
+    @Override
+    protected void onSetupActionBar(ActionBar actionBar) {
+        actionBar.setDisplayHomeAsUpEnabled(false);
     }
 
     @Override
