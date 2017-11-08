@@ -83,9 +83,6 @@ public class ToolbarSampleActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         switch (itemId) {
-            case android.R.id.home:
-                Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show();
-                break;
             case R.id.menu_share:
                 Toast.makeText(this, "分享", Toast.LENGTH_SHORT).show();
                 break;
