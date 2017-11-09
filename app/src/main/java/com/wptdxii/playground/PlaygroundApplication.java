@@ -23,8 +23,8 @@ import java.lang.reflect.Method;
 /**
  * Created by wptdxii on 2016/7/28 0028.
  */
-public class App extends Application {
-    private static final String TAG = "App";
+public class PlaygroundApplication extends Application {
+    private static final String TAG = "PlaygroundApplication";
     private static Application instance;
     private AppComponent mAppcomponent;
 

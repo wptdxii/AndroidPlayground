@@ -3,7 +3,7 @@ package com.wptdxii.playground.imageloader;
 import android.content.Context;
 import android.widget.ImageView;
 
-import com.wptdxii.playground.App;
+import com.wptdxii.playground.PlaygroundApplication;
 
 /**
  * 加载图片的工具类
@@ -70,7 +70,7 @@ public class ImageLoader {
      * @param imageLoaderConfig
      */
     public static void loadImage(ImageLoaderConfig imageLoaderConfig) {
-        ImageLoaderProvider.getInstance().loadImage(App.getInstance(),imageLoaderConfig);
+        ImageLoaderProvider.getInstance().loadImage(PlaygroundApplication.getInstance(),imageLoaderConfig);
     }
 
     /**
@@ -91,7 +91,7 @@ public class ImageLoader {
      * @param imageLoaderConfig
      */
     public static void loadCircleImage(ImageLoaderConfig imageLoaderConfig) {
-        ImageLoaderProvider.getInstance().loadCircleImage(App.getInstance(),imageLoaderConfig);
+        ImageLoaderProvider.getInstance().loadCircleImage(PlaygroundApplication.getInstance(),imageLoaderConfig);
     }
 
     /**

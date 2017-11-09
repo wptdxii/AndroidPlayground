@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
     <application
-        android:name=".App"
+        android:name=".PlaygroundApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -35,13 +35,6 @@
         <activity
             android:name=".ui.common.MainActivity"
             android:launchMode="singleTask"/>
-        <activity
-            android:name=".ui.sample.ChildActivity"
-            android:parentActivityName=".ui.common.MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.common.MainActivity"/>
-        </activity>
         <activity android:name=".ui.sample.SwipeRecyclerActivity"/>
         <activity android:name=".ui.sample.home.ContentActivity"/>
         <activity android:name=".ui.sample.WidgetActivity"/>
@@ -50,13 +43,6 @@
         <activity android:name=".ui.sample.SwipeRecyclerFragmentActivity"/>
         <activity android:name=".ui.sample.recyclerview.SampleRecyclerViewActivity"/>
         <activity android:name=".ui.sample.SampleUmengActivity"/>
-        <activity
-            android:name=".ui.sample.NextActivity"
-            android:parentActivityName=".ui.common.MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.common.MainActivity"/>
-        </activity>
         <activity
             android:name=".ui.sample.ToolbarSampleActivity"
             android:parentActivityName=".ui.common.MainActivity">

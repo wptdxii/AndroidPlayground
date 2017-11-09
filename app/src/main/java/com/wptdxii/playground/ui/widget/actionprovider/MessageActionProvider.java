@@ -26,6 +26,9 @@ public class MessageActionProvider extends ActionProvider {
     public MessageActionProvider(Context context) {
         super(context);
         this.context = context;
+        actionView = View.inflate(context, R.layout.provider_message_action, null);
+        flBadge = actionView.findViewById(R.id.fl_badge);
+        tvBadge = actionView.findViewById(R.id.tv_badge);
     }
 
     /**
@@ -33,13 +36,11 @@ public class MessageActionProvider extends ActionProvider {
      * 在该方法中获去到的 ActionProvider 实例并没有被系统回调 onCreateActionView() 方法，所以在
      * onCreateActionView() 获取的布局控件都为 null，这时在 Activity 的 onCreateOptionsMenu()
      * 方法中使用调用 ActionProvider 中获取到的子控件也都为 null
+     *
      * @return
      */
     @Override
     public View onCreateActionView() {
-        actionView = View.inflate(context, R.layout.provider_message_action, null);
-        flBadge = actionView.findViewById(R.id.fl_badge);
-        tvBadge = actionView.findViewById(R.id.tv_badge);
         return actionView;
     }
 

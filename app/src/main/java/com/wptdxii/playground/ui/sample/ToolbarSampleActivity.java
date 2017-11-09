@@ -9,6 +9,7 @@ import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -62,18 +63,18 @@ public class ToolbarSampleActivity extends BaseActivity {
             ((MenuBuilder) menu).setOptionalIconsVisible(true);
         }
         getMenuInflater().inflate(R.menu.activity_toolbar_sample, menu);
-        MenuItem menuItem = menu.findItem(R.id.menu_share);
+        MenuItem menuItem = menu.findItem(R.id.menu_message);
         //        View view = menuItem.getActionView();
         //        TextView tvBadge = view.findViewById(R.id.tv_badge);
         //        tvBadge.setText("5");
         actionProvider = (MessageActionProvider) MenuItemCompat.getActionProvider(menuItem);
-        //        actionProvider.setOnClickListener(new View.OnClickListener() {
-        //            @Override
-        //            public void onClick(View view) {
-        //                onOptionsItemSelected(menuItem);
-        //            }
-        //        });
-        //        actionProvider.setBadgeCount("0");
+        actionProvider.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onOptionsItemSelected(menuItem);
+            }
+        });
+        actionProvider.setBadgeCount("9");
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -83,7 +84,7 @@ public class ToolbarSampleActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         switch (itemId) {
-            case R.id.menu_share:
+            case R.id.menu_message:
                 Toast.makeText(this, "分享", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.menu_search:
