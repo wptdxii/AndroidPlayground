@@ -53,7 +53,7 @@ public class ToolbarSampleActivity extends BaseActivity {
         //        TextView tvBadge = actionView.findViewById(R.id.tv_badge);
         //        tvBadge.setText("5");
         //        MessageActionProvider actionProvider = (MessageActionProvider) MenuItemCompat.getActionProvider(menuItem);
-        //        actionProvider.setBadgeCount(5);
+        //        actionProvider.setMessageCount(5);
     }
 
     @SuppressLint("RestrictedApi")
@@ -74,7 +74,7 @@ public class ToolbarSampleActivity extends BaseActivity {
                 onOptionsItemSelected(menuItem);
             }
         });
-        actionProvider.setBadgeCount("9");
+        actionProvider.setMessageCount("9");
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -88,7 +88,7 @@ public class ToolbarSampleActivity extends BaseActivity {
                 Toast.makeText(this, "分享", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.menu_search:
-                actionProvider.setBadgeCount(9);
+                actionProvider.setMessageCount(9);
                 //                actionProvider.onPrepareSubMenu((item.getSubMenu()));
                 //                actionProvider.onPerformDefaultAction();
                 Toast.makeText(this, "搜索", Toast.LENGTH_SHORT).show();

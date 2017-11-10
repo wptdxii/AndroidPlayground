@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="@dimen/menu_item_size"
-             android:layout_height="@dimen/menu_item_size">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="@dimen/menu_item_size"
+    android:layout_height="@dimen/menu_item_size">
 
     <FrameLayout
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="@dimen/menu_item_ripple_size"
+        android:layout_height="@dimen/menu_item_ripple_size"
+        android:layout_gravity="center"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        tools:ignore="NewApi" />
+
+    <FrameLayout
+        android:layout_width="@dimen/menu_item_container_size"
+        android:layout_height="@dimen/menu_item_container_size"
         android:layout_gravity="center">
 
         <ImageView
@@ -14,12 +21,13 @@
             android:layout_width="@dimen/menu_item_icon_size"
             android:layout_height="@dimen/menu_item_icon_size"
             android:layout_gravity="center"
-            android:src="@drawable/ic_message_white_24dp"/>
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_message_white_24dp" />
 
         <FrameLayout
             android:id="@+id/fl_badge"
-            android:layout_width="14dp"
-            android:layout_height="14dp"
+            android:layout_width="@dimen/menu_item_badge_size"
+            android:layout_height="@dimen/menu_item_badge_size"
             android:layout_gravity="top|end"
             android:background="@drawable/shape_badge_bg_red"
             android:visibility="gone"
@@ -32,7 +40,7 @@
                 android:layout_gravity="center"
                 android:textColor="@color/color_white_ffffffff"
                 android:textSize="10sp"
-                tools:ignore="SmallSp"/>
+                tools:ignore="SmallSp" />
         </FrameLayout>
     </FrameLayout>
 </FrameLayout>

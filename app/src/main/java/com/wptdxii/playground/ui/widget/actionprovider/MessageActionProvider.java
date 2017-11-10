@@ -3,7 +3,6 @@ package com.wptdxii.playground.ui.widget.actionprovider;
 import android.content.Context;
 import android.support.v4.view.ActionProvider;
 import android.text.TextUtils;
-import android.view.SubMenu;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -18,14 +17,12 @@ import com.wptdxii.playground.R;
  */
 
 public class MessageActionProvider extends ActionProvider {
-    private Context context;
     private View actionView;
     private FrameLayout flBadge;
     private TextView tvBadge;
 
     public MessageActionProvider(Context context) {
         super(context);
-        this.context = context;
         actionView = View.inflate(context, R.layout.provider_message_action, null);
         flBadge = actionView.findViewById(R.id.fl_badge);
         tvBadge = actionView.findViewById(R.id.tv_badge);
@@ -48,27 +45,15 @@ public class MessageActionProvider extends ActionProvider {
         actionView.setOnClickListener(onClickListener);
     }
 
-    public void setBadgeCount(int count) {
+    public void setMessageCount(int count) {
         flBadge.setVisibility(count > 0 ? View.VISIBLE : View.GONE);
         tvBadge.setText(String.valueOf(count));
     }
 
-    public void setBadgeCount(String count) {
+    public void setMessageCount(String count) {
         if (TextUtils.isDigitsOnly(count)) {
-            setBadgeCount(Integer.parseInt(count));
+            setMessageCount(Integer.parseInt(count));
         }
-    }
-
-    @Override
-    public void onPrepareSubMenu(SubMenu subMenu) {
-        super.onPrepareSubMenu(subMenu);
-        subMenu.add("sub1");
-        subMenu.add("sub2");
-    }
-
-    @Override
-    public boolean hasSubMenu() {
-        return true;
     }
 }
 

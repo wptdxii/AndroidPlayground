@@ -1,15 +1,31 @@
+import static org.apache.tools.ant.taskdefs.condition.Os.FAMILY_WINDOWS
+import static org.apache.tools.ant.taskdefs.condition.Os.isFamily
+
 apply plugin: 'com.android.application'
 //apply plugin: 'com.neenbedankt.android-apt'
 
 def keyStorePath
-if (System.properties['os.name'].toLowerCase().contains('windows')) {
-    keyStorePath = System.getenv('USERPROFILE') + File.separator + ".ssh"
+def keyStoreFile
+def keyStoreConfig
+if (isFamily(FAMILY_WINDOWS)) {
+    keyStoreConfig = System.getenv('USERPROFILE') + File.separator + ".ssh" + File.separator +
+            "playground.properties"
+    keyStoreFile = System.getenv('USERPROFILE') + File.separator + ".ssh" + File.separator +
+            "playground.jks"
 } else {
-    keyStorePath = System.getenv('HOME') + File.separator + '.ssh'
+//    keyStorePath = System.getenv('HOME') + "/.ssh/androidKeystore.properties"
+    keyStoreConfig = System.getenv('HOME') + "/.ssh/playground.properties"
+    keyStoreFile = System.getenv('HOME') + "/.ssh/playground.jks"
 }
 
-def keyStoreFile = keyStorePath + File.separator + 'playground.jks'
-def keyStoreConfig = keyStorePath + File.separator + 'playground.properties'
+//if (System.properties['os.name'].toLowerCase().contains('windows')) {
+//    keyStorePath = System.getenv('USERPROFILE') + File.separator + ".ssh"
+//} else {
+//    keyStorePath = System.getenv('HOME') + File.separator + '.ssh'
+//}
+
+//def keyStoreFile = keyStorePath + File.separator + 'playground.jks'
+//def keyStoreConfig = keyStorePath + File.separator + 'playground.properties'
 
 Properties props = new Properties()
 if (new File(keyStoreConfig).exists()) {
@@ -49,14 +65,14 @@ android {
     signingConfigs {
 
 //        def KEYSTORE = file('../buildsystem/AndroidKeyStore.jks')
-//        debug {
-//            // metod1
-//            storeFile file(keyStoreFile)
-//            storePassword props.getProperty('STORE_PWD')
-//            keyAlias props.getProperty('KEY_ALIAS')
-//            keyPassword props.getProperty('KEY_PWD')
-//
-//        }
+        debug {
+            // metod1
+            storeFile file(keyStoreFile)
+            storePassword props.getProperty('STORE_PWD')
+            keyAlias props.getProperty('KEY_ALIAS')
+            keyPassword props.getProperty('KEY_PWD')
+
+        }
 
         release {
             // method2  keystore placed in holder →  ../.ssh/
