@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.v4.view.ActionProvider;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.wptdxii.playground.R;
@@ -18,13 +17,11 @@ import com.wptdxii.playground.R;
 
 public class MessageActionProvider extends ActionProvider {
     private View actionView;
-    private FrameLayout flBadge;
     private TextView tvBadge;
 
     public MessageActionProvider(Context context) {
         super(context);
         actionView = View.inflate(context, R.layout.provider_message_action, null);
-        flBadge = actionView.findViewById(R.id.fl_badge);
         tvBadge = actionView.findViewById(R.id.tv_badge);
     }
 
@@ -46,7 +43,7 @@ public class MessageActionProvider extends ActionProvider {
     }
 
     public void setMessageCount(int count) {
-        flBadge.setVisibility(count > 0 ? View.VISIBLE : View.GONE);
+        tvBadge.setVisibility(count > 0 ? View.VISIBLE : View.GONE);
         tvBadge.setText(String.valueOf(count));
     }
 
@@ -56,4 +53,3 @@ public class MessageActionProvider extends ActionProvider {
         }
     }
 }
-

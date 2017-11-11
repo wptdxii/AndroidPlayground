@@ -5,31 +5,18 @@ apply plugin: 'com.android.application'
 //apply plugin: 'com.neenbedankt.android-apt'
 
 def keyStorePath
-def keyStoreFile
-def keyStoreConfig
 if (isFamily(FAMILY_WINDOWS)) {
-    keyStoreConfig = System.getenv('USERPROFILE') + File.separator + ".ssh" + File.separator +
-            "playground.properties"
-    keyStoreFile = System.getenv('USERPROFILE') + File.separator + ".ssh" + File.separator +
-            "playground.jks"
+    keyStorePath = System.getenv('USERPROFILE')
 } else {
-//    keyStorePath = System.getenv('HOME') + "/.ssh/androidKeystore.properties"
-    keyStoreConfig = System.getenv('HOME') + "/.ssh/playground.properties"
-    keyStoreFile = System.getenv('HOME') + "/.ssh/playground.jks"
+    keyStorePath = System.getenv('HOME')
 }
 
-//if (System.properties['os.name'].toLowerCase().contains('windows')) {
-//    keyStorePath = System.getenv('USERPROFILE') + File.separator + ".ssh"
-//} else {
-//    keyStorePath = System.getenv('HOME') + File.separator + '.ssh'
-//}
-
-//def keyStoreFile = keyStorePath + File.separator + 'playground.jks'
-//def keyStoreConfig = keyStorePath + File.separator + 'playground.properties'
+def keyStoreFile = keyStorePath + File.separator + '.ssh' + File.separator + 'playground.jks'
+def keyStoreProperties = keyStorePath + File.separator + '.ssh' + File.separator + 'playground.properties'
 
 Properties props = new Properties()
-if (new File(keyStoreConfig).exists()) {
-    props.load(new FileInputStream(file(keyStoreConfig)))
+if (new File(keyStoreProperties).exists()) {
+    props.load(new FileInputStream(file(keyStoreProperties)))
 }
 
 
@@ -68,10 +55,9 @@ android {
         debug {
             // metod1
             storeFile file(keyStoreFile)
-            storePassword props.getProperty('STORE_PWD')
+            storePassword props.getProperty('KEYSTORE_PWD')
             keyAlias props.getProperty('KEY_ALIAS')
             keyPassword props.getProperty('KEY_PWD')
-
         }
 
         release {
@@ -82,7 +68,7 @@ android {
 //            keyPassword props['KEY_PASSWORD']
 
             storeFile file(keyStoreFile)
-            storePassword props.getProperty('STORE_PWD')
+            storePassword props.getProperty('KEYSTORE_PWD')
             keyAlias props.getProperty('KEY_ALIAS')
             keyPassword props.getProperty('KEY_PWD')
         }
@@ -91,11 +77,12 @@ android {
 
     buildTypes {
         debug {
+            applicationIdSuffix ".debug"
             versionNameSuffix "-debug"
             minifyEnabled false
             shrinkResources false
             zipAlignEnabled false
-//            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.debug
 //            manifestPlaceholders = [UMENG_APPKEY_VALUE : UMENG_APPKEY_DEBUG]
             buildConfigField "String", "UMENG_APPKEY", "\"${UMENG_APPKEY_DEBUG}\""
 //            buildConfigField "String", "ENDPOINT", "\"${endpoint_product}\""
@@ -107,7 +94,7 @@ android {
 //            resValue "string", "op_app_name", "dev_${app_name}"
         }
         release {
-            versionNameSuffix "_release"
+            versionNameSuffix "-release"
             minifyEnabled false
             shrinkResources false
             zipAlignEnabled true

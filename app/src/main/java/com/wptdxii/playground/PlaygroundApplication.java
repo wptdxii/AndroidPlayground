@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.util.Log;
 import android.view.View;
 
 import com.wptdxii.ext.Ext;
@@ -24,7 +23,6 @@ import java.lang.reflect.Method;
  * Created by wptdxii on 2016/7/28 0028.
  */
 public class PlaygroundApplication extends Application {
-    private static final String TAG = "PlaygroundApplication";
     private static Application instance;
     private AppComponent mAppcomponent;
 
@@ -50,7 +48,6 @@ public class PlaygroundApplication extends Application {
         initInjector();
         initExtension();
         String deviceInfo = DeviceUtils.getDeviceInfo(this);
-        Log.e(TAG, "onCreate: " + deviceInfo);
 
     }
 

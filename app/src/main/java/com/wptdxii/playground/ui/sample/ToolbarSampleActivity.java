@@ -9,7 +9,6 @@ import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -26,7 +25,7 @@ public class ToolbarSampleActivity extends BaseActivity {
     Button btnChild;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    private MessageActionProvider actionProvider;
+    private MessageActionProvider mActionProvider;
 
     public static void startActivity(Context context) {
         NavigateUtil.startActivity(context, ToolbarSampleActivity.class);
@@ -45,6 +44,7 @@ public class ToolbarSampleActivity extends BaseActivity {
         toolbar.setSubtitle("Subtitle");
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
         //        toolbar_center_title.inflateMenu(R.menu.activity_toolbar_sample);
         //        Menu menu = toolbar_center_title.getMenu();
@@ -52,8 +52,8 @@ public class ToolbarSampleActivity extends BaseActivity {
         //        View actionView = menuItem.getActionView();
         //        TextView tvBadge = actionView.findViewById(R.id.tv_badge);
         //        tvBadge.setText("5");
-        //        MessageActionProvider actionProvider = (MessageActionProvider) MenuItemCompat.getActionProvider(menuItem);
-        //        actionProvider.setMessageCount(5);
+        //        MessageActionProvider mActionProvider = (MessageActionProvider) MenuItemCompat.getActionProvider(menuItem);
+        //        mActionProvider.setMessageCount(5);
     }
 
     @SuppressLint("RestrictedApi")
@@ -62,20 +62,15 @@ public class ToolbarSampleActivity extends BaseActivity {
         if (menu instanceof MenuBuilder) {
             ((MenuBuilder) menu).setOptionalIconsVisible(true);
         }
+
         getMenuInflater().inflate(R.menu.activity_toolbar_sample, menu);
         MenuItem menuItem = menu.findItem(R.id.menu_message);
         //        View view = menuItem.getActionView();
         //        TextView tvBadge = view.findViewById(R.id.tv_badge);
         //        tvBadge.setText("5");
-        actionProvider = (MessageActionProvider) MenuItemCompat.getActionProvider(menuItem);
-        actionProvider.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onOptionsItemSelected(menuItem);
-            }
-        });
-        actionProvider.setMessageCount("9");
-
+        mActionProvider = (MessageActionProvider) MenuItemCompat.getActionProvider(menuItem);
+        mActionProvider.setOnClickListener(view -> onOptionsItemSelected(menuItem));
+        mActionProvider.setMessageCount("9");
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -88,9 +83,9 @@ public class ToolbarSampleActivity extends BaseActivity {
                 Toast.makeText(this, "分享", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.menu_search:
-                actionProvider.setMessageCount(9);
-                //                actionProvider.onPrepareSubMenu((item.getSubMenu()));
-                //                actionProvider.onPerformDefaultAction();
+                mActionProvider.setMessageCount(0);
+                //                mActionProvider.onPrepareSubMenu((item.getSubMenu()));
+                //                mActionProvider.onPerformDefaultAction();
                 Toast.makeText(this, "搜索", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.menu_near_me:
