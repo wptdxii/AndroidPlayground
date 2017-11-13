@@ -5,14 +5,16 @@ apply plugin: 'com.android.application'
 //apply plugin: 'com.neenbedankt.android-apt'
 
 def keyStorePath
+def keyStoreFile
+def keyStoreProperties
 if (isFamily(FAMILY_WINDOWS)) {
     keyStorePath = System.getenv('USERPROFILE')
 } else {
     keyStorePath = System.getenv('HOME')
 }
-
-def keyStoreFile = keyStorePath + File.separator + '.ssh' + File.separator + 'playground.jks'
-def keyStoreProperties = keyStorePath + File.separator + '.ssh' + File.separator + 'playground.properties'
+keyStorePath = keyStorePath + File.separator + '.ssh' + File.separator
+keyStoreFile = keyStorePath + 'playground.jks'
+keyStoreProperties = keyStorePath + 'playground.properties'
 
 Properties props = new Properties()
 if (new File(keyStoreProperties).exists()) {
@@ -21,7 +23,7 @@ if (new File(keyStoreProperties).exists()) {
 
 
 def getDate() {
-    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC")) // 注意时区
+    return new Date().format('yyyy-MM-dd', TimeZone.getTimeZone('UTC')) // 注意时区
 }
 
 def getRevision() {
@@ -77,8 +79,8 @@ android {
 
     buildTypes {
         debug {
-            applicationIdSuffix ".debug"
-            versionNameSuffix "-debug"
+            applicationIdSuffix '.debug'
+            versionNameSuffix '-debug'
             minifyEnabled false
             shrinkResources false
             zipAlignEnabled false
