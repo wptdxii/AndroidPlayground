@@ -3,7 +3,6 @@ package com.wptdxii.playground.ui.sample;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
@@ -14,7 +13,6 @@ import android.widget.Toast;
 
 import com.wptdxii.ext.util.NavigateUtil;
 import com.wptdxii.playground.R;
-import com.wptdxii.playground.ui.widget.actionprovider.MessageActionProvider;
 import com.wptdxii.uiframework.base.BaseActivity;
 
 import butterknife.BindView;
@@ -25,7 +23,7 @@ public class ToolbarSampleActivity extends BaseActivity {
     Button btnChild;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    private MessageActionProvider mActionProvider;
+//    private MessageActionProvider mActionProvider;
 
     public static void startActivity(Context context) {
         NavigateUtil.startActivity(context, ToolbarSampleActivity.class);
@@ -42,6 +40,7 @@ public class ToolbarSampleActivity extends BaseActivity {
         //        toolbar_center_title.setOverflowIcon(ContextCompat.getDrawable(this, R.drawable.ic_add_white_24dp));
         toolbar.setTitle("Title");
         toolbar.setSubtitle("Subtitle");
+        toolbar.setLogo(R.mipmap.ic_launcher);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
@@ -68,9 +67,9 @@ public class ToolbarSampleActivity extends BaseActivity {
         //        View view = menuItem.getActionView();
         //        TextView tvBadge = view.findViewById(R.id.tv_badge);
         //        tvBadge.setText("5");
-        mActionProvider = (MessageActionProvider) MenuItemCompat.getActionProvider(menuItem);
-        mActionProvider.setOnClickListener(view -> onOptionsItemSelected(menuItem));
-        mActionProvider.setMessageCount("9");
+//        mActionProvider = (MessageActionProvider) MenuItemCompat.getActionProvider(menuItem);
+//        mActionProvider.setOnClickListener(view -> onOptionsItemSelected(menuItem));
+//        mActionProvider.setMessageCount("9");
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -83,7 +82,7 @@ public class ToolbarSampleActivity extends BaseActivity {
                 Toast.makeText(this, "分享", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.menu_search:
-                mActionProvider.setMessageCount(0);
+//                mActionProvider.setMessageCount(0);
                 //                mActionProvider.onPrepareSubMenu((item.getSubMenu()));
                 //                mActionProvider.onPerformDefaultAction();
                 Toast.makeText(this, "搜索", Toast.LENGTH_SHORT).show();
