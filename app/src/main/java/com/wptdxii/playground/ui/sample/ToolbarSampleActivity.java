@@ -80,7 +80,7 @@ public class ToolbarSampleActivity extends BaseActivity {
         switch (itemId) {
             case R.id.menu_message:
                 Toast.makeText(this, "分享", Toast.LENGTH_SHORT).show();
-                break;
+                return super.onOptionsItemSelected(item);
             case R.id.menu_search:
 //                mActionProvider.setMessageCount(0);
                 //                mActionProvider.onPrepareSubMenu((item.getSubMenu()));
