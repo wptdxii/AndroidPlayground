@@ -12,10 +12,9 @@
     app:popupTheme="@style/ToolbarTheme.Popup">
 
     <TextView
+        android:id="@+id/tv_center_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Custom Layout"
         android:textColor="@color/colorWhite_FFFFFF"/>
-
 </android.support.v7.widget.Toolbar>

@@ -1,11 +1,12 @@
 <resources>
 
-    <style name="AppTheme" parent="AppTheme.Base" />
+    <style name="AppTheme" parent="AppTheme.Base"/>
 
     <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textAllCaps">false</item>
     </style>
 
     <style name="ToolbarTheme.OverflowMenu" parent="ToolbarTheme.OverflowMenu.Base">
@@ -16,7 +17,7 @@
         <item name="overlapAnchor">false</item>
     </style>
 
-    <style name="ToolbarTheme" parent="ToolbarTheme.Base" />
+    <style name="ToolbarTheme" parent="ToolbarTheme.Base"/>
 
     <style name="ToolbarTheme.Base" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <!--<item name="android:textAllCaps">false</item>-->
@@ -82,7 +83,17 @@
         <item name="android:windowBackground">@drawable/splash_layers</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
+    <style name="ButtonStyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_margin">1dp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textColor">@color/colorBlack_000000</item>
+    </style>
 </resources>
