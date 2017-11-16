@@ -29,7 +29,7 @@ public class SampleRecyclerViewActivity extends BaseActivity {
 
     @Override
     protected void onSetupContent(Bundle savedInstanceState) {
-        mRecyclerView = findView(R.id.mRecyclerView);
+        mRecyclerView = findViewById(R.id.mRecyclerView);
         ApiFactory.getGankApi()
                 .getGankListWithRx(100, 1)
                 .compose(new DefaultTransformer<BaseGankResponse<ArrayList<GankModel>>, BaseGankResponse<ArrayList<GankModel>>>())

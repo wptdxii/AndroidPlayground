@@ -3,7 +3,6 @@ package com.wptdxii.uiframework.base;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -11,7 +10,6 @@ import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.wptdxii.ext.util.ActivityStack;
 import com.wptdxii.ext.util.AppStatusTracker;
@@ -65,6 +63,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * set content view Id
+     *
      * @return
      */
     @LayoutRes
@@ -83,7 +82,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      * 重启app
      */
     protected void restartApp() {
-        // TODO startActivity to ContentActivity
+        // TODO startActivity to MainActivity
     }
 
 
@@ -130,17 +129,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     //                break;
     //        }
     //    }
-
-    /**
-     * findViewById without force transform
-     *
-     * @param resId
-     * @param <T>
-     * @return
-     */
-    public <T extends View> T findView(@IdRes int resId) {
-        return (T) findViewById(resId);
-    }
 
     /**
      * call this method when need to requesst runtime permissions in Activity

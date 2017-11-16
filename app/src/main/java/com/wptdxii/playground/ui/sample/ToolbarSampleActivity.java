@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.graphics.drawable.DrawerArrowDrawable;
 import android.support.v7.view.menu.MenuBuilder;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import com.wptdxii.ext.util.NavigateUtil;
 import com.wptdxii.playground.R;
+import com.wptdxii.playground.ui.widget.actionprovider.MessageActionProvider;
 import com.wptdxii.uiframework.base.BaseActivity;
 
 import butterknife.BindView;
@@ -27,10 +29,12 @@ public class ToolbarSampleActivity extends BaseActivity {
     Toolbar toolbar;
     @BindView(R.id.tv_center_title)
     TextView tvCenterTitle;
-    DrawerArrowDrawable mArrowDrawable;
-    //    private MessageActionProvider mActionProvider;
-    boolean mMenuChanged;
-    boolean mMenuItemMessageVisible;
+
+    private MessageActionProvider mActionProvider;
+    private DrawerArrowDrawable mArrowDrawable;
+    private boolean mMenuChanged;
+    private boolean mMenuItemMessageVisible;
+    private int mMessageCount = 0;
 
     public static void startActivity(Context context) {
         NavigateUtil.startActivity(context, ToolbarSampleActivity.class);
@@ -43,6 +47,7 @@ public class ToolbarSampleActivity extends BaseActivity {
 
     @Override
     protected void onSetupContent(Bundle savedInstanceState) {
+        Log.d(TAG, "onSetupContent:");
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
@@ -73,34 +78,37 @@ public class ToolbarSampleActivity extends BaseActivity {
     @SuppressLint("RestrictedApi")
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        Log.e(TAG, "onCreateOptionsMenu:");
         if (menu instanceof MenuBuilder) {
             ((MenuBuilder) menu).setOptionalIconsVisible(true);
         }
 
-        getMenuInflater().inflate(R.menu.activity_toolbar_sample, menu);
+        //        int menuResId = getMenuResId();
+        int menuResId = getMenuResId();
+        getMenuInflater().inflate(menuResId, menu);
         MenuItem menuItem = menu.findItem(R.id.menu_message);
         //        View view = menuItem.getActionView();
         //        TextView tvBadge = view.findViewById(R.id.tv_badge);
         //        tvBadge.setText("5");
-        //        mActionProvider = (MessageActionProvider) MenuItemCompat.getActionProvider(menuItem);
-        //        mActionProvider.setOnClickListener(view -> onOptionsItemSelected(menuItem));
-        //        mActionProvider.setMessageCount("9");
-        return super.onCreateOptionsMenu(menu);
+        mActionProvider = (MessageActionProvider) MenuItemCompat.getActionProvider(menuItem);
+        mActionProvider.setOnClickListener(view -> onOptionsItemSelected(menuItem));
+
+        Log.d(TAG, "onCreateOptionsMenu:");
+        return true;
     }
 
-//    @Override
-//    public boolean onPrepareOptionsMenu(Menu menu) {
-//        Log.e(TAG, "onPrepareOptionsMenu: ");
-//        modifyItemMessageVisibility(menu);
-//        return true;
-//    }
-
+    private int getMenuResId() {
+        int menuResId = mMenuChanged ?
+                R.menu.activity_toolbar_sample_alternative : R.menu.activity_toolbar_sample;
+        mMenuChanged = !mMenuChanged;
+        return menuResId;
+    }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        Log.e(TAG, "onPrepareOptionsMenu: ");
-        return super.onPrepareOptionsMenu(menu);
+        modifyItemMessageVisibility(menu);
+
+        Log.d(TAG, "onPrepareOptionsMenu: ");
+        return true;
     }
 
     @Override
@@ -109,7 +117,6 @@ public class ToolbarSampleActivity extends BaseActivity {
         switch (itemId) {
             case R.id.menu_message:
                 Toast.makeText(this, "分享", Toast.LENGTH_SHORT).show();
-                return super.onOptionsItemSelected(item);
             case R.id.menu_search:
                 //                mActionProvider.setMessageCount(0);
                 //                mActionProvider.onPrepareSubMenu((item.getSubMenu()));
@@ -159,14 +166,12 @@ public class ToolbarSampleActivity extends BaseActivity {
         tvCenterTitle.setText("CenterTitle");
     }
 
-//    @OnClick(R.id.btn_change_menu)
-//    public void changeMenu() {
-//        int menuResId = mMenuChanged ?
-//                R.menu.activity_toolbar_sample : R.menu.activity_toolbar_sample_alternative;
-//        toolbar.getMenu().clear();
-//        toolbar.inflateMenu(menuResId);
-//        mMenuChanged = !mMenuChanged;
-//    }
+    @OnClick(R.id.btn_change_menu)
+    public void changeMenu() {
+        int menuResId = getMenuResId();
+        toolbar.getMenu().clear();
+        toolbar.inflateMenu(menuResId);
+    }
 
     @OnClick(R.id.btn_modify_menu)
     public void modifyMenu() {
@@ -181,8 +186,12 @@ public class ToolbarSampleActivity extends BaseActivity {
     }
 
     @OnClick(R.id.btn_invalidate_menu)
-    public void invalidateMenu() {
-        Log.e(TAG, "invalidateMenu: ");
+    public void invalidate() {
         invalidateOptionsMenu();
+    }
+
+    @OnClick(R.id.btn_action_provider)
+    public void actionProvider() {
+        mActionProvider.setMessageCount(mMessageCount++ % 3);
     }
 }

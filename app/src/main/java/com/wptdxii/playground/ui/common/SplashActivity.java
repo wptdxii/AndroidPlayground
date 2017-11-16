@@ -1,6 +1,7 @@
 package com.wptdxii.playground.ui.common;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,6 +18,8 @@ import com.wptdxii.uiframework.callback.PermissionListener;
 public class SplashActivity extends BaseActivity {
     private static final String TAG = "SplashActivity";
     private static final int MSG_TO_HOME_ACTIVITY = 0;
+
+    @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
