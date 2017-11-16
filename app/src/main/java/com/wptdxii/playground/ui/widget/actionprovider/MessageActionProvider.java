@@ -25,14 +25,6 @@ public class MessageActionProvider extends ActionProvider {
         tvBadge = actionView.findViewById(R.id.tv_badge);
     }
 
-    /**
-     * 当 Toolbar 作为应用栏使用时，创建菜单会回调 Activity 中的 onCreateOptionsMenu() 方法，
-     * 在该方法中获去到的 ActionProvider 实例并没有被系统回调 onCreateActionView() 方法，所以在
-     * onCreateActionView() 获取的布局控件都为 null，这时在 Activity 的 onCreateOptionsMenu()
-     * 方法中使用调用 ActionProvider 中获取到的子控件也都为 null
-     *
-     * @return
-     */
     @Override
     public View onCreateActionView() {
         return actionView;
