@@ -5,7 +5,7 @@
     android:id="@+id/activity_recycler_view_practice"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.sample.recyclerview.SampleRecyclerViewActivity">
+    tools:context=".module.sample.recyclerview.SampleRecyclerViewActivity">
 
     <include layout="@layout/widget_toolbar"/>
 

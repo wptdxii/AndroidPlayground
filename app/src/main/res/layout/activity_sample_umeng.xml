@@ -5,7 +5,7 @@
     android:id="@+id/activity_sample_umeng"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.wptdxii.playground.ui.sample.SampleUmengActivity">
+    tools:context="com.wptdxii.playground.module.sample.SampleUmengActivity">
 
     <include layout="@layout/widget_toolbar"/>
 

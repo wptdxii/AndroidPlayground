@@ -5,7 +5,7 @@ import android.content.Context;
 import com.wptdxii.playground.internal.di.module.AppModule;
 import com.wptdxii.playground.internal.di.module.GankApiModule;
 import com.wptdxii.playground.internal.di.module.RepositoryModule;
-import com.wptdxii.playground.ui.sample.home.ContentActivity;
+import com.wptdxii.playground.module.sample.home.ContentActivity;
 import com.wptdxii.data.net.retrofit.api.gankapi.GankApi;
 import com.wptdxii.domain.executor.PostExecutionThread;
 import com.wptdxii.domain.executor.ThreadExecutor;

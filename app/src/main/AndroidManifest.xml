@@ -24,7 +24,7 @@
         <!-- android:value="${UMENG_CHANNEL_VALUE}"/> -->
 
         <activity
-            android:name=".ui.common.SplashActivity"
+            android:name=".module.common.SplashActivity"
             android:theme="@style/SplashActivityTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -33,24 +33,26 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.common.MainActivity"
+            android:name=".module.common.MainActivity"
             android:launchMode="singleTask"/>
-        <activity android:name=".ui.sample.SwipeRecyclerActivity"/>
-        <activity android:name=".ui.sample.home.ContentActivity"/>
-        <activity android:name=".ui.sample.WidgetActivity"/>
-        <activity android:name=".ui.sample.TabViewPagerActivity"/>
-        <activity android:name=".ui.sample.ViewPagerActivity"/>
-        <activity android:name=".ui.sample.SwipeRecyclerFragmentActivity"/>
-        <activity android:name=".ui.sample.recyclerview.SampleRecyclerViewActivity"/>
-        <activity android:name=".ui.sample.SampleUmengActivity"/>
+        <activity android:name=".module.sample.SwipeRecyclerActivity"/>
+        <activity android:name=".module.sample.home.ContentActivity"/>
+        <activity android:name=".module.sample.WidgetActivity"/>
+        <activity android:name=".module.sample.TabViewPagerActivity"/>
+        <activity android:name=".module.sample.ViewPagerActivity"/>
+        <activity android:name=".module.sample.SwipeRecyclerFragmentActivity"/>
+        <activity android:name=".module.sample.recyclerview.SampleRecyclerViewActivity"/>
+        <activity android:name=".module.sample.SampleUmengActivity"/>
         <activity
-            android:name=".ui.sample.ToolbarSampleActivity"
-            android:parentActivityName=".ui.common.MainActivity">
+            android:name=".module.sample.ToolbarSampleActivity"
+            android:parentActivityName=".module.common.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.common.MainActivity"/>
+                android:value=".module.common.MainActivity"/>
         </activity>
-        <activity android:name=".ui.sample.SampleActivity"/>
+        <activity android:name=".module.sample.SampleActivity"/>
+        <activity android:name=".module.sample.ActionBarSampleActivity">
+        </activity>
     </application>
 
 </manifest>

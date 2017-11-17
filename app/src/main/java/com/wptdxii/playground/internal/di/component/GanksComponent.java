@@ -3,7 +3,7 @@ package com.wptdxii.playground.internal.di.component;
 import com.wptdxii.playground.internal.di.module.ActivityModule;
 import com.wptdxii.playground.internal.di.module.GanksModule;
 import com.wptdxii.playground.internal.di.scope.PerActivity;
-import com.wptdxii.playground.ui.sample.home.ContentActivity;
+import com.wptdxii.playground.module.sample.home.ContentActivity;
 
 import dagger.Component;
 
