@@ -9,7 +9,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.graphics.drawable.DrawerArrowDrawable;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -50,7 +49,6 @@ public class ActionBarSampleActivity extends BaseActivity {
 
     @Override
     protected void onSetupContent(Bundle savedInstanceState) {
-        Log.d(TAG, "onSetupContent:");
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
@@ -68,8 +66,6 @@ public class ActionBarSampleActivity extends BaseActivity {
         mArrowDrawable.setProgress(0);
     }
 
-    private static final String TAG = "ToolbarSampleActivity";
-
     @SuppressLint("RestrictedApi")
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -77,17 +73,16 @@ public class ActionBarSampleActivity extends BaseActivity {
             ((MenuBuilder) menu).setOptionalIconsVisible(true);
         }
 
-        //        int menuResId = getMenuResId();
-        int menuResId = getMenuResId();
-        getMenuInflater().inflate(menuResId, menu);
-        MenuItem menuItem = menu.findItem(R.id.menu_message);
-        //        View view = menuItem.getActionView();
-        //        TextView tvBadge = view.findViewById(R.id.tv_badge);
-        //        tvBadge.setText("5");
+        getMenuInflater().inflate(R.menu.activity_action_bar_sample, menu);
+        MenuItem menuItem = menu.findItem(R.id.action_message);
         mActionProvider = (MessageActionProvider) MenuItemCompat.getActionProvider(menuItem);
         mActionProvider.setOnClickListener(view -> onOptionsItemSelected(menuItem));
+        return true;
+    }
 
-        Log.d(TAG, "onCreateOptionsMenu:");
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        Toast.makeText(this, "onPrepareOptionsMenuClicked", Toast.LENGTH_SHORT).show();
         return true;
     }
 
@@ -98,30 +93,20 @@ public class ActionBarSampleActivity extends BaseActivity {
         return menuResId;
     }
 
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        modifyItemMessageVisibility(menu);
-
-        Log.d(TAG, "onPrepareOptionsMenu: ");
-        return true;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         switch (itemId) {
-            case R.id.menu_message:
+            case R.id.action_message:
                 Toast.makeText(this, "分享", Toast.LENGTH_SHORT).show();
-            case R.id.menu_search:
-                //                mActionProvider.setMessageCount(0);
-                //                mActionProvider.onPrepareSubMenu((item.getSubMenu()));
-                //                mActionProvider.onPerformDefaultAction();
+            case R.id.action_search:
                 Toast.makeText(this, "搜索", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.menu_near_me:
+            case R.id.action_near_me:
                 Toast.makeText(this, "附近", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.menu_setting:
+            case R.id.action_setting:
                 Toast.makeText(this, "设置", Toast.LENGTH_SHORT).show();
                 break;
             default:
@@ -133,7 +118,8 @@ public class ActionBarSampleActivity extends BaseActivity {
     @OnClick(R.id.btn_navigation)
     public void setNavigation() {
         toolbar.setNavigationIcon(mArrowDrawable);
-        toolbar.setNavigationOnClickListener(view -> Toast.makeText(this, "Drawer", Toast.LENGTH_SHORT).show());
+        toolbar.setNavigationOnClickListener(view ->
+                Toast.makeText(this, "Navigation", Toast.LENGTH_SHORT).show());
     }
 
     @OnClick(R.id.btn_overflow_menu_button)
@@ -163,9 +149,8 @@ public class ActionBarSampleActivity extends BaseActivity {
 
     @OnClick(R.id.btn_change_menu)
     public void changeMenu() {
-        int menuResId = getMenuResId();
         toolbar.getMenu().clear();
-        toolbar.inflateMenu(menuResId);
+        toolbar.inflateMenu(R.menu.activity_action_bar_sample_alternative);
     }
 
     @OnClick(R.id.btn_modify_menu)
@@ -175,7 +160,7 @@ public class ActionBarSampleActivity extends BaseActivity {
     }
 
     private void modifyItemMessageVisibility(Menu menu) {
-        MenuItem itemMessage = menu.findItem(R.id.menu_message);
+        MenuItem itemMessage = menu.findItem(R.id.action_message);
         itemMessage.setVisible(mMenuItemMessageVisible);
         mMenuItemMessageVisible = !mMenuItemMessageVisible;
     }

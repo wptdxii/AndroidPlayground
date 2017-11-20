@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto"
-      xmlns:tools="http://schemas.android.com/tools"
-      tools:ignore="AlwaysShowAction">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="AlwaysShowAction">
     <item
-        android:id="@+id/menu_search"
+        android:id="@+id/action_search"
         android:icon="@drawable/ic_search_white_24dp"
         android:title="搜索"
         app:actionViewClass="android.support.v7.widget.SearchView"
         app:showAsAction="always|collapseActionView" />
     <item
-        android:id="@+id/menu_message"
+        android:id="@+id/action_message"
         android:icon="@drawable/ic_message_white_24dp"
         android:title="消息"
-        app:actionProviderClass="com.wptdxii.playground.ui.widget.actionprovider.MessageActionProvider"
+        app:actionProviderClass="com.wptdxii.playground.module.widget.actionprovider.MessageActionProvider"
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/menu_near_me"
+        android:id="@+id/action_near_me"
         android:icon="@drawable/ic_near_me_black_24dp"
         android:title="附近"
         app:showAsAction="never" />
     <item
-        android:id="@+id/menu_setting"
+        android:id="@+id/action_setting"
         android:icon="@drawable/ic_settings_black_24dp"
         android:title="设置"
         app:showAsAction="never" />

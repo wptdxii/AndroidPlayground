@@ -88,7 +88,7 @@ public class ToolbarSampleActivity extends BaseActivity {
         //        int menuResId = getMenuResId();
         int menuResId = getMenuResId();
         getMenuInflater().inflate(menuResId, menu);
-        MenuItem menuItem = menu.findItem(R.id.menu_message);
+        MenuItem menuItem = menu.findItem(R.id.action_message);
         //        View view = menuItem.getActionView();
         //        TextView tvBadge = view.findViewById(R.id.tv_badge);
         //        tvBadge.setText("5");
@@ -118,18 +118,18 @@ public class ToolbarSampleActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
         switch (itemId) {
-            case R.id.menu_message:
+            case R.id.action_message:
                 Toast.makeText(this, "分享", Toast.LENGTH_SHORT).show();
-            case R.id.menu_search:
+            case R.id.action_search:
                 //                mActionProvider.setMessageCount(0);
                 //                mActionProvider.onPrepareSubMenu((item.getSubMenu()));
                 //                mActionProvider.onPerformDefaultAction();
                 Toast.makeText(this, "搜索", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.menu_near_me:
+            case R.id.action_near_me:
                 Toast.makeText(this, "附近", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.menu_setting:
+            case R.id.action_setting:
                 Toast.makeText(this, "设置", Toast.LENGTH_SHORT).show();
                 break;
             default:
@@ -183,7 +183,7 @@ public class ToolbarSampleActivity extends BaseActivity {
     }
 
     private void modifyItemMessageVisibility(Menu menu) {
-        MenuItem itemMessage = menu.findItem(R.id.menu_message);
+        MenuItem itemMessage = menu.findItem(R.id.action_message);
         itemMessage.setVisible(mMenuItemMessageVisible);
         mMenuItemMessageVisible = !mMenuItemMessageVisible;
     }
