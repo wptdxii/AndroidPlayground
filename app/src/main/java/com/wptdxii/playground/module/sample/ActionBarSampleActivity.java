@@ -35,7 +35,7 @@ public class ActionBarSampleActivity extends BaseActivity {
     private MessageActionProvider mActionProvider;
     private DrawerArrowDrawable mArrowDrawable;
     private boolean mMenuChanged;
-    private boolean mMenuItemMessageVisible;
+    private boolean mMenuItemNearMeVisible;
     private int mMessageCount = 0;
 
     public static void startActivity(Context context) {
@@ -99,15 +99,15 @@ public class ActionBarSampleActivity extends BaseActivity {
         int itemId = item.getItemId();
         switch (itemId) {
             case R.id.action_message:
-                Toast.makeText(this, "分享", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Message", Toast.LENGTH_SHORT).show();
             case R.id.action_search:
-                Toast.makeText(this, "搜索", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Search", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.action_near_me:
-                Toast.makeText(this, "附近", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Near Me", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.action_setting:
-                Toast.makeText(this, "设置", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Setting", Toast.LENGTH_SHORT).show();
                 break;
             default:
                 return super.onOptionsItemSelected(item);
@@ -160,9 +160,9 @@ public class ActionBarSampleActivity extends BaseActivity {
     }
 
     private void modifyItemMessageVisibility(Menu menu) {
-        MenuItem itemMessage = menu.findItem(R.id.action_message);
-        itemMessage.setVisible(mMenuItemMessageVisible);
-        mMenuItemMessageVisible = !mMenuItemMessageVisible;
+        MenuItem itemMessage = menu.findItem(R.id.action_near_me);
+        itemMessage.setVisible(mMenuItemNearMeVisible);
+        mMenuItemNearMeVisible = !mMenuItemNearMeVisible;
     }
 
     @OnClick(R.id.btn_invalidate_menu)
@@ -172,6 +172,6 @@ public class ActionBarSampleActivity extends BaseActivity {
 
     @OnClick(R.id.btn_action_provider)
     public void actionProvider() {
-        mActionProvider.setMessageCount(mMessageCount++ % 3);
+        mActionProvider.setMessageCount(mMessageCount++ % 3 + 1);
     }
 }
