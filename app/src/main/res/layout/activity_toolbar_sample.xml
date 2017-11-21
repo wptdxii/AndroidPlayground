@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <include layout="@layout/toolbar_center_title"/>
+    <include layout="@layout/toolbar_center_title" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,12 +14,12 @@
         <Button
             android:id="@+id/btn_navigation"
             style="@style/ButtonStyle"
-            android:text="Navigation"/>
+            android:text="Navigation" />
 
         <Button
             android:id="@+id/btn_overflow_menu_button"
             style="@style/ButtonStyle"
-            android:text="Overflow Menu Button"/>
+            android:text="Overflow Menu Button" />
     </LinearLayout>
 
     <LinearLayout
@@ -30,22 +30,22 @@
         <Button
             android:id="@+id/btn_logo"
             style="@style/ButtonStyle"
-            android:text="Logo"/>
+            android:text="Logo" />
 
         <Button
             android:id="@+id/btn_title"
             style="@style/ButtonStyle"
-            android:text="Title"/>
+            android:text="Title" />
 
         <Button
             android:id="@+id/btn_subtitle"
             style="@style/ButtonStyle"
-            android:text="Subtitle"/>
+            android:text="Subtitle" />
 
         <Button
             android:id="@+id/btn_center_title"
             style="@style/ButtonStyle"
-            android:text="CenterTitle"/>
+            android:text="CenterTitle" />
     </LinearLayout>
 
     <LinearLayout
@@ -55,19 +55,19 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btn_change_menu"
-            style="@style/ButtonStyle"
-            android:text="Change Menu"/>
-
-        <Button
             android:id="@+id/btn_modify_menu"
             style="@style/ButtonStyle"
-            android:text="Modify Menu"/>
+            android:text="Modify Menu" />
+
+        <Button
+            android:id="@+id/btn_change_menu"
+            style="@style/ButtonStyle"
+            android:text="Change Menu" />
 
         <Button
             android:id="@+id/btn_invalidate_menu"
             style="@style/ButtonStyle"
-            android:text="Invalidate"/>
+            android:text="Invalidate" />
     </LinearLayout>
 
     <LinearLayout
@@ -79,11 +79,11 @@
         <Button
             android:id="@+id/btn_action_provider"
             style="@style/ButtonStyle"
-            android:text="ActionProvider"/>
+            android:text="ActionProvider" />
 
         <Button
             android:id="@+id/btn_action_layout"
             style="@style/ButtonStyle"
-            android:text="ActionLayout"/>
+            android:text="ActionLayout" />
     </LinearLayout>
 </LinearLayout>

@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.graphics.drawable.DrawerArrowDrawable;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -34,7 +35,6 @@ public class ActionBarSampleActivity extends BaseActivity {
 
     private MessageActionProvider mActionProvider;
     private DrawerArrowDrawable mArrowDrawable;
-    private boolean mMenuChanged;
     private boolean mMenuItemNearMeVisible;
     private int mMessageCount = 0;
 
@@ -51,6 +51,7 @@ public class ActionBarSampleActivity extends BaseActivity {
     protected void onSetupContent(Bundle savedInstanceState) {
         ButterKnife.bind(this);
 
+        Log.e(TAG, "onSetupContent: " + mMenuItemNearMeVisible );
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
@@ -66,6 +67,8 @@ public class ActionBarSampleActivity extends BaseActivity {
         mArrowDrawable.setProgress(0);
     }
 
+    private static final String TAG = "ActionBarSampleActivity";
+
     @SuppressLint("RestrictedApi")
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -77,22 +80,17 @@ public class ActionBarSampleActivity extends BaseActivity {
         MenuItem menuItem = menu.findItem(R.id.action_message);
         mActionProvider = (MessageActionProvider) MenuItemCompat.getActionProvider(menuItem);
         mActionProvider.setOnClickListener(view -> onOptionsItemSelected(menuItem));
+        Log.e(TAG, "onCreateOptionsMenu: ");
         return true;
+
     }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        Toast.makeText(this, "onPrepareOptionsMenuClicked", Toast.LENGTH_SHORT).show();
+        Log.e(TAG, "onPrepareOptionsMenu: ");
+        modifyItemMessageVisibility(menu);
         return true;
     }
-
-    private int getMenuResId() {
-        int menuResId = mMenuChanged ?
-                R.menu.activity_toolbar_sample_alternative : R.menu.activity_toolbar_sample;
-        mMenuChanged = !mMenuChanged;
-        return menuResId;
-    }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -147,27 +145,29 @@ public class ActionBarSampleActivity extends BaseActivity {
         tvCenterTitle.setText("CenterTitle");
     }
 
-    @OnClick(R.id.btn_change_menu)
-    public void changeMenu() {
-        toolbar.getMenu().clear();
-        toolbar.inflateMenu(R.menu.activity_action_bar_sample_alternative);
-    }
-
     @OnClick(R.id.btn_modify_menu)
     public void modifyMenu() {
         Menu menu = toolbar.getMenu();
         modifyItemMessageVisibility(menu);
     }
 
-    private void modifyItemMessageVisibility(Menu menu) {
-        MenuItem itemMessage = menu.findItem(R.id.action_near_me);
-        itemMessage.setVisible(mMenuItemNearMeVisible);
-        mMenuItemNearMeVisible = !mMenuItemNearMeVisible;
+    @OnClick(R.id.btn_change_menu)
+    public void changeMenu() {
+        toolbar.getMenu().clear();
+        toolbar.inflateMenu(R.menu.activity_action_bar_sample_alternative);
     }
+
 
     @OnClick(R.id.btn_invalidate_menu)
     public void invalidate() {
         invalidateOptionsMenu();
+    }
+
+    private void modifyItemMessageVisibility(Menu menu) {
+        Log.e(TAG, "modifyItemMessageVisibility: " + mMenuItemNearMeVisible);
+        MenuItem itemMessage = menu.findItem(R.id.action_near_me);
+        itemMessage.setVisible(mMenuItemNearMeVisible);
+        mMenuItemNearMeVisible = !mMenuItemNearMeVisible;
     }
 
     @OnClick(R.id.btn_action_provider)
