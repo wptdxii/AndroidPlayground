@@ -55,14 +55,14 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btn_change_menu"
-            style="@style/ButtonStyle"
-            android:text="Change Menu"/>
-
-        <Button
             android:id="@+id/btn_modify_menu"
             style="@style/ButtonStyle"
             android:text="Modify Menu"/>
+
+        <Button
+            android:id="@+id/btn_change_menu"
+            style="@style/ButtonStyle"
+            android:text="Change Menu"/>
 
         <Button
             android:id="@+id/btn_invalidate_menu"
@@ -77,13 +77,13 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btn_action_provider"
+            android:id="@+id/btn_increase"
             style="@style/ButtonStyle"
-            android:text="ActionProvider"/>
+            android:text="Message Increase"/>
 
         <Button
-            android:id="@+id/btn_action_layout"
+            android:id="@+id/btn_decrease"
             style="@style/ButtonStyle"
-            android:text="ActionLayout"/>
+            android:text="Message Decrease"/>
     </LinearLayout>
 </LinearLayout>

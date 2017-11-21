@@ -43,6 +43,7 @@
         <activity android:name=".module.sample.SwipeRecyclerFragmentActivity"/>
         <activity android:name=".module.sample.recyclerview.SampleRecyclerViewActivity"/>
         <activity android:name=".module.sample.SampleUmengActivity"/>
+        <activity android:name=".module.sample.SampleActivity"/>
         <activity
             android:name=".module.sample.ToolbarSampleActivity"
             android:parentActivityName=".module.common.MainActivity">
@@ -50,9 +51,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".module.common.MainActivity"/>
         </activity>
-        <activity android:name=".module.sample.SampleActivity"/>
-        <activity android:name=".module.sample.ActionBarSampleActivity">
+        <activity
+            android:name=".module.sample.ActionBarSampleActivity"
+            android:parentActivityName=".module.common.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".module.common.MainActivity"/>
         </activity>
     </application>
-
 </manifest>

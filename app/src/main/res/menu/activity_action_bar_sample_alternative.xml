@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="AlwaysShowAction">
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:ignore="AlwaysShowAction">
 
     <item
-        android:id="@+id/action_near_me"
-        android:icon="@drawable/ic_near_me_white_24dp"
+        android:id="@+id/action_message"
+        android:icon="@drawable/ic_message_white_24dp"
         android:title="附近"
-        app:showAsAction="always" />
-    <item
-        android:id="@+id/action_setting"
-        android:icon="@drawable/ic_settings_black_24dp"
-        android:title="设置"
-        app:showAsAction="never" />
+        app:showAsAction="always"/>
 </menu>

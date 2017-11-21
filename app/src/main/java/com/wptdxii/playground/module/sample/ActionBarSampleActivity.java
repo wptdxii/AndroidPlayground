@@ -1,7 +1,6 @@
 package com.wptdxii.playground.module.sample;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
@@ -15,7 +14,6 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.wptdxii.ext.util.NavigateUtil;
 import com.wptdxii.playground.R;
 import com.wptdxii.playground.module.widget.actionprovider.MessageActionProvider;
 import com.wptdxii.uiframework.base.BaseActivity;
@@ -34,53 +32,43 @@ public class ActionBarSampleActivity extends BaseActivity {
     TextView tvCenterTitle;
 
     private MessageActionProvider mActionProvider;
-    private DrawerArrowDrawable mArrowDrawable;
-    private boolean mMenuItemNearMeVisible;
+    private boolean mActionMessageVisible = true;
     private int mMessageCount = 0;
-
-    public static void startActivity(Context context) {
-        NavigateUtil.startActivity(context, ActionBarSampleActivity.class);
-    }
 
     @Override
     protected int onCreateContentView() {
-        return R.layout.activity_toolbar_sample;
+        return R.layout.activity_action_bar_sample;
     }
 
     @Override
     protected void onSetupContent(Bundle savedInstanceState) {
         ButterKnife.bind(this);
 
-        Log.e(TAG, "onSetupContent: " + mMenuItemNearMeVisible );
+        Log.d(TAG, "onSetupContent: " + mActionMessageVisible);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowTitleEnabled(false);
-
-        initDrawerArrowDrawable();
     }
 
-    private void initDrawerArrowDrawable() {
-        mArrowDrawable = new DrawerArrowDrawable(this);
-        mArrowDrawable.setColor(ContextCompat.getColor(this, R.color.colorWhite_FFFFFF));
-        mArrowDrawable.setProgress(0);
-    }
 
     private static final String TAG = "ActionBarSampleActivity";
 
     @SuppressLint("RestrictedApi")
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        Log.e(TAG, "onCreateOptionsMenu: ");
+
+        getMenuInflater().inflate(R.menu.activity_action_bar_sample, menu);
+
         if (menu instanceof MenuBuilder) {
             ((MenuBuilder) menu).setOptionalIconsVisible(true);
         }
 
-        getMenuInflater().inflate(R.menu.activity_action_bar_sample, menu);
         MenuItem menuItem = menu.findItem(R.id.action_message);
         mActionProvider = (MessageActionProvider) MenuItemCompat.getActionProvider(menuItem);
         mActionProvider.setOnClickListener(view -> onOptionsItemSelected(menuItem));
-        Log.e(TAG, "onCreateOptionsMenu: ");
         return true;
 
     }
@@ -115,9 +103,16 @@ public class ActionBarSampleActivity extends BaseActivity {
 
     @OnClick(R.id.btn_navigation)
     public void setNavigation() {
-        toolbar.setNavigationIcon(mArrowDrawable);
+        toolbar.setNavigationIcon(getDrawerArrowDrawable());
         toolbar.setNavigationOnClickListener(view ->
                 Toast.makeText(this, "Navigation", Toast.LENGTH_SHORT).show());
+    }
+
+    private DrawerArrowDrawable getDrawerArrowDrawable() {
+        DrawerArrowDrawable arrowDrawable = new DrawerArrowDrawable(this);
+        arrowDrawable.setColor(ContextCompat.getColor(this, R.color.colorWhite_FFFFFF));
+        arrowDrawable.setProgress(0);
+        return arrowDrawable;
     }
 
     @OnClick(R.id.btn_overflow_menu_button)
@@ -160,18 +155,26 @@ public class ActionBarSampleActivity extends BaseActivity {
 
     @OnClick(R.id.btn_invalidate_menu)
     public void invalidate() {
+        mActionMessageVisible = true;
         invalidateOptionsMenu();
     }
 
     private void modifyItemMessageVisibility(Menu menu) {
-        Log.e(TAG, "modifyItemMessageVisibility: " + mMenuItemNearMeVisible);
-        MenuItem itemMessage = menu.findItem(R.id.action_near_me);
-        itemMessage.setVisible(mMenuItemNearMeVisible);
-        mMenuItemNearMeVisible = !mMenuItemNearMeVisible;
+        MenuItem itemMessage = menu.findItem(R.id.action_message);
+        itemMessage.setVisible(mActionMessageVisible);
+        mActionMessageVisible = !mActionMessageVisible;
     }
 
-    @OnClick(R.id.btn_action_provider)
-    public void actionProvider() {
-        mActionProvider.setMessageCount(mMessageCount++ % 3 + 1);
+    @OnClick(R.id.btn_increase)
+    public void increaseMessage() {
+        if (mMessageCount < 0) {
+            mMessageCount = 0;
+        }
+        mActionProvider.setMessageCount(++mMessageCount);
+    }
+
+    @OnClick(R.id.btn_decrease)
+    public void decreaseMessage() {
+        mActionProvider.setMessageCount(--mMessageCount);
     }
 }
