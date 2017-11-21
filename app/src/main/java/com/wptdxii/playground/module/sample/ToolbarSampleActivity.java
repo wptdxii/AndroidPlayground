@@ -1,13 +1,11 @@
 package com.wptdxii.playground.module.sample;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.graphics.drawable.DrawerArrowDrawable;
-import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,6 +13,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.wptdxii.ext.util.MenuUtil;
 import com.wptdxii.playground.R;
 import com.wptdxii.uiframework.base.BaseActivity;
 
@@ -46,13 +45,9 @@ public class ToolbarSampleActivity extends BaseActivity {
         initToolbar();
     }
 
-    @SuppressLint("RestrictedApi")
     private void initToolbar() {
         Menu menu = toolbar.getMenu();
-        if (menu instanceof MenuBuilder) {
-            ((MenuBuilder) menu).setOptionalIconsVisible(true);
-        }
-
+        MenuUtil.showOptionalIcons(menu);
         initNavigation();
         invalidateMenu();
         initMenuItemClickListener();
@@ -195,7 +190,7 @@ public class ToolbarSampleActivity extends BaseActivity {
             this.mContext = context;
         }
 
-        @OnClick(R.id.rl_message)
+        @OnClick(R.id.fl_message)
         void checkMessage() {
             Toast.makeText(mContext, "Message", Toast.LENGTH_SHORT).show();
         }

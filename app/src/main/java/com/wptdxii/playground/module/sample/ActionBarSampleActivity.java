@@ -1,12 +1,10 @@
 package com.wptdxii.playground.module.sample;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.graphics.drawable.DrawerArrowDrawable;
-import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -14,6 +12,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.wptdxii.ext.util.MenuUtil;
 import com.wptdxii.playground.R;
 import com.wptdxii.playground.module.widget.actionprovider.MessageActionProvider;
 import com.wptdxii.uiframework.base.BaseActivity;
@@ -55,16 +54,13 @@ public class ActionBarSampleActivity extends BaseActivity {
 
     private static final String TAG = "ActionBarSampleActivity";
 
-    @SuppressLint("RestrictedApi")
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         Log.e(TAG, "onCreateOptionsMenu: ");
 
         getMenuInflater().inflate(R.menu.activity_action_bar_sample, menu);
 
-        if (menu instanceof MenuBuilder) {
-            ((MenuBuilder) menu).setOptionalIconsVisible(true);
-        }
+        MenuUtil.showOptionalIcons(menu);
 
         MenuItem menuItem = menu.findItem(R.id.action_message);
         mActionProvider = (MessageActionProvider) MenuItemCompat.getActionProvider(menuItem);
