@@ -5,6 +5,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.graphics.drawable.DrawerArrowDrawable;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -62,9 +63,26 @@ public class ActionBarSampleActivity extends BaseActivity {
 
         MenuUtil.showOptionalIcons(menu);
 
-        MenuItem menuItem = menu.findItem(R.id.action_message);
-        mActionProvider = (MessageActionProvider) MenuItemCompat.getActionProvider(menuItem);
-        mActionProvider.setOnClickListener(view -> onOptionsItemSelected(menuItem));
+        MenuItem actionSearch = menu.findItem(R.id.action_search);
+        actionSearch.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                Toast.makeText(ActionBarSampleActivity.this, "Expand", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                Toast.makeText(ActionBarSampleActivity.this, "Collapse", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+        SearchView searchView = (SearchView) actionSearch.getActionView();
+        searchView.setQueryHint("input to search...");
+
+        MenuItem actionMessage = menu.findItem(R.id.action_message);
+        mActionProvider = (MessageActionProvider) MenuItemCompat.getActionProvider(actionMessage);
+        mActionProvider.setOnClickListener(view -> onOptionsItemSelected(actionMessage));
         return true;
 
     }
@@ -82,6 +100,7 @@ public class ActionBarSampleActivity extends BaseActivity {
         switch (itemId) {
             case R.id.action_message:
                 Toast.makeText(this, "Message", Toast.LENGTH_SHORT).show();
+                break;
             case R.id.action_search:
                 Toast.makeText(this, "Search", Toast.LENGTH_SHORT).show();
                 break;

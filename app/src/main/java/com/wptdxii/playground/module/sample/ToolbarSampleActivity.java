@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.graphics.drawable.DrawerArrowDrawable;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,6 +34,7 @@ public class ToolbarSampleActivity extends BaseActivity {
     private boolean mMenuItemMessageVisible;
     private int mMessageCount = 0;
     private ActionLayoutHolder mActionLayoutHolder;
+    private MenuItem mActionSearch;
 
     @Override
     protected int onCreateContentView() {
@@ -43,6 +45,15 @@ public class ToolbarSampleActivity extends BaseActivity {
     protected void onSetupContent(Bundle savedInstanceState) {
         ButterKnife.bind(this);
         initToolbar();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mActionSearch.isActionViewExpanded()) {
+            mActionSearch.collapseActionView();
+            return;
+        }
+        super.onBackPressed();
     }
 
     private void initToolbar() {
@@ -92,8 +103,26 @@ public class ToolbarSampleActivity extends BaseActivity {
         Menu menu = toolbar.getMenu();
         menu.clear();
         toolbar.inflateMenu(R.menu.activity_toolbar_sample);
-        MenuItem menuItem = menu.findItem(R.id.action_message);
-        View actionView = menuItem.getActionView();
+
+        mActionSearch = menu.findItem(R.id.action_search);
+        mActionSearch.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                Toast.makeText(ToolbarSampleActivity.this, "Expand", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                Toast.makeText(ToolbarSampleActivity.this, "Collapse", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+        SearchView searchView = (SearchView) mActionSearch.getActionView();
+        searchView.setQueryHint("input to search...");
+
+        MenuItem actionMessage = menu.findItem(R.id.action_message);
+        View actionView = actionMessage.getActionView();
         if (mActionLayoutHolder == null) {
             mActionLayoutHolder = new ActionLayoutHolder(this);
         }
