@@ -32,19 +32,19 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':ext')
-    compile project(':domain')
-    compile rootProject.ext.libJunit
-    compile rootProject.ext.libRxAndroid
-    compile rootProject.ext.libRetrofit
-    compile rootProject.ext.libRetrofitConverterGson
-    compile rootProject.ext.libRetrofitAdapterRxJava
-    compile rootProject.ext.libOkHttpLoggingInterceptor
-    compile rootProject.ext.libFastJson
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':ext')
+    implementation project(':domain')
+    implementation rootProject.ext.libJunit
+    implementation rootProject.ext.libRxAndroid
+    implementation rootProject.ext.libRetrofit
+    implementation rootProject.ext.libRetrofitConverterGson
+    implementation rootProject.ext.libRetrofitAdapterRxJava
+    implementation rootProject.ext.libOkHttpLoggingInterceptor
+    implementation rootProject.ext.libFastJson
 
     annotationProcessor  rootProject.ext.libDaggerCompiler
-    compile rootProject.ext.libDagger
+    implementation rootProject.ext.libDagger
 
-    provided rootProject.ext.libJavaxAnnotation
+    compileOnly rootProject.ext.libJavaxAnnotation
 }

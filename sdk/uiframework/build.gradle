@@ -33,9 +33,9 @@ android {
 }
 
 dependencies {
-    compile project(':ext')
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile supportDependencies.v4
-    compile supportDependencies.appCompat
+    implementation project(':ext')
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    testImplementation 'junit:junit:4.12'
+    implementation supportDependencies.v4
+    implementation supportDependencies.appCompat
 }

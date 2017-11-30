@@ -35,11 +35,11 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    testCompile 'junit:junit:4.12'
-    compile rootProject.ext.libSupportV4
-    compile rootProject.ext.libSupportAppcompatV7
-    compile rootProject.ext.libGson
-    compile rootProject.ext.libJavaxInject
-    compile rootProject.ext.libLogger
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    testImplementation 'junit:junit:4.12'
+    implementation rootProject.ext.libSupportV4
+    implementation rootProject.ext.libSupportAppcompatV7
+    implementation rootProject.ext.libGson
+    implementation rootProject.ext.libJavaxInject
+    implementation rootProject.ext.libLogger
 }

@@ -144,35 +144,51 @@ android {
         //配置信息在lint.xml中,需手动建立
 //        lintConfig file("lint.xml")
     }
-    // if exists override the defaultConfig ,or merge the defaultConfig
-//    productFlavors {
-//        dev{
-//            applicationId "com.wptdxii.playground.dev"
-//        }
-//        product{}
-//
-//        rc_yingyongbao {}
-//        rc_baidu {}
-//        rc_360{}
-//        arm {
-//
-//            ndk {
-//                //引号内容要与jniLibs文件夹内的文件夹名相同
-//                abiFilters "arm64-v8a", "armeabi", "armeabi-v7a"
-//            }
-//        }
-//
-//        x86 {
-//            ndk {
-//                abiFilters "x86", "x86_64"
-//            }
-//        }
-//        mips {
-//            ndk {
-//                abiFilters "mips"
-//            }
-//        }
-//    }
+
+    flavorDimensions "minApi","abi","deploy"
+    productFlavors {
+        dev {
+            dimension "deploy"
+        }
+
+        prod {
+            dimension "deploy"
+        }
+
+        minApi {
+            dimension "minApi"
+        }
+
+        minApi27 {
+            dimension "minApi"
+            minSdkVersion 27
+        }
+
+        abi {
+            dimension "abi"
+        }
+
+        arm {
+            dimension "abi"
+            ndk {
+                //引号内容要与jniLibs文件夹内的文件夹名相同
+                abiFilters "arm64-v8a", "armeabi", "armeabi-v7a"
+            }
+        }
+
+        x86 {
+            dimension "abi"
+            ndk {
+                abiFilters "x86", "x86_64"
+            }
+        }
+        mips {
+            dimension "abi"
+            ndk {
+                abiFilters "mips"
+            }
+        }
+    }
 
 //    productFlavors.all { flavor ->
 //        flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
@@ -222,34 +238,33 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
 //    compile(name:'test', ext:'aar') arr文件放到libs目录下，'test'为arr文件名
-    compile project(':ext')
-    compile project(':data')
-    compile project(':domain')
-    compile project(':uikit')
-    compile project(':uiframework')
-    compile project(':im')
-    compile project(':authorize')
-    compile project(':share')
-    compile project(':lbs')
-    testCompile testDependencies.junit
-    compile supportDependencies.v4
-    compile supportDependencies.appCompat
-    compile supportDependencies.design
-    compile supportDependencies.annotations
-    compile supportDependencies.constraint
+    implementation project(':ext')
+    implementation project(':data')
+    implementation project(':domain')
+    implementation project(':uikit')
+    implementation project(':uiframework')
+    implementation project(':im')
+    implementation project(':authorize')
+    implementation project(':share')
+    implementation project(':lbs')
+    testImplementation testDependencies.junit
+    implementation supportDependencies.v4
+    implementation supportDependencies.appCompat
+    implementation supportDependencies.design
+    implementation supportDependencies.annotations
+    implementation supportDependencies.constraint
 
-    compile httpDependencies.retrofit
-    compile httpDependencies.gsonConverter
-    compile httpDependencies.rxAdapter
-    compile httpDependencies.logInterceptor
+    implementation httpDependencies.retrofit
+    implementation httpDependencies.gsonConverter
+    implementation httpDependencies.rxAdapter
+    implementation httpDependencies.logInterceptor
 
-    compile diDependencies.dagger
+    implementation diDependencies.dagger
     annotationProcessor diDependencies.compiler
 
-    compile butterKnifeDependencies.butterknife
+    implementation butterKnifeDependencies.butterknife
     annotationProcessor butterKnifeDependencies.compiler
 
 //    compile rootProject.ext.imageLoaderDependencies.glide
@@ -260,17 +275,17 @@ dependencies {
 //        transitive = false
 //    }
 
-    compile rootProject.ext.libFastJson
-    compile rootProject.ext.libRxJava
-    compile rootProject.ext.libRxAndroid
-    compile rootProject.ext.libEventBus
-    compile rootProject.ext.libGlide
+    implementation rootProject.ext.libFastJson
+    implementation rootProject.ext.libRxJava
+    implementation rootProject.ext.libRxAndroid
+    implementation rootProject.ext.libEventBus
+    implementation rootProject.ext.libGlide
 //    compile rootProject.ext.libDagger
 //    annotationProcessor rootProject.ext.libDaggerCompiler
-    compile rootProject.ext.libJavaxAnnotation
+    implementation rootProject.ext.libJavaxAnnotation
 //    debugCompile rootProject.ext.debugDependencies.leakCanary
 //    releaseCompile rootProject.ext.releaseDependencies.leakCanary
 //    debugCompile rootProject.ext.debugDependencies.blockCanary
 //    releaseCompile rootProject.ext.releaseDependencies.blockCanary
-    debugCompile rootProject.ext.debugDependencies.stetho
+    debugImplementation rootProject.ext.debugDependencies.stetho
 }

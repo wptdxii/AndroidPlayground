@@ -33,8 +33,8 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile rootProject.ext.libSupportV4
-    compile rootProject.ext.libSupportAppcompatV7
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    testImplementation 'junit:junit:4.12'
+    implementation rootProject.ext.libSupportV4
+    implementation rootProject.ext.libSupportAppcompatV7
 }

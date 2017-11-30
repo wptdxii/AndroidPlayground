@@ -1,8 +1,6 @@
 apply plugin: 'java'
 
-//noinspection GroovyUnusedAssignment
 sourceCompatibility = rootProject.ext.android.javaVersion
-//noinspection GroovyUnusedAssignment
 targetCompatibility = rootProject.ext.android.javaVersion
 
 configurations {
@@ -16,11 +14,11 @@ sourceSets {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile rootProject.ext.libGson
-    compile rootProject.ext.libRxJava
-    compile rootProject.ext.libJavaxInject
-    provided rootProject.ext.libDaggerCompiler
-    provided rootProject.ext.libJavaxAnnotation
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation rootProject.ext.libGson
+    implementation rootProject.ext.libRxJava
+    implementation rootProject.ext.libJavaxInject
+    compileOnly rootProject.ext.libDaggerCompiler
+    compileOnly rootProject.ext.libJavaxAnnotation
 
 }
