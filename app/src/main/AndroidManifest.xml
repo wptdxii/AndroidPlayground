@@ -58,5 +58,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".module.common.MainActivity"/>
         </activity>
+        <activity android:name=".module.sample.widget.ConstraintSampleActivity">
+        </activity>
     </application>
+
 </manifest>

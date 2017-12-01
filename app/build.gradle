@@ -145,7 +145,7 @@ android {
 //        lintConfig file("lint.xml")
     }
 
-    flavorDimensions "minApi","abi","deploy"
+    flavorDimensions "minApi", "abi", "deploy"
     productFlavors {
         dev {
             dimension "deploy"
@@ -249,6 +249,7 @@ dependencies {
     implementation project(':authorize')
     implementation project(':share')
     implementation project(':lbs')
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation testDependencies.junit
     implementation supportDependencies.v4
     implementation supportDependencies.appCompat
